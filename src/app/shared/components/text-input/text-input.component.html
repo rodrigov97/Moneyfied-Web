@@ -1,0 +1,53 @@
+<div [class.lableless]="!label" class="form-group">
+
+  <label [class.is-invalid]="isInvalid()" [for]="fieldId" *ngIf="!!label">
+    {{ label }}
+  </label>
+
+  <div class="input-group">
+
+    <ng-container [ngSwitch]="type">
+
+      <input
+        *ngSwitchCase="'text'"
+        [name]="name"
+        [formControl]="control"
+        [id]="fieldId"
+        [placeholder]="placeholder"
+        [type]="type"
+        class="form-control"
+        (blur)="onBlur()"
+      />
+
+      <input
+        *ngSwitchCase="'password'"
+        [name]="name"
+        [formControl]="control"
+        [id]="fieldId"
+        [placeholder]="placeholder"
+        [type]="type"
+        class="form-control"
+        (blur)="onBlur()"
+      />
+
+    </ng-container>
+
+    <div *ngIf="append" class="input-group-append">
+      <ng-content class="ng-content" select=".input-group-text"></ng-content>
+    </div>
+
+  </div>
+
+  <div>
+
+    <small *ngIf="isInvalid()" class="d-inline invalid-feedback">
+      {{ forceErrorMessage || errorMessage }}
+    </small>
+
+    <small class="d-inline float-right" *ngIf="hasCounter && maxlength > 0">
+      {{ maxlength - control.value.length }}
+    </small>
+
+  </div>
+
+</div>

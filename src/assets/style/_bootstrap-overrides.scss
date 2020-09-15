@@ -1,0 +1,92 @@
+@import './bootstrap-utils';
+@import '~bootstrap/scss/bootstrap';
+
+/* Bootstrap */
+
+textarea,
+textarea.form-control,
+input.form-control,
+input[type="text"],
+input[type="password"],
+input[type="email"],
+input[type="number"],
+[type="text"].form-control,
+[type="password"].form-control,
+[type="email"].form-control,
+[type="tel"].form-control,
+[contenteditable].form-control {
+  border-radius: 0px !important;
+}
+
+textarea:focus,
+textarea.form-control:focus,
+input.form-control:focus,
+input[type="text"]:focus,
+input[type="password"]:focus,
+input[type="email"]:focus,
+input[type="number"]:focus,
+[type="text"].form-control:focus,
+[type="password"].form-control:focus,
+[type="email"].form-control:focus,
+[type="tel"].form-control:focus,
+[contenteditable].form-control:focus {
+  box-shadow: none;
+  border: 1px solid $indigo-light;
+}
+
+.btn:focus,
+.btn:active {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+.btn.btn-primary {
+  border: none;
+  border-radius: 0px !important;
+  background-color: $indigo;
+}
+
+.btn.btn-primary:active {
+  background-color: $indigo-light !important;
+}
+
+.btn.btn-secondary {
+  border: none;
+  border-radius: 0px !important;
+  background-color: $lignt-blue;
+}
+
+.btn.btn-secondary:active {
+  background-color: $lignt-blue-light !important;
+}
+
+.was-validated .form-control:invalid,
+.form-control.is-invalid {
+  box-shadow: none !important;
+}
+
+.was-validated .form-control:valid,
+.form-control.is-valid {
+  box-shadow: none !important;
+}
+
+.modal-content {
+  border-radius: 0px;
+  border: none;
+}
+
+.modal-header,
+.modal-footer {
+  border: none;
+}
+
+/* Custom Input */
+
+.input-group-append span {
+  background-color: transparent ;
+  border-radius: 0px;
+}
+
+.input-group-text i {
+  color: inherit ;
+}

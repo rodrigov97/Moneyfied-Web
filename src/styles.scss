@@ -1,2 +1,68 @@
 @import '../node_modules/bootstrap/scss/bootstrap.scss';
+@import "./assets/style/_variables";
+@import "./assets/style/_bootstrap-overrides";
 
+/* Setting Margin and Padding */
+
+html,
+body,
+p {
+  margin: 0px;
+  padding: 0px;
+}
+
+* {
+  user-select: none; /* supported by Chrome and Opera */
+ -webkit-user-select: none; /* Safari */
+ -khtml-user-select: none; /* Konqueror HTML */
+ -moz-user-select: none; /* Firefox */
+ -ms-user-select: none; /* Internet Explorer/Edge */
+}
+
+/* Defaults */
+
+/* width */
+::-webkit-scrollbar {
+  width: 3px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 100px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #aaaaaa;
+  border-radius: 100px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #686868;
+  border-radius: 100px;
+}
+
+* {
+  font-weight: lighter;
+  color: #3f3f3f;
+}
+
+i {
+  color: #3f3f3f;
+}
+
+button:focus {
+  outline: 0;
+}
+
+/* Custom Classes*/
+
+.fill {
+  flex: 1 1 auto;
+}
+
+.click {
+  cursor: pointer;
+}

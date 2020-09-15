@@ -1,0 +1,17 @@
+@import './variables';
+
+$enable-responsive-font-sizes: true;
+
+$theme-colors: (
+  danger: $color-danger,
+  dark: $blue-grey,
+  info: $color-info,
+  light: $blue-grey-light,
+  primary: $indigo,
+  secondary: $lignt-blue,
+  success: $color-success,
+);
+
+@import '~bootstrap/scss/functions';
+@import '~bootstrap/scss/variables';
+@import '~bootstrap/scss/mixins';
