@@ -3,13 +3,13 @@
 $enable-responsive-font-sizes: true;
 
 $theme-colors: (
-  danger: $color-danger,
+  danger: $danger,
   dark: $blue-grey,
-  info: $color-info,
+  info: $info,
   light: $blue-grey-light,
   primary: $indigo,
   secondary: $lignt-blue,
-  success: $color-success,
+  success: $success,
 );
 
 @import '~bootstrap/scss/functions';

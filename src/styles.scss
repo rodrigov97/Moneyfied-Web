@@ -1,6 +1,7 @@
-@import '../node_modules/bootstrap/scss/bootstrap.scss';
-@import "./assets/style/_variables";
+@import "./assets/style/variables";
 @import "./assets/style/_bootstrap-overrides";
+@import "../node_modules/bootstrap/scss/bootstrap.scss";
+@import "../node_modules/bootstrap/scss/mixins/_breakpoints.scss";
 
 /* Setting Margin and Padding */
 

@@ -1,3 +1,5 @@
+@import "../../../../assets/style/variables";
+
 .svg-icon {
   width: 30px;
   height: 30px;
@@ -8,7 +10,7 @@
 .svg-icon path,
 .svg-icon polygon,
 .svg-icon rect {
-  fill: #f1cf0c;
+  fill: $warning;
 }
 
 .svg-icon circle {

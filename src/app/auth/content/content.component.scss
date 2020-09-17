@@ -1,0 +1,30 @@
+@import "../../../assets/style/_variables.scss";
+
+section {
+  height: 100%;
+  width: 100%;
+}
+
+.carousel {
+  height: 100%;
+  width: 100%;
+}
+
+.carousel-inner {
+  height: 60%;
+  width: 60%;
+}
+
+.carousel-indicators li {
+  background-color: $indigo;
+}
+
+h5,
+p {
+  color: $success;
+}
+
+.carousel-caption {
+  bottom: 0;
+  position: relative;
+}
