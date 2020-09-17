@@ -4,6 +4,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 import { DataService } from 'src/app/shared/data.service';
 import { AuthService } from '../auth.service';
+import { LocalStoreService } from 'src/app/core/services/local-store.service';
 
 @Component({
   selector: 'app-form-login',
@@ -22,6 +23,7 @@ export class FormAuthComponent implements OnInit {
   constructor(
     private authService: AuthService,
     private dataService: DataService,
+    private storageService: LocalStoreService,
     private route: Router
   ) {
     this.formLogin = new FormGroup({
@@ -70,8 +72,8 @@ export class FormAuthComponent implements OnInit {
           if (response.success) {
             this.isLoading = false;
 
-            localStorage.setItem('token', response.token);
-            localStorage.setItem('usuario', JSON.stringify(response.usuario));
+            this.storageService.addToken(response.token);
+            this.storageService.addUser(response.usuario);
 
             alert(JSON.stringify(response.usuario));
             //this.route.navigate(['home']);
