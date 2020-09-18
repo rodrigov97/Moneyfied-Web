@@ -24,4 +24,10 @@ export class AuthService {
 
     return this.apiClient.post(path, info);
   }
+
+  resetPassword(info: any): Observable<any> {
+    const path = 'send-mail/confirmation';
+
+    return this.apiClient.post(path, info);
+  }
 }

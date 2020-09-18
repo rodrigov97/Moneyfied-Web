@@ -6,39 +6,39 @@ section {
 }
 
 .title {
-  height: 70px;
-  font-size: 30px;
+  height: 4.375rem;
+  font-size: 1.875rem;
 }
 
 .form-container {
   width: 85%;
-  height: 400px;
+  height: 25rem;
 }
 
 .form-row {
-  margin-top: 10px;
+  margin-top: 0.625rem;
 }
 
 .submit {
-  margin-top: 25px;
+  margin-top: 1.5625rem;
 }
 
 .submit button {
-  width: 120px;
+  width: 7.5rem;
 }
 
 .reset-password button {
-  margin-top: 25px;
+  margin-top: 1.5625rem;
 }
 
 .options {
-  margin-top: 15px;
+  margin-top: 0.9375rem;
 }
 
 .options li {
   list-style: none;
   text-align: center;
-  margin-top: 5px;
+  margin-top: 0.3125rem;
 }
 
 .options li a {
@@ -52,10 +52,10 @@ section {
 }
 
 .svg-icon {
-  width: 20px;
-  height: 20px;
-  margin-left: 10px;
-  margin-bottom: 3px;
+  width: 1.25rem;
+  height: 1.25rem;
+  margin-left: 0.625rem;
+  margin-bottom: 0.1875rem;
 }
 
 .svg-icon path,
@@ -71,12 +71,12 @@ section {
 
 .was-validated .form-control:invalid,
 .form-control.is-invalid {
-  border: 1px solid $light-grey !important;
+  border: 0.0625rem solid $light-grey !important;
 }
 
 .was-validated .form-control:valid,
 .form-control.is-valid {
-  border: 1px solid $light-grey !important;
+  border: 0.0625rem solid $light-grey !important;
 }
 
 input {
@@ -84,7 +84,7 @@ input {
 }
 
 .input-group-prepend {
-  margin-left: -2px;
+  margin-left: -0.125rem;
 }
 
 .input-group-prepend .icon-container {

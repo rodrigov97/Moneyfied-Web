@@ -31,7 +31,7 @@ input[type="number"]:focus,
 [type="tel"].form-control:focus,
 [contenteditable].form-control:focus {
   box-shadow: none;
-  border: 1px solid $indigo-light;
+  border: 0.0625rem solid $indigo-light;
 }
 
 .btn:focus,
@@ -42,7 +42,7 @@ input[type="number"]:focus,
 
 .btn.btn-primary {
   border: none;
-  border-radius: 0px !important;
+  border-radius: 0rem !important;
   background-color: $indigo;
 }
 
@@ -52,7 +52,7 @@ input[type="number"]:focus,
 
 .btn.btn-secondary {
   border: none;
-  border-radius: 0px !important;
+  border-radius: 0rem !important;
   background-color: $lignt-blue;
 }
 
@@ -71,7 +71,7 @@ input[type="number"]:focus,
 }
 
 .modal-content {
-  border-radius: 0px;
+  border-radius: 0rem;
   border: none;
 }
 
@@ -84,7 +84,7 @@ input[type="number"]:focus,
 
 .input-group-append span {
   background-color: transparent ;
-  border-radius: 0px;
+  border-radius: 0rem;
 }
 
 .input-group-text i {
