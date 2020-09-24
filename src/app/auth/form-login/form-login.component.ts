@@ -4,14 +4,14 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 import { DataService } from 'src/app/shared/data.service';
 import { AuthService } from '../auth.service';
-import { LocalStoreService } from 'src/app/core/services/local-store.service';
+import { LocalStorageService } from 'src/app/core/services/local-storage.service';
 
 @Component({
   selector: 'app-form-login',
   templateUrl: './form-login.component.html',
   styleUrls: ['./form-login.component.scss']
 })
-export class FormAuthComponent implements OnInit {
+export class FormLoginComponent implements OnInit {
 
   formLogin: FormGroup;
 
@@ -23,7 +23,7 @@ export class FormAuthComponent implements OnInit {
   constructor(
     private authService: AuthService,
     private dataService: DataService,
-    private storageService: LocalStoreService,
+    private storageService: LocalStorageService,
     private route: Router
   ) {
     this.formLogin = new FormGroup({

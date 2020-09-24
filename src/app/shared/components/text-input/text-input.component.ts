@@ -27,7 +27,7 @@ export class TextInputComponent extends Validations implements OnInit {
   @Input() name: string;
   @Input() type: string;
   @Input() placeholder: string;
-  @Input() control: FormControl;
+  @Input() control: FormControl = new FormControl();
   @Input() append: boolean;
   @Input() trim = false;
 

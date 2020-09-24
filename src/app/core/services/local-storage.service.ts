@@ -4,7 +4,7 @@ import { Usuario } from '../models/usuario.model';
 @Injectable({
   providedIn: 'root'
 })
-export class LocalStoreService {
+export class LocalStorageService {
 
   constructor() { }
 

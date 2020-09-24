@@ -1,14 +1,14 @@
 import { NgModule } from '@angular/core';
 import { ErrorHandlerService } from './error-handler.service';
 import { ApiClient } from '../clients/api.client';
-import { LocalStoreService } from './local-store.service';
+import { LocalStorageService } from './local-storage.service';
 
 @NgModule({
   providers: [
     // App
     ApiClient,
     ErrorHandlerService,
-    LocalStoreService
+    LocalStorageService
   ]
 })
 export class ServiceModule { }
