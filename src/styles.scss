@@ -1,14 +1,15 @@
-@import '../node_modules/bootstrap/scss/bootstrap.scss';
-@import "./assets/style/_variables";
+@import "./assets/style/variables";
 @import "./assets/style/_bootstrap-overrides";
+@import "../node_modules/bootstrap/scss/bootstrap.scss";
+@import "../node_modules/bootstrap/scss/mixins/_breakpoints.scss";
 
 /* Setting Margin and Padding */
 
 html,
 body,
 p {
-  margin: 0px;
-  padding: 0px;
+  margin: 0rem;
+  padding: 0rem;
 }
 
 * {
@@ -23,25 +24,25 @@ p {
 
 /* width */
 ::-webkit-scrollbar {
-  width: 3px;
+  width: 0.1875rem;
 }
 
 /* Track */
 ::-webkit-scrollbar-track {
   background: #f1f1f1;
-  border-radius: 100px;
+  border-radius: 6.25rem;
 }
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
   background: #aaaaaa;
-  border-radius: 100px;
+  border-radius: 6.25rem;
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
   background: #686868;
-  border-radius: 100px;
+  border-radius: 6.25rem;
 }
 
 * {

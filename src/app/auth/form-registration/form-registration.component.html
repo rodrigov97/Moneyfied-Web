@@ -1,0 +1,66 @@
+<section class="d-flex align-items-center justify-content-center">
+  <app-load-spinner *ngIf="isLoading"></app-load-spinner>
+  <div class="form-container" *ngIf="!isLoading">
+    <div class="title d-flex align-items-center justify-content-center">
+      CADASTRO
+    </div>
+    <form [formGroup]="formRegister" (submit)="register()">
+
+      <app-text-input
+        [append]="true"
+        [control]="name"
+        [trim]="true"
+        fieldId="name"
+        label="Nome"
+        name="name"
+        placeholder="Nome"
+        type="text"
+      >
+        <span class="icon-container input-group-text">
+          <i class="fas fa-user"></i>
+        </span>
+      </app-text-input>
+
+      <app-text-input
+        [append]="true"
+        [control]="email"
+        [trim]="true"
+        fieldId="email"
+        label="Email"
+        name="email"
+        placeholder="Email"
+        type="text"
+      >
+        <span class="icon-container input-group-text">
+          <i class="fas fa-envelope"></i>
+        </span>
+      </app-text-input>
+
+      <app-text-input
+        [append]="true"
+        [control]="password"
+        [trim]="true"
+        class="d-block mb-5"
+        fieldId="password"
+        label="Senha"
+        name="senha"
+        placeholder="Senha"
+        [type]="passwordInput"
+      >
+        <span (click)="showPasswordEvent()" class="icon-container click input-group-text">
+          <i *ngIf="!isPasswordHidden" class="fas fa-eye"></i>
+          <i *ngIf="isPasswordHidden" class="fas fa-eye-slash"></i>
+        </span>
+      </app-text-input>
+
+      <div class="submit col-12 d-flex justify-content-center">
+        <button class="btn btn-primary" type="submit">
+          Cadastrar
+        </button>
+      </div>
+      <div class="options">
+        <li><a (click)="backToLogin()">Voltar para o login</a></li>
+      </div>
+    </form>
+  </div>
+</section>

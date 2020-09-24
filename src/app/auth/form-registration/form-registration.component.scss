@@ -1,0 +1,93 @@
+@import "../../../assets/style/_variables.scss";
+
+section {
+  height: 100%;
+  width: 100%;
+}
+
+.title {
+  height: 4.375rem;
+  font-size: 1.875rem;
+}
+
+.form-container {
+  width: 85%;
+  height: 25rem;
+}
+
+.form-row {
+  margin-top: 0.625rem;
+}
+
+.submit {
+  margin-top: 1.5625rem;
+}
+
+.submit button {
+  width: 7.5rem;
+}
+
+.reset-password button {
+  margin-top: 1.5625rem;
+}
+
+.options {
+  margin-top: 0.9375rem;
+}
+
+.options li {
+  list-style: none;
+  text-align: center;
+  margin-top: 0.3125rem;
+}
+
+.options li a {
+  text-decoration: none;
+  cursor: pointer;
+  color: $indigo-dark;
+}
+
+.options li a:hover {
+  text-decoration-line: underline;
+}
+
+.svg-icon {
+  width: 1.25rem;
+  height: 1.25rem;
+  margin-left: 0.625rem;
+  margin-bottom: 0.1875rem;
+}
+
+.svg-icon path,
+.svg-icon polygon,
+.svg-icon rect {
+  fill: $white;
+}
+
+.svg-icon circle {
+  stroke:$white;
+  stroke-width: 1;
+}
+
+.was-validated .form-control:invalid,
+.form-control.is-invalid {
+  border: 0.0625rem solid $light-grey !important;
+}
+
+.was-validated .form-control:valid,
+.form-control.is-valid {
+  border: 0.0625rem solid $light-grey !important;
+}
+
+input {
+  border-right: none;
+}
+
+.input-group-prepend {
+  margin-left: -0.125rem;
+}
+
+.input-group-prepend .icon-container {
+  background-color: $white !important;
+  cursor: pointer;
+}
