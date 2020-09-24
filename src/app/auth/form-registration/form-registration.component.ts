@@ -32,7 +32,7 @@ export class FormRegistrationComponent implements OnInit {
         Validators.required, CustomValidators.email
       ]),
       Senha: new FormControl('', [
-        Validators.required
+        Validators.required, Validators.minLength(5)
       ])
     });
   }
