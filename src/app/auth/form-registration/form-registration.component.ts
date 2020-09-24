@@ -26,10 +26,10 @@ export class FormRegistrationComponent implements OnInit {
   ) {
     this.formRegister = new FormGroup({
       Nome: new FormControl('', [
-        Validators.required, CustomValidators.email
+        Validators.required
       ]),
       Email: new FormControl('', [
-        Validators.required
+        Validators.required, CustomValidators.email
       ]),
       Senha: new FormControl('', [
         Validators.required
