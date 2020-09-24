@@ -5,6 +5,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { DataService } from 'src/app/shared/data.service';
 import { AuthService } from '../auth.service';
 import { LocalStoreService } from 'src/app/core/services/local-store.service';
+import { CustomValidators } from 'src/app/core/services/custom-validators';
 
 @Component({
   selector: 'app-form-login',
@@ -26,9 +27,10 @@ export class FormAuthComponent implements OnInit {
     private storageService: LocalStoreService,
     private route: Router
   ) {
+
     this.formLogin = new FormGroup({
       Email: new FormControl('', [
-        Validators.required
+        Validators.required, CustomValidators.email
       ]),
       Senha: new FormControl('', [
         Validators.required

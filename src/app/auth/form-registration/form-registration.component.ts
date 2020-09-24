@@ -3,6 +3,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { AuthService } from '../auth.service';
 import { Router } from '@angular/router';
 import { DataService } from 'src/app/shared/data.service';
+import { CustomValidators } from 'src/app/core/services/custom-validators';
 
 @Component({
   selector: 'app-form-registration',
@@ -28,7 +29,7 @@ export class FormRegistrationComponent implements OnInit {
         Validators.required
       ]),
       Email: new FormControl('', [
-        Validators.required
+        Validators.required, CustomValidators.email
       ]),
       Senha: new FormControl('', [
         Validators.required
