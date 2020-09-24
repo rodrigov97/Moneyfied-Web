@@ -1,0 +1,14 @@
+section {
+  height: calc(100vh - 3.125rem);
+  width: 100vw;
+  overflow: auto;
+}
+
+.display {
+  box-sizing: border-box !important;
+  padding: 0.625rem;
+  height: 100%;
+  width: 100%;
+  background-color: whitesmoke;
+  z-index: -1;
+}

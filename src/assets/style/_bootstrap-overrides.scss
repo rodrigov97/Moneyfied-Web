@@ -1,5 +1,5 @@
-@import './bootstrap-utils';
-@import '~bootstrap/scss/bootstrap';
+@import "./bootstrap-utils";
+@import "~bootstrap/scss/bootstrap";
 
 /* Bootstrap */
 
@@ -34,6 +34,7 @@ input[type="number"]:focus,
   border: 0.0625rem solid $indigo-light;
 }
 
+.btn,
 .btn:focus,
 .btn:active {
   outline: none !important;
@@ -46,7 +47,9 @@ input[type="number"]:focus,
   background-color: $indigo;
 }
 
-.btn.btn-primary:active {
+.btn.btn-primary:active,
+.btn.btn-primary:focus,
+.btn.btn-primary:hover {
   background-color: $indigo-light !important;
 }
 
@@ -56,7 +59,9 @@ input[type="number"]:focus,
   background-color: $lignt-blue;
 }
 
-.btn.btn-secondary:active {
+.btn.btn-secondary:active,
+.btn.btn-secondary:focus,
+.btn.btn-secondary:hover {
   background-color: $lignt-blue-light !important;
 }
 
@@ -83,10 +88,10 @@ input[type="number"]:focus,
 /* Custom Input */
 
 .input-group-append span {
-  background-color: transparent ;
+  background-color: transparent;
   border-radius: 0rem;
 }
 
 .input-group-text i {
-  color: inherit ;
+  color: inherit;
 }
