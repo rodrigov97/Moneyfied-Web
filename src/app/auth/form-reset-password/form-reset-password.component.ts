@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators, AbstractControl } from '@angular/forms';
 import { AuthService } from '../auth.service';
 import { Router } from '@angular/router';
+import { CustomValidators } from 'src/app/core/services/custom-validators';
 
 @Component({
   selector: 'app-form-reset-password',
@@ -24,7 +25,7 @@ export class FormResetPasswordComponent implements OnInit {
   ) {
     this.formResetPassword = new FormGroup({
       Email: new FormControl('', [
-        Validators.required
+        Validators.required, CustomValidators.email
       ])
     });
   }

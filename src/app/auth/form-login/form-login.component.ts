@@ -5,6 +5,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { DataService } from 'src/app/shared/data.service';
 import { AuthService } from '../auth.service';
 import { LocalStorageService } from 'src/app/core/services/local-storage.service';
+import { CustomValidators } from 'src/app/core/services/custom-validators';
 
 @Component({
   selector: 'app-form-login',
@@ -28,7 +29,7 @@ export class FormLoginComponent implements OnInit {
   ) {
     this.formLogin = new FormGroup({
       Email: new FormControl('', [
-        Validators.required
+        Validators.required, CustomValidators.email
       ]),
       Senha: new FormControl('', [
         Validators.required
