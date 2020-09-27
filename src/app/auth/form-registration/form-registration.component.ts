@@ -75,6 +75,7 @@ export class FormRegistrationComponent implements OnInit {
 
       this.authService.register(value).subscribe(
         (response) => {
+
           if (response.success) {
             this.isLoading = false;
 
@@ -88,6 +89,8 @@ export class FormRegistrationComponent implements OnInit {
             this.route.navigate(['login']);
           }
           else {
+            this.isLoading = false;
+
             this.dataService.openWarningDialogModal({
               command: 'open',
               title: 'Atenção',
