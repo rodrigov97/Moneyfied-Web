@@ -34,11 +34,15 @@ input[type="number"]:focus,
   border: 0.0625rem solid $indigo-light;
 }
 
+button,
+button:focus,
+button:active,
 .btn,
 .btn:focus,
 .btn:active {
   outline: none !important;
   box-shadow: none !important;
+  border: none;
 }
 
 .btn.btn-primary {
@@ -94,4 +98,9 @@ input[type="number"]:focus,
 
 .input-group-text i {
   color: inherit;
+}
+
+.form-control:disabled,
+.form-control[readonly] {
+  background-color: $white !important;
 }

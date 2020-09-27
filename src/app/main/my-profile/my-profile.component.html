@@ -1,0 +1,54 @@
+<section (window:resize)="onResize()">
+  <div class="profile-header d-flex justify-content-center align-items-center">
+    <div>
+      <div class="profile-picture">
+
+      </div>
+      <li *ngIf="isMobile" class="mt-3" style="text-align: center;">
+        <a>Trocar foto de perfil</a>
+      </li>
+    </div>
+    <div class="d-none d-md-block profile-header-data">
+      <li>
+        <h1>Rodrigo Ventura</h1>
+      </li>
+      <li>
+        <a>Trocar foto de perfil</a>
+      </li>
+    </div>
+  </div>
+  <hr>
+  <div class="profile-info">
+    <h3 class="mb-4">{{formTitle}}</h3>
+    <form>
+      <div class="form-row">
+        <div class="col-6">
+
+          <app-text-input
+            [control]="name"
+            [trim]="true"
+            fieldId="Nome"
+            label="Nome"
+            name="nome"
+            placeholder="Nome"
+            type="text"
+          ></app-text-input>
+
+        </div>
+        <div class="col-6">
+
+          <app-text-input
+            [control]="email"
+            [trim]="true"
+            fieldId="email"
+            label="Email"
+            name="email"
+            placeholder="Email"
+            type="text"
+          ></app-text-input>
+
+        </div>
+      </div>
+    </form>
+  </div>
+</section>

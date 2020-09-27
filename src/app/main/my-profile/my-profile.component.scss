@@ -1,0 +1,49 @@
+@import "../../../assets/style/variables";
+
+section {
+  height: 100%;
+  width: 100%;
+  overflow: auto;
+  background-color: $white;
+  padding: 0.625rem;
+}
+
+hr {
+  margin: 0.625rem !important;
+}
+
+.profile-header {
+  padding: 0.625rem;
+}
+
+.profile-picture {
+  height: 9.375rem;
+  width: 9.375rem;
+  background-color: $blue-grey-light;
+  border-radius: 100px;
+}
+
+.profile-header-data {
+  margin-left: 0.9375rem;
+}
+
+.profile-header-data h1 {
+  text-align: left;
+}
+
+li {
+  list-style: none;
+}
+
+li a {
+  text-decoration: none;
+  cursor: pointer;
+  color: $indigo-dark;
+}
+
+li a:hover {
+  text-decoration-line: underline;
+}
+
+.profile-info {
+}
