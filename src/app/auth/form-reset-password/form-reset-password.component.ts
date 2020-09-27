@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, Validators, AbstractControl } from '@angular/forms';
 import { AuthService } from '../auth.service';
-import { Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
 import { CustomValidators } from 'src/app/core/services/custom-validators';
+import { DataService } from 'src/app/shared/data.service';
+import { FormGroup, FormControl, Validators, AbstractControl } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-form-reset-password',
@@ -21,6 +22,7 @@ export class FormResetPasswordComponent implements OnInit {
 
   constructor(
     private authService: AuthService,
+    private dataService: DataService,
     private route: Router
   ) {
     this.formResetPassword = new FormGroup({
@@ -60,11 +62,17 @@ export class FormResetPasswordComponent implements OnInit {
           this.isLoading = false;
           this.mailSent = true;
           this.formResetPassword.reset();
-          if(response.success) {
+          if (response.success) {
             this.emailSuccess = response.success;
           }
           else {
             this.emailSuccess = response.success;
+
+            this.dataService.openWarningDialogModal({
+              command: 'open',
+              title: 'Atenção',
+              content: response.message
+            });
           }
         });
     }
