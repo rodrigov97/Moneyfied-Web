@@ -4,7 +4,7 @@ import { Usuario } from '../models/usuario.model';
 @Injectable({
   providedIn: 'root'
 })
-export class LocalStoreService {
+export class LocalStorageService {
 
   constructor() { }
 
@@ -24,5 +24,10 @@ export class LocalStoreService {
   get userInfo(): Usuario {
     const userInfo = JSON.parse(localStorage.getItem('usuario'));
     return new Usuario(userInfo);
+  }
+
+  get userId(): number {
+    const userInfo = JSON.parse(localStorage.getItem('usuario'));
+    return userInfo.UsuarioId;
   }
 }

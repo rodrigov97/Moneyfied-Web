@@ -1,7 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { CustomValidators } from 'src/app/core/services/custom-validators';
+import { DataService } from 'src/app/shared/data.service';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { LocalStorageService } from 'src/app/core/services/local-storage.service';
+import { ProfileService } from './profile.service';
 import { ResponsiveService } from 'src/app/core/services/responsive.service';
+import { Usuario } from 'src/app/core/models/usuario.model';
 
 @Component({
   selector: 'app-my-profile',
@@ -14,11 +18,19 @@ export class MyProfileComponent implements OnInit {
   formProfile: FormGroup;
   formDisabled: boolean = true;
 
+  isLoading: boolean = false;
+
   isMobile: boolean;
 
+  isPasswordHidden: boolean;
+  passwordInput: string = 'password';
+
   constructor(
-    private responsiveService: ResponsiveService
-    ) {
+    private responsiveService: ResponsiveService,
+    private localStorage: LocalStorageService,
+    private profileService: ProfileService,
+    private dataService: DataService,
+  ) {
     this.formProfile = new FormGroup({
       Nome: new FormControl('', [
         Validators.required
@@ -45,7 +57,29 @@ export class MyProfileComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.formProfile.disable();
+    this.formState();
+    this.onResize();
+    this.loadUserInfo();
+  }
+
+  loadUserInfo(): void {
+    this.isLoading = true;
+    const usuarioId = this.localStorage.userId
+
+    this.profileService.getUserInfo(usuarioId).subscribe(
+      response => {
+        if (response.success) {
+          const user = response.usuario;
+
+          this.formProfile.setValue({
+            Nome: user.Nome,
+            Email: user.Email,
+            Senha: user.Senha
+          });
+
+          this.isLoading = false;
+        }
+      });
   }
 
   onResize(): void {
@@ -55,14 +89,67 @@ export class MyProfileComponent implements OnInit {
 
   formState(): void {
     if (this.formDisabled) {
-      this.formProfile.enable();
-      this.formTitle = 'Editar Dados do usuário';
-    }
-    else {
+      this.passwordInput = 'password';
       this.formProfile.disable();
       this.formTitle = 'Dados do usuário';
     }
+    else {
+      this.formProfile.enable();
+      this.formTitle = 'Editar dados do usuário';
+    }
+  }
 
+  changeFormState(): void {
     this.formDisabled = !this.formDisabled;
+    this.formState();
+  }
+
+  showPasswordEvent() {
+    this.isPasswordHidden = !this.isPasswordHidden;
+
+    this.passwordInput = this.isPasswordHidden ? 'text' : 'password';
+  }
+
+  cancelEditing(): void {
+    this.formDisabled = !this.formDisabled;
+    this.formProfile.reset();
+    this.loadUserInfo();
+  }
+
+  updateUserInfo(): void {
+    const isValid = this.formProfile.valid;
+
+    if (isValid) {
+      const user = new Usuario(this.formProfile.value);
+      user.UsuarioId = this.localStorage.userId;
+
+      this.isLoading = true;
+
+      this.profileService.updateUserInfo(user).subscribe(
+        response => {
+
+          if (response.success) {
+            this.isLoading = false;
+
+            this.dataService.openSuccessDialogModal({
+              command: 'open',
+              title: 'Sucesso',
+              content: response.message
+            });
+
+            this.formDisabled = true;
+            this.formState();
+          }
+          else {
+            this.isLoading = false;
+
+            this.dataService.openWarningDialogModal({
+              command: 'open',
+              title: 'Atenção',
+              content: response.message
+            });
+          }
+        });
+    }
   }
 }

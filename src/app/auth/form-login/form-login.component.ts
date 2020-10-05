@@ -4,7 +4,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 import { DataService } from 'src/app/shared/data.service';
 import { AuthService } from '../auth.service';
-import { LocalStoreService } from 'src/app/core/services/local-store.service';
+import { LocalStorageService } from 'src/app/core/services/local-storage.service';
 import { CustomValidators } from 'src/app/core/services/custom-validators';
 
 @Component({
@@ -24,7 +24,7 @@ export class FormAuthComponent implements OnInit {
   constructor(
     private authService: AuthService,
     private dataService: DataService,
-    private storageService: LocalStoreService,
+    private storageService: LocalStorageService,
     private route: Router
   ) {
 
@@ -77,8 +77,7 @@ export class FormAuthComponent implements OnInit {
             this.storageService.addToken(response.token);
             this.storageService.addUser(response.usuario);
 
-            alert(JSON.stringify(response.usuario));
-            //this.route.navigate(['home']);
+            this.route.navigate(['app']);
           }
           else {
             this.dataService.openWarningDialogModal({

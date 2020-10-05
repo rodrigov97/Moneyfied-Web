@@ -6,8 +6,10 @@ import { MainRoutingModule } from './main.routing.module';
 
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { MainComponent } from './main.component';
-import { SharedModule } from '../shared/shared.module';
 import { MyProfileComponent } from './my-profile/my-profile.component';
+import { ProfileService } from './my-profile/profile.service';
+import { ReactiveFormsModule } from '@angular/forms';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   imports: [
@@ -15,12 +17,18 @@ import { MyProfileComponent } from './my-profile/my-profile.component';
     CommonModule,
     // App
     MainRoutingModule,
+    ReactiveFormsModule,
     SharedModule
   ],
   declarations: [
+    // App
     MainComponent,
     DashboardComponent,
     MyProfileComponent
+  ],
+  providers: [
+    // App
+    ProfileService
   ],
   bootstrap: [AppComponent]
 })

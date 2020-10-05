@@ -69,6 +69,13 @@ button:active,
   background-color: $lignt-blue-light !important;
 }
 
+.btn-success,
+.btn-danger {
+  border-radius: 0rem !important;
+  width: 5.625rem;
+  font-weight: lighter !important;
+}
+
 .was-validated .form-control:invalid,
 .form-control.is-invalid {
   box-shadow: none !important;

@@ -34,6 +34,10 @@ export class ApiClient {
     return this.http.post(this.apiUrl(path), body, options)
   }
 
+  put(path: string, body?: any, options?: HttpOptions): Observable<any> {
+    return this.http.put(this.apiUrl(path), body, options)
+  }
+
   delete(path: string, options?: HttpOptions): Observable<any> {
     return this.http.delete(this.apiUrl(path), options)
   }

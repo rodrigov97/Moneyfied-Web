@@ -1,4 +1,5 @@
 @import "../../../assets/style/variables";
+@import "../../../../node_modules/bootstrap/scss/mixins/_breakpoints.scss";
 
 section {
   height: 100%;
@@ -14,17 +15,6 @@ hr {
 
 .profile-header {
   padding: 0.625rem;
-}
-
-.profile-picture {
-  height: 9.375rem;
-  width: 9.375rem;
-  background-color: $blue-grey-light;
-  border-radius: 100px;
-}
-
-.profile-header-data {
-  margin-left: 0.9375rem;
 }
 
 .profile-header-data h1 {
@@ -45,5 +35,25 @@ li a:hover {
   text-decoration-line: underline;
 }
 
-.profile-info {
+form {
+  margin-bottom: 0.625rem;
+}
+
+.btn-editar span {
+  color: $white;
+}
+
+@include media-breakpoint-up(lg) {
+  .btn-editar i {
+    margin-right: 0.3125rem;
+    color: $white;
+  }
+}
+
+
+@include media-breakpoint-down(md) {
+  .btn-editar i {
+    margin-right: 0rem;
+    color: $white;
+  }
 }

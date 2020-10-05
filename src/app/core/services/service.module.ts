@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { ErrorHandlerService } from './error-handler.service';
 import { ApiClient } from '../clients/api.client';
-import { LocalStoreService } from './local-store.service';
+import { LocalStorageService } from './local-storage.service';
 import { ResponsiveService } from './responsive.service';
 
 @NgModule({
@@ -9,7 +9,7 @@ import { ResponsiveService } from './responsive.service';
     // App
     ApiClient,
     ErrorHandlerService,
-    LocalStoreService,
+    LocalStorageService,
     ResponsiveService
   ]
 })
