@@ -144,6 +144,7 @@ export class MyProfileComponent implements OnInit {
               content: response.message
             });
 
+            this.userName = user.Nome;
             this.formDisabled = true;
             this.formState();
           }
