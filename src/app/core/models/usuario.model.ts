@@ -3,7 +3,7 @@ interface UsuarioAttributes {
   Nome: string;
   Email: string;
   Senha: string;
-  Plano: number;
+  ImagemPerfil: string;
 }
 
 export class Usuario implements UsuarioAttributes {
@@ -11,13 +11,13 @@ export class Usuario implements UsuarioAttributes {
   Nome: string;
   Email: string;
   Senha: string;
-  Plano: number;
+  ImagemPerfil: string;
 
   constructor(attr: UsuarioAttributes) {
     this.UsuarioId = attr.UsuarioId;
     this.Nome = attr.Nome;
     this.Email = attr.Email;
     this.Senha = attr.Senha;
-    this.Plano = attr.Plano;
+    this.ImagemPerfil = attr.ImagemPerfil;
   }
 }

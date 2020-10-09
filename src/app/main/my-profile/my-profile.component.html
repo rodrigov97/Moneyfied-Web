@@ -1,81 +1,99 @@
 <section (window:resize)="onResize()">
-  <div class="profile-header d-flex align-items-center">
-    <div class="profile-header-data">
-      <li>
-        <h1>Rodrigo Ventura</h1>
-      </li>
-    </div>
-  </div>
-  <hr>
-  <div class="profile-info">
-    <app-load-spinner *ngIf="isLoading"></app-load-spinner>
-    <div *ngIf="!isLoading">
-      <div class="d-flex">
-        <h3 class="form-title">{{formTitle}}</h3>
-        <span class="fill"></span>
-        <button *ngIf="formDisabled" class="btn btn-primary btn-editar" (click)="changeFormState()">
-          <i class="fas fa-edit"></i>
-          <span *ngIf="!isMobile"> Editar Perfil</span>
-        </button>
+  <app-load-spinner *ngIf="isLoading"></app-load-spinner>
+  <div *ngIf="!isLoading">
+    <div class="profile-header d-flex align-items-center justify-content-center">
+      <div class="profile-header-data">
+        <div class="profile-img d-flex align-items-center justify-content-center">
+          <img *ngIf="userProfilePicture"
+            src="../../../assets/media/images/profile-pictures/{{userProfilePicture}}" alt="">
+        </div>
       </div>
-      <form [formGroup]="formProfile" (submit)="updateUserInfo()">
-        <div class="form-row">
-          <div class="col-6" [ngClass]="{'col-12' : isMobile}">
-
-            <app-text-input
-              [control]="name"
-              [trim]="true"
-              fieldId="Nome"
-              label="Nome"
-              name="nome"
-              placeholder="Nome"
-              type="text"
-            ></app-text-input>
-
-          </div>
-          <div class="col-6" [ngClass]="{'col-12' : isMobile}">
-
-            <app-text-input
-              [control]="email"
-              [trim]="true"
-              fieldId="email"
-              label="Email"
-              name="email"
-              placeholder="Email"
-              type="text"
-            ></app-text-input>
-
-          </div>
+      <div class="user-name" *ngIf="!isMobile">
+        <li>
+          <h1>{{userName}}</h1>
+        </li>
+        <li>
+          <a (click)="changeProfileImage()">
+            Trocar foto de perfil
+          </a>
+        </li>
+      </div>
+    </div>
+    <li class="mobile-change-image" *ngIf="isMobile">
+      <a (click)="changeProfileImage()">Trocar foto de perfil</a>
+    </li>
+    <input id="profile-pic-input" type="file" style="display:none" accept="image/x-png,image/jpeg" (change)="changeImageHandler($event)">
+    <hr>
+    <div class="profile-info">
+      <div>
+        <div class="d-flex">
+          <h3 class="form-title">{{formTitle}}</h3>
+          <span class="fill"></span>
+          <button *ngIf="formDisabled" class="btn btn-primary btn-editar" (click)="changeFormState()">
+            <i class="fas fa-edit"></i>
+            <span *ngIf="!isMobile"> Editar Perfil</span>
+          </button>
         </div>
-        <div class="form-row">
-          <div class="col-12">
+        <form [formGroup]="formProfile" (submit)="updateUserInfo()">
+          <div class="form-row">
+            <div class="col-6" [ngClass]="{'col-12' : isMobile}">
 
-            <app-text-input
-              [append]="!formDisabled"
-              [control]="password"
-              [trim]="true"
-              [type]="passwordInput"
-              fieldId="password"
-              label="Senha"
-              name="password"
-              placeholder="Senha"
-            >
-              <span (click)="showPasswordEvent()" class="icon-container click input-group-text">
-                <i *ngIf="!isPasswordHidden" class="fas fa-eye"></i>
-                <i *ngIf="isPasswordHidden" class="fas fa-eye-slash"></i>
-              </span>
-            </app-text-input>
+              <app-text-input
+                [control]="name"
+                [trim]="true"
+                fieldId="Nome"
+                label="Nome"
+                name="nome"
+                placeholder="Nome"
+                type="text">
+              </app-text-input>
 
+            </div>
+            <div class="col-6" [ngClass]="{'col-12' : isMobile}">
+
+              <app-text-input
+                [control]="email"
+                [trim]="true"
+                fieldId="email"
+                label="Email"
+                name="email"
+                placeholder="Email"
+                type="text">
+              </app-text-input>
+
+            </div>
           </div>
-        </div>
-        <div class="form-row">
-          <div class="col-12 d-flex">
-            <button *ngIf="!formDisabled" class="btn btn-danger" (click)="cancelEditing()">Cancelar</button>
-            <span class="fill"></span>
-            <button *ngIf="!formDisabled" class="btn btn-success" type="submit">Salvar</button>
+
+          <div class="form-row">
+            <div class="col-12">
+
+              <app-text-input
+                [append]="!formDisabled"
+                [control]="password"
+                [trim]="true"
+                [type]="passwordInput"
+                fieldId="password"
+                label="Senha"
+                name="password"
+                placeholder="Senha">
+
+                <span (click)="showPasswordEvent()" class="icon-container click input-group-text">
+                  <i *ngIf="!isPasswordHidden" class="fas fa-eye"></i>
+                  <i *ngIf="isPasswordHidden" class="fas fa-eye-slash"></i>
+                </span>
+              </app-text-input>
+
+            </div>
           </div>
-        </div>
-      </form>
+          <div class="form-row">
+            <div class="col-12 d-flex">
+              <button *ngIf="!formDisabled" class="btn btn-danger" (click)="cancelEditing()">Cancelar</button>
+              <span class="fill"></span>
+              <button *ngIf="!formDisabled" class="btn btn-success" type="submit">Salvar</button>
+            </div>
+          </div>
+        </form>
+      </div>
     </div>
   </div>
 </section>

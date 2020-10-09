@@ -6,6 +6,7 @@ import { LocalStorageService } from 'src/app/core/services/local-storage.service
 import { ProfileService } from './profile.service';
 import { ResponsiveService } from 'src/app/core/services/responsive.service';
 import { Usuario } from 'src/app/core/models/usuario.model';
+import { FilesHandlerService } from 'src/app/core/services/files-handler.service';
 
 @Component({
   selector: 'app-my-profile',
@@ -25,11 +26,15 @@ export class MyProfileComponent implements OnInit {
   isPasswordHidden: boolean;
   passwordInput: string = 'password';
 
+  userName: string = '';
+  userProfilePicture: string = '';
+
   constructor(
     private responsiveService: ResponsiveService,
     private localStorage: LocalStorageService,
     private profileService: ProfileService,
     private dataService: DataService,
+    private filesHandler: FilesHandlerService
   ) {
     this.formProfile = new FormGroup({
       Nome: new FormControl('', [
@@ -78,6 +83,8 @@ export class MyProfileComponent implements OnInit {
           });
 
           this.isLoading = false;
+          this.userName = user.Nome;
+          this.userProfilePicture = user.ImagemPerfil;
         }
       });
   }
@@ -151,5 +158,40 @@ export class MyProfileComponent implements OnInit {
           }
         });
     }
+  }
+
+  changeProfileImage(): void {
+    document.getElementById('profile-pic-input').click();
+  }
+
+  changeImageHandler(event: any): void {
+    var file = event.target.files[0],
+      userId = this.localStorage.userId;
+
+    file = this.filesHandler.generateUserProfileImage(file);
+
+    this.isLoading = true;
+
+    this.profileService.uploadProfilePicture(file, userId).subscribe(
+      response => {
+        if (response.success) {
+          this.loadUserInfo();
+
+          this.dataService.openSuccessDialogModal({
+            command: 'open',
+            title: 'Sucesso',
+            content: response.message
+          });
+        }
+        else {
+          this.isLoading = false;
+
+          this.dataService.openErrorDialogModal({
+            command: 'open',
+            title: 'Erro',
+            content: response.message
+          });
+        }
+      });
   }
 }

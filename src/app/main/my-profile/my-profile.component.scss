@@ -21,6 +21,33 @@ hr {
   text-align: left;
 }
 
+.profile-img {
+  height: 9.375rem;
+  width: 9.375rem;
+  border-radius: 6.25rem;
+  background-color: $blue-grey-light;
+}
+
+.profile-img img {
+  max-height: 9.375rem;
+  max-width: 9.375rem;
+  border-radius: 6.25rem;
+  background-position: center;
+  background-size: cover;
+}
+
+.profile-img h1 {
+  color: $white;
+}
+
+.user-name {
+  margin-left: 0.9375rem;
+}
+
+.mobile-change-image {
+  text-align: center;
+}
+
 li {
   list-style: none;
 }
@@ -33,6 +60,7 @@ li a {
 
 li a:hover {
   text-decoration-line: underline;
+  color: $indigo-dark;
 }
 
 form {
@@ -49,7 +77,6 @@ form {
     color: $white;
   }
 }
-
 
 @include media-breakpoint-down(md) {
   .btn-editar i {
