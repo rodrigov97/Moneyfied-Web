@@ -27,6 +27,7 @@ export class FormLoginComponent implements OnInit {
     private storageService: LocalStorageService,
     private route: Router
   ) {
+
     this.formLogin = new FormGroup({
       Email: new FormControl('', [
         Validators.required, CustomValidators.email
@@ -76,8 +77,7 @@ export class FormLoginComponent implements OnInit {
             this.storageService.addToken(response.token);
             this.storageService.addUser(response.usuario);
 
-            alert(JSON.stringify(response.usuario));
-            //this.route.navigate(['home']);
+            this.route.navigate(['app']);
           }
           else {
             this.dataService.openWarningDialogModal({

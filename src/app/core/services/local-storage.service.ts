@@ -25,4 +25,9 @@ export class LocalStorageService {
     const userInfo = JSON.parse(localStorage.getItem('usuario'));
     return new Usuario(userInfo);
   }
+
+  get userId(): number {
+    const userInfo = JSON.parse(localStorage.getItem('usuario'));
+    return userInfo.UsuarioId;
+  }
 }

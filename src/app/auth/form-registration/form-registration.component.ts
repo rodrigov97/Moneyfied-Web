@@ -85,7 +85,6 @@ export class FormRegistrationComponent implements OnInit {
               content: response.message
             });
 
-            this.isLoading = false;
             this.route.navigate(['login']);
           }
           else {
@@ -103,11 +102,7 @@ export class FormRegistrationComponent implements OnInit {
   }
 
   backToLogin(): void {
-    this.formRegister.setValue({
-      Nome: null,
-      Email: null,
-      Senha: null
-    });
+    this.formRegister.reset();
 
     this.route.navigate(['login']);
   }

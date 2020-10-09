@@ -1,0 +1,32 @@
+<section class="side-menu" *ngIf="toggleMenu" (window:resize)="onResize()">
+  <table>
+    <tr *ngIf="!isMobile">
+      <td class="color-indicator">
+        <div class="color-indicator"></div>
+      </td>
+      <td (click)="hideItemName()" *ngIf="hideName" class="icon align-items-center"><i class="fas fa-chevron-right"></i>
+      </td>
+      <td (click)="hideItemName()" *ngIf="!hideName" class="icon align-items-center"><i class="fas fa-chevron-left"></i>
+      </td>
+      <td [hidden]="hideName" (click)="hideItemName()" class="name">Recolher</td>
+    </tr>
+    <tr *ngFor="let item of menuItems" (click)="selectItem(item.Name, item.Url)"
+      [style.background-color]="item.Name === selectedItem ? 'whitesmoke' : ''">
+      <td class="color-indicator" [ngStyle]="setBackgroundStyle(item.Name, item.Color)">
+        <div class="color-indicator"></div>
+      </td>
+      <td class="icon align-items-center"><i [ngStyle]="setColorStyle(item.Name, item.Color)" class="{{item.Icon}}"></i>
+      </td>
+      <td [ngStyle]="setColorStyle(item.Name, item.Color)" [hidden]="hideName" class="name align-items-center">
+        {{item.Name}}
+      </td>
+    </tr>
+  </table>
+  <tr (click)="logoutUser()" *ngIf="!isMobile" class="logout">
+    <td class="color-indicator">
+      <div class="color-indicator"></div>
+    </td>
+    <td class="icon align-items-center"><i class="{{logout.Icon}}"></i></td>
+    <td [hidden]="hideName" class="name align-items-center">{{logout.Name}}</td>
+  </tr>
+</section>

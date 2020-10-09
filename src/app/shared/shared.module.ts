@@ -8,6 +8,8 @@ import { WarningComponent } from './dialogs/warning/warning.component';
 import { LoadSpinnerComponent } from './ui/load-spinner/load-spinner.component';
 import { TextInputComponent } from './components/text-input/text-input.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { MenuComponent } from './menu/menu.component';
+import { NavbarComponent } from './navbar/navbar.component';
 
 
 
@@ -23,7 +25,9 @@ import { ReactiveFormsModule } from '@angular/forms';
     SuccessComponent,
     WarningComponent,
     LoadSpinnerComponent,
-    TextInputComponent
+    TextInputComponent,
+    MenuComponent,
+    NavbarComponent
   ],
   exports: [
     // App
@@ -31,7 +35,9 @@ import { ReactiveFormsModule } from '@angular/forms';
     SuccessComponent,
     WarningComponent,
     LoadSpinnerComponent,
-    TextInputComponent
+    TextInputComponent,
+    MenuComponent,
+    NavbarComponent
   ],
   bootstrap: [AppComponent]
 })

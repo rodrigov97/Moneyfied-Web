@@ -1,4 +1,4 @@
-<div [class.lableless]="!label" class="form-group">
+<div [class.lableless]="!label" class="form-group" [class]="class">
 
   <label [class.is-invalid]="isInvalid()" [for]="fieldId" *ngIf="!!label">
     {{ label }}
@@ -16,6 +16,7 @@
         [placeholder]="placeholder"
         [type]="type"
         class="form-control"
+        [readonly]="readonly"
         (blur)="onBlur()"
       />
 
@@ -27,6 +28,7 @@
         [placeholder]="placeholder"
         [type]="type"
         class="form-control"
+        [readonly]="readonly"
         (blur)="onBlur()"
       />
 

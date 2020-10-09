@@ -1,0 +1,48 @@
+@import "../../../assets/style/_variables.scss";
+
+.top-bar {
+  height: 3.125rem;
+  width: 100%;
+  //box-shadow: 70px 0px 7px 1px rgba(168, 168, 168, 0.75);
+  background-color: $white;
+  z-index: 1 !important;
+  user-select: none;
+}
+
+i {
+  font-size: 1.25rem;
+}
+
+button {
+  height: 100%;
+  background-color: $white;
+  border: none;
+}
+
+.menu-toggler {
+  width: 3.75rem;
+  margin-left: 0.625rem;
+}
+
+.logout {
+  width: 3.75rem;
+}
+
+.wallet {
+  margin-bottom: 0 !important;
+  font-size: 1.375rem;
+}
+
+.wallet i {
+  margin-right: 0.625rem;
+  font-size: 1.4375rem;
+}
+
+.positive {
+  color: success;
+}
+
+.negative {
+  color: danger;
+}
+

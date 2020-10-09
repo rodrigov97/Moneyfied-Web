@@ -1,0 +1,54 @@
+@import "../../../assets/style/_variables.scss";
+
+.side-menu {
+  height: calc(100vh - 3.125rem);
+  background-color: #ffffff;
+  z-index: 1 !important;
+  overflow: auto;
+}
+table,
+tr,
+td {
+  margin: 0;
+  padding: 0;
+}
+
+i {
+  font-size: 1.25rem;
+}
+
+tr {
+  list-style: none;
+  text-align: center;
+  cursor: pointer;
+  user-select: none;
+  line-height: 40px;
+}
+
+tr:hover {
+  background-color: $whitesmoke;
+}
+
+.color-indicator {
+  background-color: $whitesmoke;
+  width: 10px !important;
+}
+
+tr:hover .color-indicator {
+  background-color: $indigo !important;
+}
+
+.icon i {
+  width: 3.75rem;
+}
+
+.name {
+  white-space: nowrap;
+  flex: 1 1 auto;
+  padding-right: 0.625rem;
+  text-align: left;
+}
+
+.blank {
+  height: 2.5rem;
+}

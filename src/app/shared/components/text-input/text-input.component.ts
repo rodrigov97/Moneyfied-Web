@@ -28,8 +28,10 @@ export class TextInputComponent extends Validations implements OnInit {
   @Input() type: string;
   @Input() placeholder: string;
   @Input() control: FormControl = new FormControl();
+  @Input() readonly: boolean = false;
   @Input() append: boolean;
-  @Input() trim = false;
+  @Input() trim: boolean = false;
+  @Input() class: string = '';
 
   @Input() hasCounter: boolean;
   @Input() max: number;

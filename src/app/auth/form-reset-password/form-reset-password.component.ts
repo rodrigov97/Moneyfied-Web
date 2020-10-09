@@ -4,6 +4,7 @@ import { CustomValidators } from 'src/app/core/services/custom-validators';
 import { DataService } from 'src/app/shared/data.service';
 import { FormGroup, FormControl, Validators, AbstractControl } from '@angular/forms';
 import { Router } from '@angular/router';
+import { CustomValidators } from 'src/app/core/services/custom-validators';
 
 @Component({
   selector: 'app-form-reset-password',
