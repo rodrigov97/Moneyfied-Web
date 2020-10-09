@@ -75,6 +75,7 @@ export class FormRegistrationComponent implements OnInit {
 
       this.authService.register(value).subscribe(
         (response) => {
+
           if (response.success) {
             this.isLoading = false;
 

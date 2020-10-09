@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, Validators, AbstractControl } from '@angular/forms';
 import { AuthService } from '../auth.service';
+import { Component, OnInit } from '@angular/core';
+import { CustomValidators } from 'src/app/core/services/custom-validators';
+import { DataService } from 'src/app/shared/data.service';
+import { FormGroup, FormControl, Validators, AbstractControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CustomValidators } from 'src/app/core/services/custom-validators';
 
@@ -21,6 +23,7 @@ export class FormResetPasswordComponent implements OnInit {
 
   constructor(
     private authService: AuthService,
+    private dataService: DataService,
     private route: Router
   ) {
     this.formResetPassword = new FormGroup({
@@ -65,6 +68,12 @@ export class FormResetPasswordComponent implements OnInit {
           }
           else {
             this.emailSuccess = response.success;
+
+            this.dataService.openWarningDialogModal({
+              command: 'open',
+              title: 'Atenção',
+              content: response.message
+            });
           }
         });
     }

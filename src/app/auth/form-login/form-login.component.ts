@@ -12,7 +12,7 @@ import { CustomValidators } from 'src/app/core/services/custom-validators';
   templateUrl: './form-login.component.html',
   styleUrls: ['./form-login.component.scss']
 })
-export class FormAuthComponent implements OnInit {
+export class FormLoginComponent implements OnInit {
 
   formLogin: FormGroup;
 
