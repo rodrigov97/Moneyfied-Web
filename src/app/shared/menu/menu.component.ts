@@ -45,6 +45,7 @@ export class MenuComponent implements OnInit {
 
   hideItemName(): void {
     this.hideName = !this.hideName;
+    window.dispatchEvent(new Event('resize'));
   }
 
   selectItem(itemName: string, url: string) {

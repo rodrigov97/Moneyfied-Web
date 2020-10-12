@@ -48,7 +48,7 @@ export class IncomeComponent implements OnInit {
     }
   }
 
-  earningsStatus(value: number): {} {
+  incomeStatus(value: number): {} {
     if (value < 0) {
       return {
         'color': '#e71426'

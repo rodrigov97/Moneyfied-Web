@@ -54,28 +54,40 @@ ul .content-margin {
   width: 100%;
 }
 
-.earnings-list {
+.income-list,
+.income-filters {
   background-color: $white;
-  //box-shadow: 2px 2px 5px -2px #858585bf;
 }
 
-.earnings-chart {
-  height: 100%;
-  width: 70%;
-  margin-left: 10px;
+.income-filters {
+  padding: 10px;
+  box-sizing: border-box;
 }
 
 @include media-breakpoint-up(lg) {
-  .earnings-list {
-    height: 100%;
+  .income-filters {
+    width: 40%;
+    margin-right: 10px;
+  }
+
+  .income-list {
     width: 100%;
+  }
+
+  .data {
+    display: flex;
   }
 }
 
-
 @include media-breakpoint-down(md) {
-  .earnings-list {
+  .income-filters {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+
+  .income-list {
     height: 100%;
     width: 100%;
+    margin-bottom: 10px;
   }
 }
