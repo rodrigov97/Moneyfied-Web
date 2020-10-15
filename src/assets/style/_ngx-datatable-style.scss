@@ -3,11 +3,11 @@
 @import "~@swimlane/ngx-datatable/assets/icons.css";
 
 .datatable-body-cell {
-  border-bottom: 1px solid #f0f0f0;
+  border-bottom: 0.0625rem solid #f0f0f0;
 }
 
 .datatable-header-cell span {
-  font-size: 16px;
+  font-size: 1rem;
   font-weight: bold;
   color: #666666;
 }

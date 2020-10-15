@@ -3,6 +3,7 @@ import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/fo
 import { CustomValidators } from 'src/app/core/services/custom-validators';
 import { DateAttributes, DateService } from 'src/app/core/services/date.service';
 import { ResponsiveService } from 'src/app/core/services/responsive.service';
+import { DataService } from 'src/app/shared/data.service';
 
 @Component({
   selector: 'app-income',
@@ -27,7 +28,8 @@ export class IncomeComponent implements OnInit {
   constructor(
     private responsiveService: ResponsiveService,
     private detectChanges: ChangeDetectorRef,
-    private dateService: DateService
+    private dateService: DateService,
+    private dataService: DataService
   ) {
     const date = new Date(),
       month = date.getMonth(),
@@ -94,5 +96,14 @@ export class IncomeComponent implements OnInit {
         'color': '#13ca66'
       }
     }
+  }
+
+  addIncome(): void {
+    this.dataService.openFormRegisterModal({
+      command: 'open',
+      title: 'Atenção',
+      form: 'Receita',
+      formType: 'Cadastro'
+    });
   }
 }

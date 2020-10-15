@@ -13,6 +13,8 @@ import { WarningComponent } from './dialogs/warning/warning.component';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { SelectComponent } from './components/select/select.component';
 import { FormRegisterComponent } from './dialogs/form-register/form-register.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { DatepickerComponent } from './components/datepicker/datepicker.component';
 
 
 
@@ -21,7 +23,8 @@ import { FormRegisterComponent } from './dialogs/form-register/form-register.com
     // Angular
     CommonModule,
     ReactiveFormsModule,
-    NgxDatatableModule
+    NgxDatatableModule,
+    NgbModule
   ],
   declarations: [
     // App
@@ -33,7 +36,8 @@ import { FormRegisterComponent } from './dialogs/form-register/form-register.com
     MenuComponent,
     NavbarComponent,
     SelectComponent,
-    FormRegisterComponent
+    FormRegisterComponent,
+    DatepickerComponent
   ],
   exports: [
     // App
@@ -44,7 +48,9 @@ import { FormRegisterComponent } from './dialogs/form-register/form-register.com
     TextInputComponent,
     MenuComponent,
     NavbarComponent,
-    SelectComponent
+    SelectComponent,
+    FormRegisterComponent,
+    DatepickerComponent
   ],
   bootstrap: [AppComponent]
 })

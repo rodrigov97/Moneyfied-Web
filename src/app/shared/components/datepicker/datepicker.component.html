@@ -1,0 +1,39 @@
+<div [class.lableless]="!label" class="form-group" [class]="class">
+
+  <label [class.is-invalid]="isInvalid()" [for]="fieldId" *ngIf="!!label">
+    {{ label }}
+  </label>
+
+  <div class="input-group">
+
+    <input
+      [formControl]="control"
+      [id]="fieldId"
+      #datePicker="ngbDatepicker"
+      class="form-control"
+      name="datePicker"
+      ngbDatepicker
+      placeholder="Data"
+      readonly
+    >
+
+    <div class="input-group-append">
+      <span (click)="datePicker.toggle()" class="icon-container click input-group-text">
+        <i class="fas fa-calendar-alt"></i>
+      </span>
+    </div>
+
+    <div>
+
+      <small *ngIf="isInvalid()" class="d-inline invalid-feedback">
+        {{ forceErrorMessage || errorMessage }}
+      </small>
+
+    </div>
+  </div>
+</div>
+
+
+<!-- <div class="input-group-append">
+  <button class="btn btn-outline-secondary calendar" (click)="d2.toggle()" type="button"></button>
+</div> -->
