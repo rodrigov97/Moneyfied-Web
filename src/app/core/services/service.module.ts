@@ -3,6 +3,7 @@ import { ErrorHandlerService } from './error-handler.service';
 import { ApiClient } from '../clients/api.client';
 import { LocalStorageService } from './local-storage.service';
 import { ResponsiveService } from './responsive.service';
+import { DateService } from './date.service';
 
 @NgModule({
   providers: [
@@ -10,7 +11,8 @@ import { ResponsiveService } from './responsive.service';
     ApiClient,
     ErrorHandlerService,
     LocalStorageService,
-    ResponsiveService
+    ResponsiveService,
+    DateService
   ]
 })
 export class ServiceModule { }

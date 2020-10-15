@@ -1,4 +1,7 @@
 import { Component, OnInit, ElementRef, ViewChild, ChangeDetectorRef } from '@angular/core';
+import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
+import { CustomValidators } from 'src/app/core/services/custom-validators';
+import { DateAttributes, DateService } from 'src/app/core/services/date.service';
 import { ResponsiveService } from 'src/app/core/services/responsive.service';
 
 @Component({
@@ -12,6 +15,8 @@ export class IncomeComponent implements OnInit {
   @ViewChild('headerInfo') headerInfo: ElementRef;
   @ViewChild('dataContent') dataContent: ElementRef;
 
+  formFilters: FormGroup;
+
   mainHeight: number;
   headerHeight: number;
 
@@ -21,15 +26,45 @@ export class IncomeComponent implements OnInit {
 
   constructor(
     private responsiveService: ResponsiveService,
-    private detectChanges: ChangeDetectorRef
-  ) { }
+    private detectChanges: ChangeDetectorRef,
+    private dateService: DateService
+  ) {
+    const date = new Date(),
+      month = date.getMonth(),
+      year = date.getFullYear();
+
+    this.formFilters = new FormGroup({
+      Mes: new FormControl(this.currentMonth(month)),
+      Ano: new FormControl(year),
+    });
+  }
 
   ngOnInit(): void {
+  }
+
+  get month(): AbstractControl {
+    return this.formFilters.get('Mes');
+  }
+
+  get year(): AbstractControl {
+    return this.formFilters.get('Ano');
+  }
+
+  currentMonth(current: number): string {
+    return this.dateService.months[current].value;
   }
 
   ngAfterViewInit(): void {
     this.onResize();
     this.detectChanges.detectChanges();
+  }
+
+  get months(): DateAttributes[] {
+    return this.dateService.months;
+  }
+
+  get years(): any {
+    return this.dateService.years;
   }
 
   onResize(): void {

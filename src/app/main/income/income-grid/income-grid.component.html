@@ -1,4 +1,4 @@
-<ngx-datatable (window:resize)="onResize()"
+<ngx-datatable
   class="material"
   [columnMode]="'force'"
   [headerHeight]="50"
@@ -7,10 +7,19 @@
   [scrollbarV]="true"
   [scrollbarH]="true"
   [rows]="rows"
+  (select)="selectedRow($event)"
+  (activate)="dblClickItem($event)"
+  [selected]="selected"
+  [selectionType]="'single'"
   [columns] = "columns"
   [limit]="10">
 
-<ngx-datatable-column *ngFor="let col of columns" [resizeable]="false" [name]="col.nome" [sortable]="true"></ngx-datatable-column>
+    <ngx-datatable-column *ngFor="let col of columns"
+      [resizeable]="true"
+      [name]="col.nome"
+      [sortable]="true"
+      [canAutoResize]="true"
+    ></ngx-datatable-column>
 
   <ngx-datatable-footer>
     <ng-template

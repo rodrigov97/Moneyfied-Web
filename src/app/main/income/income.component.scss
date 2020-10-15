@@ -4,11 +4,11 @@
 section {
   height: 100%;
   width: 100%;
-  background-color: whitesmoke;
+  background-color: $whitesmoke;
 }
 
 i {
-  margin-left: 10px;
+  margin-left: 0.625rem;
 }
 
 ul {
@@ -23,34 +23,34 @@ a {
 }
 
 ul .title {
-  width: 185px;
-  padding: 5px 10px;
-  margin-bottom: -10px;
-  margin-left: 10px !important;
+  width: 11.5625rem;
+  padding: 0.3125rem 0.625rem;
+  margin-bottom: -0.625rem;
+  margin-left: 0.625rem !important;
   background-color: $green-dark;
-  color: #ffffff;
+  color: $white;
   position: relative;
   z-index: 1;
 }
 
 ul .content {
-  padding: 15px 15px;
-  background-color: #ffffff;
+  padding: 0.9375rem 0.9375rem;
+  background-color: $white;
   //box-shadow: 2px 2px 5px -2px rgba(133, 133, 133, 0.75);
 }
 
 ul .content-margin {
-  margin: 0px 10px 10px 0;
+  margin: 0rem 0.625rem 0.625rem 0;
 }
 
 .last {
-  margin: 0px 0px 10px 0px !important;
+  margin: 0rem 0rem 0.625rem 0 !important;
 }
 
 /* Lista de Gastos */
 
 .data {
-  margin-top: 10px;
+  margin-top: 0.625rem;
   width: 100%;
 }
 
@@ -60,14 +60,22 @@ ul .content-margin {
 }
 
 .income-filters {
-  padding: 10px;
+  padding: 0.625rem;
   box-sizing: border-box;
+}
+
+.income-filters button {
+  width: 100%;
+}
+
+.icon-container {
+  text-align: center;
 }
 
 @include media-breakpoint-up(lg) {
   .income-filters {
     width: 40%;
-    margin-right: 10px;
+    margin-right: 0.625rem;
   }
 
   .income-list {
@@ -82,12 +90,12 @@ ul .content-margin {
 @include media-breakpoint-down(md) {
   .income-filters {
     width: 100%;
-    margin-bottom: 10px;
+    margin-bottom: 0.625rem;
   }
 
   .income-list {
     height: 100%;
     width: 100%;
-    margin-bottom: 10px;
+    margin-bottom: 0.625rem;
   }
 }

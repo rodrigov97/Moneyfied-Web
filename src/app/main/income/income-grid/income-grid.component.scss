@@ -1,0 +1,26 @@
+@import '../../../../assets/style/_variables.scss';
+
+ngx-datatable {
+  height: 100%;
+  width: 100%;
+}
+
+.ngx-datatable.material {
+  box-shadow: none !important;
+  border-radius: 0.3125rem;
+}
+
+:host ::ng-deep span {
+  font-weight: normal !important;
+}
+
+:host ::ng-deep .datatable-body-row {
+  cursor: pointer;
+}
+
+:host ::ng-deep .ngx-datatable.material.single-selection .datatable-body-row.active .datatable-row-group {
+  background: $green !important;
+}
+:host ::ng-deep .datatable-body-row.active span {
+  color: $white !important;
+}
