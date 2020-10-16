@@ -30,11 +30,12 @@
         [formControl]="control"
         [id]="fieldId"
         [placeholder]="placeholder"
-        [type]="type"
-        class="form-control"
+        [type]="'text'"
+        class="form-control align-input-right"
         [readonly]="readonly"
         (blur)="onBlur()"
-        pattern="^\d*(\.\d{0,2})?$"
+        mask="separator.2"
+        thousandSeparator="."
       />
 
       <input

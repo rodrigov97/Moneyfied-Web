@@ -2,7 +2,7 @@ interface ReceitaAttributes {
   ReceitaId: number;
   UsuarioId: number;
   Descricao: string;
-  Valor: string;
+  Valor: number;
   DataRecebimento: string;
 }
 
@@ -10,7 +10,7 @@ export class Receita implements ReceitaAttributes {
   ReceitaId: number;
   UsuarioId: number;
   Descricao: string;
-  Valor: string;
+  Valor: number;
   DataRecebimento: string;
 
   constructor(attr: ReceitaAttributes) {

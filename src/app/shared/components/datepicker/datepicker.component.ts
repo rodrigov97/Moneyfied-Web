@@ -15,7 +15,7 @@ export class CustomAdapter extends NgbDateAdapter<string> {
       if (value) {
         const date = new Date(value);
         return {
-          day: date.getDay(),
+          day: date.getDate(),
           month: date.getMonth() + 1,
           year: date.getFullYear()
         };

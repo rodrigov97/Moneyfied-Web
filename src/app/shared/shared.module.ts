@@ -15,7 +15,7 @@ import { SelectComponent } from './components/select/select.component';
 import { FormRegisterComponent } from './dialogs/form-register/form-register.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { DatepickerComponent } from './components/datepicker/datepicker.component';
-
+import { NgxMaskModule } from 'ngx-mask';
 
 
 @NgModule({
@@ -24,7 +24,8 @@ import { DatepickerComponent } from './components/datepicker/datepicker.componen
     CommonModule,
     ReactiveFormsModule,
     NgxDatatableModule,
-    NgbModule
+    NgbModule,
+    NgxMaskModule.forChild()
   ],
   declarations: [
     // App

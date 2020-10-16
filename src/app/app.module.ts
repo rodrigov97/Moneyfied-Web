@@ -10,8 +10,15 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { registerLocaleData } from '@angular/common';
 import { SharedModule } from './shared/shared.module';
 import localePt from '@angular/common/locales/pt';
+import { NgxMaskModule } from 'ngx-mask';
+import { IConfig } from 'ngx-mask';
 
 registerLocaleData(localePt);
+
+const maskConfig: Partial<IConfig> = {
+  validation: false,
+  dropSpecialCharacters: false
+};
 
 @NgModule({
   declarations: [
@@ -28,7 +35,8 @@ registerLocaleData(localePt);
     CoreModule,
     SharedModule,
     AuthModule,
-    MainModule
+    MainModule,
+    NgxMaskModule.forRoot(maskConfig),
   ],
   providers: [{ provide: LOCALE_ID, useValue: 'pt-BR' }],
   bootstrap: [AppComponent]
