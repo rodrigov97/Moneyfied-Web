@@ -1,29 +1,11 @@
 <section #main (window:resize)="onResize()">
-  <div #headerInfo [ngClass]="{'d-flex': !isMobile}">
-    <ul class="col-4" [ngClass]="{'col-12': isMobile}">
-      <li class="title col-6"><a>Maior renda do mês</a></li>
-      <li [ngClass]="{'content-margin': !isMobile}" class="content d-flex">Salário <span class="fill"></span>
-        <a class="result" [ngStyle]="incomeStatus(100)">R$ 1000,00</a>
-        <i *ngIf="1 > 0" [ngStyle]="incomeStatus(100)" class="positive fas fa-chevron-up"></i>
-        <i *ngIf="1 < 0" [ngStyle]="incomeStatus(100)" class="negative fas fa-chevron-down"></i>
-      </li>
-    </ul>
-    <ul class="col-4" [ngClass]="{'col-12': isMobile}">
-      <li class="title col-6"><a>Menor renda do mês</a></li>
-      <li [ngClass]="{'content-margin': !isMobile}" class="content d-flex">Salário <span class="fill"></span>
-        <a class="result" [ngStyle]="incomeStatus(100)">R$ 1000,00</a>
-        <i *ngIf="1 > 0" [ngStyle]="incomeStatus(100)" class="positive fas fa-chevron-up"></i>
-        <i *ngIf="1 < 0" [ngStyle]="incomeStatus(100)" class="negative fas fa-chevron-down"></i>
-      </li>
-    </ul>
-    <ul class="col-4" [ngClass]="{'col-12': isMobile}">
-      <li class="title col-6"><a>Total</a></li>
-      <li [ngClass]="{'content-margin': !isMobile}" class="content last d-flex">Renda Total <span class="fill"></span>
-        <a class="result" [ngStyle]="incomeStatus(100)">R$ 1000,00</a>
-        <i *ngIf="1 > 0" [ngStyle]="incomeStatus(100)" class="positive fas fa-chevron-up"></i>
-        <i *ngIf="1 < 0" [ngStyle]="incomeStatus(100)" class="negative fas fa-chevron-down"></i>
-      </li>
-    </ul>
+  <app-load-spinner *ngIf="isLoading"></app-load-spinner>
+  <div #headerInfo>
+
+    <app-income-info
+      [isMobile]="isMobile"
+    ></app-income-info>
+
   </div>
   <div #dataContent [style.height.px]="dataHeight" class="data">
     <div class="income-filters">
@@ -47,8 +29,15 @@
       ></app-select>
 
     </div>
+
     <div class="income-list">
-      <app-income-grid></app-income-grid>
+
+      <app-income-grid
+        [columns]="columns"
+        [rows]="rows">
+      </app-income-grid>
+
     </div>
   </div>
+  <app-form-register-income></app-form-register-income>
 </section>

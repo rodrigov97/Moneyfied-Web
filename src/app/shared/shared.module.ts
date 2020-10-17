@@ -12,7 +12,6 @@ import { TextInputComponent } from './components/text-input/text-input.component
 import { WarningComponent } from './dialogs/warning/warning.component';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { SelectComponent } from './components/select/select.component';
-import { FormRegisterComponent } from './dialogs/form-register/form-register.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { DatepickerComponent } from './components/datepicker/datepicker.component';
 import { NgxMaskModule } from 'ngx-mask';
@@ -37,7 +36,6 @@ import { NgxMaskModule } from 'ngx-mask';
     MenuComponent,
     NavbarComponent,
     SelectComponent,
-    FormRegisterComponent,
     DatepickerComponent
   ],
   exports: [
@@ -50,7 +48,6 @@ import { NgxMaskModule } from 'ngx-mask';
     MenuComponent,
     NavbarComponent,
     SelectComponent,
-    FormRegisterComponent,
     DatepickerComponent
   ],
   bootstrap: [AppComponent]

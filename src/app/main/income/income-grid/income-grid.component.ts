@@ -1,32 +1,34 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { SelectionType } from '@swimlane/ngx-datatable';
+import { Receita } from 'src/app/core/models/income.model';
+import { DataService } from 'src/app/shared/data.service';
 
 @Component({
   selector: 'app-income-grid',
   templateUrl: './income-grid.component.html',
   styleUrls: ['./income-grid.component.scss']
 })
-export class IncomeGridComponent implements OnInit {
-  a = [
-    { id: '1', nome: 'Rodrigo' },
-    { id: '2', nome: 'Pedro' },
-  ];
+export class IncomeGridComponent implements OnInit, AfterViewInit {
 
-  b = [{ nome: 'Nome' }];
-
-  @Input() rows = [] = this.a;
-  @Input() columns = [] = this.b;
-
+  @Input() rows = [];
+  @Input() columns = [];
 
   selectionType: SelectionType;
   selected: [] = [];
 
-  constructor() { }
+  constructor(
+    private dataService: DataService,
+    private dataChanged: ChangeDetectorRef
+  ) { }
+
 
   ngOnInit(): void {
     window.dispatchEvent(new Event('resize'));
   }
 
+  ngAfterViewInit(): void {
+    this.dataChanged.detectChanges();
+  }
 
   setPageData(info: any): void {
 
@@ -37,8 +39,14 @@ export class IncomeGridComponent implements OnInit {
   }
 
   dblClickItem(event: any): void {
-    if(event.type === 'dblclick') {
-
+    if (event.type === 'dblclick') {
+      this.dataService.openFormRegisterModal({
+        command: 'open',
+        title: 'Atenção',
+        form: 'Receita',
+        formType: 'Alterar',
+        data: event
+      });
     }
 
   }

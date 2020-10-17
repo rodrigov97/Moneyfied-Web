@@ -59,4 +59,8 @@ export class DateService {
       value: year + 3
     }]
   }
+
+  ISOdateFormat(date: Date): string {
+    return date.toISOString().replace('T', ' ').replace('Z', ' ').slice(0, 19)
+  }
 }

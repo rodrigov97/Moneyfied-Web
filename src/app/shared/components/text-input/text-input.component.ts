@@ -77,4 +77,11 @@ export class TextInputComponent extends Validations implements OnInit {
     const trimControl = this.control.value.trim();
     this.control.setValue(trimControl);
   }
+
+  onKeyUp(event: any): void {
+    if (!this.control.value) { return; }
+
+    const spaceControl = this.control.value.replaceAll('.', '');
+    this.control.setValue(spaceControl);
+  }
 }

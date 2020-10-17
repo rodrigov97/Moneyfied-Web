@@ -12,12 +12,14 @@
   [selected]="selected"
   [selectionType]="'single'"
   [columns] = "columns"
-  [limit]="10">
+  [limit]="10"
+  [messages]="{emptyMessage: 'Nenhum dado disponível'}">
 
     <ngx-datatable-column *ngFor="let col of columns"
       [resizeable]="true"
-      [name]="col.nome"
-      [sortable]="true"
+      [name]="col.name"
+      [prop]="col.prop"
+      [sortable]="false"
       [canAutoResize]="true"
     ></ngx-datatable-column>
 

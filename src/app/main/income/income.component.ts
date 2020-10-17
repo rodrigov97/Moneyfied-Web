@@ -1,9 +1,11 @@
 import { Component, OnInit, ElementRef, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Receita } from 'src/app/core/models/income.model';
 import { CustomValidators } from 'src/app/core/services/custom-validators';
 import { DateAttributes, DateService } from 'src/app/core/services/date.service';
 import { ResponsiveService } from 'src/app/core/services/responsive.service';
 import { DataService } from 'src/app/shared/data.service';
+import { IncomeService } from './income.service';
 
 @Component({
   selector: 'app-income',
@@ -18,18 +20,24 @@ export class IncomeComponent implements OnInit {
 
   formFilters: FormGroup;
 
-  mainHeight: number;
-  headerHeight: number;
+  mainHeight: number = 0;
+  headerHeight: number = 0;
 
   dataHeight: number = 0;
 
-  isMobile: boolean;
+  isMobile: boolean = false;
+
+  isLoading: boolean = false;
+
+  columns: any = [];
+  rows: Receita[] = [];
 
   constructor(
     private responsiveService: ResponsiveService,
-    private detectChanges: ChangeDetectorRef,
     private dateService: DateService,
-    private dataService: DataService
+    private dataService: DataService,
+    private dataChanged: ChangeDetectorRef,
+    private incomeService: IncomeService
   ) {
     const date = new Date(),
       month = date.getMonth(),
@@ -42,6 +50,9 @@ export class IncomeComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.columns = [{ name: 'Descrição', prop: 'Descricao'}, { nome: 'Valor', prop: 'Valor'}];
+
+    this.getIncomeData();
   }
 
   get month(): AbstractControl {
@@ -58,7 +69,7 @@ export class IncomeComponent implements OnInit {
 
   ngAfterViewInit(): void {
     this.onResize();
-    this.detectChanges.detectChanges();
+    this.dataChanged.detectChanges();
   }
 
   get months(): DateAttributes[] {
@@ -85,19 +96,6 @@ export class IncomeComponent implements OnInit {
     }
   }
 
-  incomeStatus(value: number): {} {
-    if (value < 0) {
-      return {
-        'color': '#e71426'
-      }
-    }
-    else if (value > 0) {
-      return {
-        'color': '#13ca66'
-      }
-    }
-  }
-
   addIncome(): void {
     this.dataService.openFormRegisterModal({
       command: 'open',
@@ -105,5 +103,13 @@ export class IncomeComponent implements OnInit {
       form: 'Receita',
       formType: 'Cadastro'
     });
+  }
+
+  getIncomeData(): void {
+
+    this.incomeService.getIncome().subscribe(
+      response => {
+        this.rows = response.receitas;
+      });
   }
 }
