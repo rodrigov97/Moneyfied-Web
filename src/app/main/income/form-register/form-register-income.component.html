@@ -9,8 +9,8 @@
         {{formType}} - {{form}}
       </h5>
     </div>
-    <div class="modal-body">
-      <form [formGroup]="formIncome">
+    <form [formGroup]="formIncome">
+      <div class="modal-body">
 
         <app-text-input
           [control]="descricao"
@@ -44,12 +44,12 @@
           name="dataRecebimento"
         ></app-datepicker>
 
-      </form>
-    </div>
-    <div class="modal-footer d-flex">
-      <button type="button" class="btn btn-cancel" (click)="modal.close()" data-dismiss="modal">Cancelar</button>
-      <span class="fill"></span>
-      <button type="button" class="btn btn-add" (click)="incomeOperations()" data-dismiss="modal">Salvar</button>
-    </div>
+      </div>
+        <div class="modal-footer d-flex">
+          <button type="button" class="btn btn-cancel" (click)="onClose()" data-dismiss="modal">Cancelar</button>
+          <span class="fill"></span>
+          <button type="button" class="btn btn-add" (click)="incomeOperations()" data-dismiss="modal">Salvar</button>
+        </div>
+    </form>
   </div>
 </ng-template>

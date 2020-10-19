@@ -4,6 +4,7 @@ import { NgbModal, NgbModalOptions, NgbModalRef } from '@ng-bootstrap/ng-bootstr
 import { Receita } from 'src/app/core/models/income.model';
 import { DateService } from 'src/app/core/services/date.service';
 import { LocalStorageService } from 'src/app/core/services/local-storage.service';
+import { NumberHandlerService } from 'src/app/core/services/number-handler.service';
 import { DataService } from 'src/app/shared/data.service';
 import { IncomeService } from '../income.service';
 
@@ -49,7 +50,8 @@ export class FormRegisterIncomeComponent implements OnInit {
     private dataService: DataService,
     private dateService: DateService,
     private incomeService: IncomeService,
-    private storageService: LocalStorageService
+    private storageService: LocalStorageService,
+    private numberHandler: NumberHandlerService
   ) {
 
     this.formIncome = new FormGroup({
@@ -84,7 +86,7 @@ export class FormRegisterIncomeComponent implements OnInit {
     this.modalOption.keyboard = false;
     this.modalOption.centered = true;
     this.modalOption.windowClass = 'no-border-radius';
-    this.dataService.currentToggleFormRegisterValue.subscribe(value => {
+    this.incomeService.currentToggleFormRegisterValue.subscribe(value => {
       if (value.command === 'open') {
         this.title = value.title;
         this.content = value.content;
@@ -93,9 +95,6 @@ export class FormRegisterIncomeComponent implements OnInit {
         this.formValue = value.data;
 
         this.myModal = this.modalService.open(this.modal, this.modalOption);
-      }
-      else {
-        this.myModal = this.modalService.dismissAll;
       }
     });
   }
@@ -115,6 +114,8 @@ export class FormRegisterIncomeComponent implements OnInit {
   }
 
   incomeOperations(): void {
+    this.formIncome.markAllAsTouched();
+
     if (this.formIncome.valid) {
       if (this.formType === 'Cadastro') {
         this.insertIncome();
@@ -125,22 +126,12 @@ export class FormRegisterIncomeComponent implements OnInit {
     }
   }
 
-  formatValue(valor: string): number {
-    if (valor.includes(',')) {
-      return Number(valor.replace(',', '.'));
-    }
-    else {
-      const value = `${valor}.00`;
-      return Number(value.replace(',', '.'));
-    }
-  }
-
   insertIncome(): void {
     var formValue = {
       ReceitaId: null,
       UsuarioId: null,
       Descricao: this.descricao.value,
-      Valor: this.formatValue(this.valor.value),
+      Valor: this.numberHandler.formatValue(this.valor.value),
       DataRecebimento: this.dateService.ISOdateFormat(this.dataRecebimento.value)
     },
       receita = new Receita(formValue);
@@ -154,10 +145,17 @@ export class FormRegisterIncomeComponent implements OnInit {
         if (response.success) {
           this.isLoading = false;
           this.formIncome.reset();
+          this.incomeService.reloadGridEvent();
+          this.modalService.dismissAll();
         }
         else {
           this.isLoading = false;
         }
       });
+  }
+
+  onClose(): void {
+    this.formIncome.reset();
+    this.modalService.dismissAll();
   }
 }

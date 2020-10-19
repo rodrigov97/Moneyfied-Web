@@ -14,6 +14,14 @@ ngx-datatable {
   font-weight: normal !important;
 }
 
+:host ::ng-deep .progress-linear .container .bar {
+  background: $green !important;
+}
+
+:host ::ng-deep .progress-linear .container {
+  background: $green-light !important;
+}
+
 :host ::ng-deep .datatable-body-row {
   cursor: pointer;
 }

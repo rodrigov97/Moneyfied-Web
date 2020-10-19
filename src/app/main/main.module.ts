@@ -16,6 +16,7 @@ import { ProfileService } from './my-profile/profile.service';
 import { ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../shared/shared.module';
 import { IncomeInfoComponent } from './income/income-info/income-info.component';
+import { IncomeModule } from './income/income.module';
 
 @NgModule({
   imports: [
@@ -25,22 +26,18 @@ import { IncomeInfoComponent } from './income/income-info/income-info.component'
     MainRoutingModule,
     ReactiveFormsModule,
     NgxDatatableModule,
-    SharedModule
+    SharedModule,
+    IncomeModule
   ],
   declarations: [
     // App
     MainComponent,
     DashboardComponent,
-    MyProfileComponent,
-    IncomeComponent,
-    IncomeGridComponent,
-    FormRegisterIncomeComponent,
-    IncomeInfoComponent
+    MyProfileComponent
   ],
   providers: [
     // App
-    ProfileService,
-    IncomeService
+    ProfileService
   ],
   bootstrap: [AppComponent]
 })

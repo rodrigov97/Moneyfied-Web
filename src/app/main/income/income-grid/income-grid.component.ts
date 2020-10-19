@@ -1,7 +1,6 @@
 import { AfterViewInit, ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { SelectionType } from '@swimlane/ngx-datatable';
-import { Receita } from 'src/app/core/models/income.model';
-import { DataService } from 'src/app/shared/data.service';
+import { IncomeService } from '../income.service';
 
 @Component({
   selector: 'app-income-grid',
@@ -12,12 +11,13 @@ export class IncomeGridComponent implements OnInit, AfterViewInit {
 
   @Input() rows = [];
   @Input() columns = [];
+  @Input() loadingIndicator: boolean = false;
 
   selectionType: SelectionType;
   selected: [] = [];
 
   constructor(
-    private dataService: DataService,
+    private incomeService: IncomeService,
     private dataChanged: ChangeDetectorRef
   ) { }
 
@@ -40,7 +40,7 @@ export class IncomeGridComponent implements OnInit, AfterViewInit {
 
   dblClickItem(event: any): void {
     if (event.type === 'dblclick') {
-      this.dataService.openFormRegisterModal({
+      this.incomeService.openFormRegisterModal({
         command: 'open',
         title: 'Atenção',
         form: 'Receita',

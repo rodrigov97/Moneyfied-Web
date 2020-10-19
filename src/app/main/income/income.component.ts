@@ -1,5 +1,6 @@
 import { Component, OnInit, ElementRef, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Subscription } from 'rxjs';
 import { Receita } from 'src/app/core/models/income.model';
 import { CustomValidators } from 'src/app/core/services/custom-validators';
 import { DateAttributes, DateService } from 'src/app/core/services/date.service';
@@ -31,11 +32,13 @@ export class IncomeComponent implements OnInit {
 
   columns: any = [];
   rows: Receita[] = [];
+  loadingIndicator: boolean = false;
+
+  reloadEventSub: Subscription;
 
   constructor(
     private responsiveService: ResponsiveService,
     private dateService: DateService,
-    private dataService: DataService,
     private dataChanged: ChangeDetectorRef,
     private incomeService: IncomeService
   ) {
@@ -47,10 +50,14 @@ export class IncomeComponent implements OnInit {
       Mes: new FormControl(this.currentMonth(month)),
       Ano: new FormControl(year),
     });
+
+    this.reloadEventSub = this.incomeService.callReloadGridFunction().subscribe(() => {
+      this.getIncomeData();
+    })
   }
 
   ngOnInit(): void {
-    this.columns = [{ name: 'Descrição', prop: 'Descricao'}, { nome: 'Valor', prop: 'Valor'}];
+    this.columns = [{ name: 'Descrição', prop: 'Descricao' }, { nome: 'Valor', prop: 'Valor' }];
 
     this.getIncomeData();
   }
@@ -97,7 +104,7 @@ export class IncomeComponent implements OnInit {
   }
 
   addIncome(): void {
-    this.dataService.openFormRegisterModal({
+    this.incomeService.openFormRegisterModal({
       command: 'open',
       title: 'Atenção',
       form: 'Receita',
@@ -106,10 +113,11 @@ export class IncomeComponent implements OnInit {
   }
 
   getIncomeData(): void {
-
+    this.loadingIndicator = true;
     this.incomeService.getIncome().subscribe(
       response => {
         this.rows = response.receitas;
+        this.loadingIndicator = false;
       });
   }
 }
