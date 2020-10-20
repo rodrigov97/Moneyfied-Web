@@ -41,7 +41,7 @@ export class IncomeGridComponent implements OnInit, AfterViewInit {
 
   dblClickItem(event: any): void {
     if (event.type === 'dblclick') {
-      this.incomeService.openFormRegisterModal({
+      this.incomeService.openFormIncome({
         command: 'open',
         title: 'Atenção',
         form: 'Receita',

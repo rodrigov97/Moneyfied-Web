@@ -9,12 +9,10 @@ import { LocalStorageService } from 'src/app/core/services/local-storage.service
 })
 export class IncomeService {
 
-  toggleFormRegister: any = { command: '' };
-  private toggleFormRegisterValue = new BehaviorSubject<any>(this.toggleFormRegister);
-  currentToggleFormRegisterValue = this.toggleFormRegisterValue.asObservable();
 
   private reloadGrid = new Subject<any>();
   private changePage = new Subject<any>();
+  private openForm = new Subject<any>();
 
   gridCurrentPage: number = 1;
 
@@ -23,8 +21,12 @@ export class IncomeService {
     private storageService: LocalStorageService
   ) { }
 
-  openFormRegisterModal(value: any): void {
-    this.toggleFormRegisterValue.next(value);
+  openFormIncome(pageNumber: any): void {
+    this.openForm.next(pageNumber);
+  }
+
+  callOpenFormIncome(): Observable<any> {
+    return this.openForm.asObservable();
   }
 
   getIncome(start: number, limit: number, month: number, year: number): Observable<any> {
@@ -49,15 +51,15 @@ export class IncomeService {
     this.reloadGrid.next();
   }
 
-  callReloadGridFunction(): Observable<any>{
+  callReloadGridFunction(): Observable<any> {
     return this.reloadGrid.asObservable();
   }
 
-  gridPageChange(pageNumber: number) {
+  gridPageChange(pageNumber: number): void {
     this.changePage.next(pageNumber);
   }
 
-  callGridPageChange(): Observable<any>{
+  callGridPageChange(): Observable<any> {
     return this.changePage.asObservable();
   }
 }

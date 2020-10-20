@@ -1,5 +1,5 @@
 import { flatten } from '@angular/compiler';
-import { Component, OnInit, ElementRef, ViewChild, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild, ChangeDetectorRef, OnDestroy } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { Receita } from 'src/app/core/models/income.model';
@@ -14,7 +14,7 @@ import { IncomeService } from './income.service';
   templateUrl: './income.component.html',
   styleUrls: ['./income.component.scss']
 })
-export class IncomeComponent implements OnInit {
+export class IncomeComponent implements OnInit, OnDestroy {
 
   @ViewChild('main') mainSection: ElementRef;
   @ViewChild('headerInfo') headerInfo: ElementRef;
@@ -75,6 +75,11 @@ export class IncomeComponent implements OnInit {
     this.getIncomeData(1);
   }
 
+  ngOnDestroy(): void {
+    this.reloadEventSub.unsubscribe();
+    this.changePageEventSub.unsubscribe();
+  }
+
   get month(): AbstractControl {
     return this.formFilters.get('Mes');
   }
@@ -117,7 +122,7 @@ export class IncomeComponent implements OnInit {
   }
 
   addIncome(): void {
-    this.incomeService.openFormRegisterModal({
+    this.incomeService.openFormIncome({
       command: 'open',
       title: 'Atenção',
       form: 'Receita',
@@ -129,8 +134,8 @@ export class IncomeComponent implements OnInit {
     var month = this.dateService.getMonthNumber(this.month.value),
       year = this.year.value;
 
-      this.currentMonthFilter = month;
-      this.currentYearFilter = year;
+    this.currentMonthFilter = month;
+    this.currentYearFilter = year;
 
     this.getIncomeData(1, month, year);
   }

@@ -1,6 +1,7 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 import { NgbModal, NgbModalOptions, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { Subscription } from 'rxjs';
 import { Receita } from 'src/app/core/models/income.model';
 import { DateService } from 'src/app/core/services/date.service';
 import { LocalStorageService } from 'src/app/core/services/local-storage.service';
@@ -14,11 +15,11 @@ import { IncomeService } from '../income.service';
   templateUrl: './form-register-income.component.html',
   styleUrls: ['./form-register-income.component.scss']
 })
-export class FormRegisterIncomeComponent implements OnInit {
+export class FormRegisterIncomeComponent implements OnInit, OnDestroy {
 
   // Exemplo de chamada do dialog
 
-  // this.dataService.openErrorDialogModal({
+  // this.incomeService.openFormIncome({
   //   command: 'open',
   //   title: 'Atenção',
   //   content: 'Olá Mundo'
@@ -44,6 +45,8 @@ export class FormRegisterIncomeComponent implements OnInit {
   formValue: Receita;
 
   isLoading: boolean = false;
+
+  subFormIncome: Subscription;
 
   constructor(
     private modalService: NgbModal,
@@ -83,7 +86,8 @@ export class FormRegisterIncomeComponent implements OnInit {
     this.modalOption.keyboard = false;
     this.modalOption.centered = true;
     this.modalOption.windowClass = 'no-border-radius';
-    this.incomeService.currentToggleFormRegisterValue.subscribe(value => {
+
+    this.subFormIncome = this.incomeService.callOpenFormIncome().subscribe(value => {
       if (value.command === 'open') {
         this.title = value.title;
         this.content = value.content;
@@ -97,6 +101,10 @@ export class FormRegisterIncomeComponent implements OnInit {
           this.setIncomeItem();
       }
     });
+  }
+
+  ngOnDestroy(): void {
+    this.subFormIncome.unsubscribe();
   }
 
   setIncomeItem(): void {
@@ -148,16 +156,17 @@ export class FormRegisterIncomeComponent implements OnInit {
       });
   }
 
+  onClose(): void {
+    this.resetFormValue();
+    this.modalService.dismissAll();
+  }
+
   resetFormValue(): void {
     this.formIncome.setValue({
       Descricao: null,
       Valor: null,
       DataRecebimento: new Date()
     });
-  }
-
-  onClose(): void {
-    this.formIncome.reset();
-    this.modalService.dismissAll();
+    this.formIncome.markAsUntouched();
   }
 }
