@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 
 export interface DateAttributes {
   value: string;
+  number?: number;
 }
 
 @Injectable({
@@ -13,29 +14,41 @@ export class DateService {
 
   get months(): DateAttributes[] {
     return [{
-      value: 'Janeiro'
+      value: 'Janeiro',
+      number: 1
     }, {
-      value: 'Fevereiro'
+      value: 'Fevereiro',
+      number: 2
     }, {
-      value: 'Março'
+      value: 'Março',
+      number: 3
     }, {
-      value: 'Abril'
+      value: 'Abril',
+      number: 4
     }, {
-      value: 'Maio'
+      value: 'Maio',
+      number: 5
     }, {
-      value: 'Junho'
+      value: 'Junho',
+      number: 6
     }, {
-      value: 'Julho'
+      value: 'Julho',
+      number: 7
     }, {
-      value: 'Agosto'
+      value: 'Agosto',
+      number: 8
     }, {
-      value: 'Setembro'
+      value: 'Setembro',
+      number: 9
     }, {
-      value: 'Outubro'
+      value: 'Outubro',
+      number: 10
     }, {
-      value: 'Novembro'
+      value: 'Novembro',
+      number: 11
     }, {
-      value: 'Dezembro'
+      value: 'Dezembro',
+      number: 12
     }]
   }
 
@@ -61,6 +74,36 @@ export class DateService {
   }
 
   ISOdateFormat(date: Date): string {
+    var date = new Date(date);
     return date.toISOString().replace('T', ' ').replace('Z', ' ').slice(0, 19)
+  }
+
+  buildDateObj(date: string): string {
+    if (typeof date === 'object') {
+      return this.ISOdateFormat(date);
+    }
+    else {
+      var dateParts = date.split("/"),
+        year = parseInt(dateParts[2]),
+        month = parseInt(dateParts[1]) - 1,
+        day = parseInt(dateParts[0]);
+
+      return this.ISOdateFormat(new Date(year, month, day));
+    }
+  }
+
+  getMonthNumber(name: string): number {
+    var month = this.months.find(month => month.value === name);
+    return month.number;
+  }
+
+  get currentMonth(): number {
+    var date = new Date();
+    return date.getMonth() + 1;
+  }
+
+  get currentYear(): number {
+    var date = new Date();
+    return date.getFullYear();
   }
 }

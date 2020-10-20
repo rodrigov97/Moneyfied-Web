@@ -14,6 +14,9 @@ export class IncomeService {
   currentToggleFormRegisterValue = this.toggleFormRegisterValue.asObservable();
 
   private reloadGrid = new Subject<any>();
+  private changePage = new Subject<any>();
+
+  gridCurrentPage: number = 1;
 
   constructor(
     private apiClient: ApiClient,
@@ -24,8 +27,8 @@ export class IncomeService {
     this.toggleFormRegisterValue.next(value);
   }
 
-  getIncome(): Observable<any> {
-    const path = `income/get/?userId=${this.storageService.userId}`;
+  getIncome(start: number, limit: number, month: number, year: number): Observable<any> {
+    const path = `income/get/?start=${start}&limit=${limit}&userId=${this.storageService.userId}&month=${month}&year=${year}`;
 
     return this.apiClient.get(path);
   }
@@ -45,7 +48,16 @@ export class IncomeService {
   reloadGridEvent() {
     this.reloadGrid.next();
   }
+
   callReloadGridFunction(): Observable<any>{
     return this.reloadGrid.asObservable();
+  }
+
+  gridPageChange(pageNumber: number) {
+    this.changePage.next(pageNumber);
+  }
+
+  callGridPageChange(): Observable<any>{
+    return this.changePage.asObservable();
   }
 }

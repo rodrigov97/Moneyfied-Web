@@ -47,7 +47,6 @@ export class FormRegisterIncomeComponent implements OnInit {
 
   constructor(
     private modalService: NgbModal,
-    private dataService: DataService,
     private dateService: DateService,
     private incomeService: IncomeService,
     private storageService: LocalStorageService,
@@ -75,9 +74,7 @@ export class FormRegisterIncomeComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.form === 'Alterar') {
-    }
-    else if (this.form === 'Cadastrar') {
-      this.prepareFormReceita();
+      this.setIncomeItem();
     }
   }
 
@@ -95,21 +92,18 @@ export class FormRegisterIncomeComponent implements OnInit {
         this.formValue = value.data;
 
         this.myModal = this.modalService.open(this.modal, this.modalOption);
+
+        if (this.formType === 'Alterar')
+          this.setIncomeItem();
       }
     });
   }
 
-  prepareFormReceita(): void {
-    if (this.formType === 'Alterar') {
-      this.setIncomeItem();
-    }
-  }
-
   setIncomeItem(): void {
-    this.formExpenses.setValue({
-      DescricaoR: this.formValue.Descricao,
-      ValorR: this.formValue.Valor,
-      DataRecebimento: this.formValue.DataRecebimento,
+    this.formIncome.setValue({
+      Descricao: this.formValue.Descricao,
+      Valor: this.formValue.Valor,
+      DataRecebimento: new Date(this.formValue.DataRecebimento),
     });
   }
 
@@ -132,10 +126,10 @@ export class FormRegisterIncomeComponent implements OnInit {
       UsuarioId: null,
       Descricao: this.descricao.value,
       Valor: this.numberHandler.formatValue(this.valor.value),
-      DataRecebimento: this.dateService.ISOdateFormat(this.dataRecebimento.value)
+      DataRecebimento: this.dateService.buildDateObj(this.dataRecebimento.value)
     },
       receita = new Receita(formValue);
-    debugger
+
     receita.UsuarioId = this.storageService.userId;
 
     this.isLoading = true;
@@ -144,7 +138,7 @@ export class FormRegisterIncomeComponent implements OnInit {
       response => {
         if (response.success) {
           this.isLoading = false;
-          this.formIncome.reset();
+          this.resetFormValue();
           this.incomeService.reloadGridEvent();
           this.modalService.dismissAll();
         }
@@ -152,6 +146,14 @@ export class FormRegisterIncomeComponent implements OnInit {
           this.isLoading = false;
         }
       });
+  }
+
+  resetFormValue(): void {
+    this.formIncome.setValue({
+      Descricao: null,
+      Valor: null,
+      DataRecebimento: new Date()
+    });
   }
 
   onClose(): void {

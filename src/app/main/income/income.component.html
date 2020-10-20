@@ -14,18 +14,22 @@
 
       <hr>
 
-      <app-select
-        name="mes"
-        label="Mês"
-        [control]="month"
-        [items]="months"
-      ></app-select>
+      <button class="btn btn-add" (click)="filterData()"><i class="fas fa-filter"></i>Filtrar</button>
+
+      <hr>
 
       <app-select
         name="ano"
         label="Ano"
         [control]="year"
         [items]="years"
+      ></app-select>
+
+      <app-select
+        name="mes"
+        label="Mês"
+        [control]="month"
+        [items]="months"
       ></app-select>
 
     </div>
@@ -35,7 +39,10 @@
       <app-income-grid
         [columns]="columns"
         [loadingIndicator]="loadingIndicator"
-        [rows]="rows">
+        [rows]="rows"
+        [rowCount]="rowCount"
+        [limit]="limit"
+        >
       </app-income-grid>
 
     </div>

@@ -11,8 +11,11 @@ export class IncomeGridComponent implements OnInit, AfterViewInit {
 
   @Input() rows = [];
   @Input() columns = [];
+  @Input() rowCount: number;
+  @Input() limit: number;
   @Input() loadingIndicator: boolean = false;
 
+  currentPage: number = 1;
   selectionType: SelectionType;
   selected: [] = [];
 
@@ -30,12 +33,10 @@ export class IncomeGridComponent implements OnInit, AfterViewInit {
     this.dataChanged.detectChanges();
   }
 
-  setPageData(info: any): void {
-
-  }
-
-  selectedRow(event: any): void {
-
+  setPageData(pageNumber: any): void {
+    this.currentPage = pageNumber.page;
+    this.incomeService.gridCurrentPage = this.currentPage;
+    this.incomeService.gridPageChange(pageNumber.page);
   }
 
   dblClickItem(event: any): void {
@@ -45,10 +46,8 @@ export class IncomeGridComponent implements OnInit, AfterViewInit {
         title: 'Atenção',
         form: 'Receita',
         formType: 'Alterar',
-        data: event
+        data: event.row
       });
     }
-
   }
-
 }

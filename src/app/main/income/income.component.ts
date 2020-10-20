@@ -1,3 +1,4 @@
+import { flatten } from '@angular/compiler';
 import { Component, OnInit, ElementRef, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
@@ -32,9 +33,15 @@ export class IncomeComponent implements OnInit {
 
   columns: any = [];
   rows: Receita[] = [];
+  rowCount: number;
+  limit: number = 10;
   loadingIndicator: boolean = false;
 
   reloadEventSub: Subscription;
+  changePageEventSub: Subscription;
+
+  currentMonthFilter: number;
+  currentYearFilter: number;
 
   constructor(
     private responsiveService: ResponsiveService,
@@ -51,15 +58,21 @@ export class IncomeComponent implements OnInit {
       Ano: new FormControl(year),
     });
 
-    this.reloadEventSub = this.incomeService.callReloadGridFunction().subscribe(() => {
-      this.getIncomeData();
-    })
+    this.reloadEventSub = this.incomeService.callReloadGridFunction().subscribe(
+      () => {
+        this.getIncomeData(this.incomeService.gridCurrentPage, this.currentMonthFilter, this.currentYearFilter);
+      });
+
+    this.changePageEventSub = this.incomeService.callGridPageChange().subscribe(
+      page => {
+        this.getIncomeData(page);
+      });
   }
 
   ngOnInit(): void {
     this.columns = [{ name: 'Descrição', prop: 'Descricao' }, { nome: 'Valor', prop: 'Valor' }];
 
-    this.getIncomeData();
+    this.getIncomeData(1);
   }
 
   get month(): AbstractControl {
@@ -112,10 +125,32 @@ export class IncomeComponent implements OnInit {
     });
   }
 
-  getIncomeData(): void {
+  filterData(): void {
+    var month = this.dateService.getMonthNumber(this.month.value),
+      year = this.year.value;
+
+      this.currentMonthFilter = month;
+      this.currentYearFilter = year;
+
+    this.getIncomeData(1, month, year);
+  }
+
+  getIncomeData(page: number, month?: number, year?: number): void {
+    var date = new Date(),
+      mes = month ? month : (this.currentMonthFilter ? this.currentMonthFilter : date.getMonth() + 1),
+      ano = year ? year : (this.currentYearFilter ? this.currentYearFilter : date.getFullYear());
+
+    if (page === 1) {
+      page = 0;
+    }
+    else if (page > 1) {
+      page = (page * this.limit) - this.limit;
+    }
+
     this.loadingIndicator = true;
-    this.incomeService.getIncome().subscribe(
+    this.incomeService.getIncome(page, this.limit, mes, ano).subscribe(
       response => {
+        this.rowCount = response.totalLinhas;
         this.rows = response.receitas;
         this.loadingIndicator = false;
       });

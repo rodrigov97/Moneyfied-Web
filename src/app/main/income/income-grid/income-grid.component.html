@@ -1,15 +1,15 @@
 <ngx-datatable
   (activate)="dblClickItem($event)"
-  (select)="selectedRow($event)"
   [columnMode]="'force'"
   [columns] = "columns"
   [footerHeight]="50"
   [headerHeight]="50"
-  [limit]="10"
+  [limit]="limit"
   [loadingIndicator]="loadingIndicator"
   [messages]="{emptyMessage: 'Nenhum dado disponível'}"
   [rowHeight]="50"
   [rows]="rows"
+  [count]="rowCount"
   [scrollbarH]="true"
   [scrollbarV]="true"
   [selected]="selected"
@@ -25,14 +25,7 @@
     ></ngx-datatable-column>
 
   <ngx-datatable-footer>
-    <ng-template
-      ngx-datatable-footer-template
-      let-rowCount="rowCount"
-      let-pageSize="pageSize"
-      let-selectedCount="selectedCount"
-      let-curPage="curPage"
-      let-offset="offset"
-    >
+    <ng-template ngx-datatable-footer-template>
       <datatable-pager
         [pagerLeftArrowIcon]="'datatable-icon-left'"
         [pagerRightArrowIcon]="'datatable-icon-right'"
@@ -40,7 +33,7 @@
         [pagerNextIcon]="'datatable-icon-skip'"
         [page]="1"
         [size]="10"
-        [count]="rows.length"
+        [count]="rowCount"
         (change)="setPageData($event)">
       </datatable-pager>
     </ng-template>
