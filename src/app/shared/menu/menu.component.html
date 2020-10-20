@@ -11,7 +11,7 @@
       <td [hidden]="hideName" (click)="hideItemName()" class="name">Recolher</td>
     </tr>
     <tr *ngFor="let item of menuItems" (click)="selectItem(item.Name, item.Url)"
-      [style.background-color]="item.Name === selectedItem ? 'whitesmoke' : ''">
+      [style.background-color]="item.Name === selectedItem ? '#ececec' : ''">
       <td class="color-indicator" [ngStyle]="setBackgroundStyle(item.Name, item.Color)">
         <div class="color-indicator"></div>
       </td>

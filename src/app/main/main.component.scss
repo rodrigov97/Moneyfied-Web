@@ -1,3 +1,5 @@
+@import "../../assets/style/_variables.scss";
+
 section {
   height: calc(100vh - 3.125rem);
   width: 100vw;
@@ -10,5 +12,5 @@ section {
   height: 100%;
   width: 100%;
   overflow-x: auto;
-  background-color: whitesmoke;
+  background-color: $whitesmoke;
 }
