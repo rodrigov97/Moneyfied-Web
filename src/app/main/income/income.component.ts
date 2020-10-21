@@ -37,6 +37,8 @@ export class IncomeComponent implements OnInit, OnDestroy {
   limit: number = 10;
   loadingIndicator: boolean = false;
 
+  incomeResume: any;
+
   reloadEventSub: Subscription;
   changePageEventSub: Subscription;
 
@@ -61,18 +63,24 @@ export class IncomeComponent implements OnInit, OnDestroy {
     this.reloadEventSub = this.incomeService.callReloadGridFunction().subscribe(
       () => {
         this.getIncomeData(this.incomeService.gridCurrentPage, this.currentMonthFilter, this.currentYearFilter);
+        this.getIncomeResume(this.currentMonthFilter, this.currentYearFilter);
       });
 
     this.changePageEventSub = this.incomeService.callGridPageChange().subscribe(
       page => {
-        this.getIncomeData(page);
+        this.getIncomeData(page)
       });
   }
 
   ngOnInit(): void {
+    var date = new Date(),
+      month = date.getMonth() + 1,
+      year = date.getFullYear();
+
     this.columns = [{ name: 'Descrição', prop: 'Descricao' }, { nome: 'Valor', prop: 'Valor' }];
 
     this.getIncomeData(1);
+    this.getIncomeResume(month, year);
   }
 
   ngOnDestroy(): void {
@@ -138,6 +146,7 @@ export class IncomeComponent implements OnInit, OnDestroy {
     this.currentYearFilter = year;
 
     this.getIncomeData(1, month, year);
+    this.getIncomeResume(month, year);
   }
 
   getIncomeData(page: number, month?: number, year?: number): void {
@@ -158,6 +167,16 @@ export class IncomeComponent implements OnInit, OnDestroy {
         this.rowCount = response.totalLinhas;
         this.rows = response.receitas;
         this.loadingIndicator = false;
+      });
+  }
+
+  getIncomeResume(month: number, year: number): void {
+
+    this.incomeService.getIncomeResume(month, year).subscribe(
+      response => {
+        if (response.success) {
+          this.incomeResume = response.values;
+        }
       });
   }
 }

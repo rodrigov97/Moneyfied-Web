@@ -38,9 +38,8 @@ export class MenuComponent implements OnInit {
   onResize(): void {
     this.responsiveService.checkWidth();
     this.isMobile = this.responsiveService.isMobile;
-    if(this.isMobile) {
+    if (this.isMobile)
       this.hideName = false;
-    }
   }
 
   hideItemName(): void {
@@ -50,7 +49,8 @@ export class MenuComponent implements OnInit {
 
   selectItem(itemName: string, url: string) {
     this.selectedItem = itemName;
-
+    if (this.isMobile)
+      this.toggleMenu = false;
     this.route.navigate(['app', url]);
   }
 

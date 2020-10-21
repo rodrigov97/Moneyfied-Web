@@ -123,7 +123,7 @@ export class FormRegisterIncomeComponent implements OnInit, OnDestroy {
         this.insertIncome();
       }
       else if (this.formType === 'Alterar') {
-
+        this.updateIncome();
       }
     }
   }
@@ -143,6 +143,34 @@ export class FormRegisterIncomeComponent implements OnInit, OnDestroy {
     this.isLoading = true;
 
     this.incomeService.insertIncome(receita).subscribe(
+      response => {
+        if (response.success) {
+          this.isLoading = false;
+          this.resetFormValue();
+          this.incomeService.reloadGridEvent();
+          this.modalService.dismissAll();
+        }
+        else {
+          this.isLoading = false;
+        }
+      });
+  }
+
+  updateIncome(): void {
+    var formValue = {
+      ReceitaId: this.formValue.ReceitaId,
+      UsuarioId: this.formValue.UsuarioId,
+      Descricao: this.descricao.value,
+      Valor: this.numberHandler.formatValue(this.valor.value),
+      DataRecebimento: this.dateService.buildDateObj(this.dataRecebimento.value)
+    },
+    receita = new Receita(formValue);
+
+    receita.UsuarioId = this.storageService.userId;
+
+    this.isLoading = true;
+
+    this.incomeService.updateIncome(receita).subscribe(
       response => {
         if (response.success) {
           this.isLoading = false;

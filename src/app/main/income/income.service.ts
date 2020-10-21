@@ -35,6 +35,12 @@ export class IncomeService {
     return this.apiClient.get(path);
   }
 
+  getIncomeResume(month: number, year: number): Observable<any> {
+    const path = `income/info/?userId=${this.storageService.userId}&month=${month}&year=${year}`;
+
+    return this.apiClient.get(path);
+  }
+
   insertIncome(incomeInfo: Receita): Observable<any> {
     const path = `income/insert`;
 

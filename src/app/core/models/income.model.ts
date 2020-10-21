@@ -6,6 +6,14 @@ interface ReceitaAttributes {
   DataRecebimento: string;
 }
 
+export interface ReceitaResumo {
+  MaxDesc: string;
+  MaxValue: string;
+  MinDesc: string;
+  MinValue: string;
+  TotalValue: string;
+}
+
 export class Receita implements ReceitaAttributes {
   ReceitaId: number;
   UsuarioId: number;

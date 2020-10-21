@@ -1,50 +1,53 @@
 <section #main (window:resize)="onResize()">
   <app-load-spinner *ngIf="isLoading"></app-load-spinner>
-  <div #headerInfo>
+  <div *ngIf="!isLoading">
+    <div #headerInfo>
 
-    <app-income-info
-      [isMobile]="isMobile"
-    ></app-income-info>
-
-  </div>
-  <div #dataContent [style.height.px]="dataHeight" class="data">
-    <div class="income-filters">
-
-      <button class="btn btn-add" (click)="addIncome()"><i class="fas fa-plus"></i>Nova Receita</button>
-
-      <hr>
-
-      <button class="btn btn-add" (click)="filterData()"><i class="fas fa-filter"></i>Filtrar</button>
-
-      <hr>
-
-      <app-select
-        name="ano"
-        label="Ano"
-        [control]="year"
-        [items]="years"
-      ></app-select>
-
-      <app-select
-        name="mes"
-        label="Mês"
-        [control]="month"
-        [items]="months"
-      ></app-select>
+      <app-income-info
+        [isMobile]="isMobile"
+        [resume]="incomeResume"
+      ></app-income-info>
 
     </div>
+    <div #dataContent [style.height.px]="dataHeight" class="data">
+      <div class="income-filters">
 
-    <div class="income-list">
+        <button class="btn btn-add" (click)="addIncome()"><i class="fas fa-plus"></i>Nova Receita</button>
 
-      <app-income-grid
-        [columns]="columns"
-        [loadingIndicator]="loadingIndicator"
-        [rows]="rows"
-        [rowCount]="rowCount"
-        [limit]="limit"
-        >
-      </app-income-grid>
+        <hr>
 
+        <button class="btn btn-add" (click)="filterData()"><i class="fas fa-filter"></i>Filtrar</button>
+
+        <hr>
+
+        <app-select
+          name="ano"
+          label="Ano"
+          [control]="year"
+          [items]="years"
+        ></app-select>
+
+        <app-select
+          name="mes"
+          label="Mês"
+          [control]="month"
+          [items]="months"
+        ></app-select>
+
+      </div>
+
+      <div class="income-list">
+
+        <app-income-grid
+          [columns]="columns"
+          [loadingIndicator]="loadingIndicator"
+          [rows]="rows"
+          [rowCount]="rowCount"
+          [limit]="limit"
+          >
+        </app-income-grid>
+
+      </div>
     </div>
   </div>
   <app-form-register-income></app-form-register-income>
