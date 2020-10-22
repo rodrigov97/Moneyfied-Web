@@ -17,15 +17,6 @@ import { IncomeService } from '../income.service';
 })
 export class FormRegisterIncomeComponent implements OnInit, OnDestroy {
 
-  // Exemplo de chamada do dialog
-
-  // this.incomeService.openFormIncome({
-  //   command: 'open',
-  //   title: 'Atenção',
-  //   content: 'Olá Mundo'
-  // });
-
-
   closeResult: string;
   modalOption: NgbModalOptions = {};
 

@@ -12,7 +12,6 @@
         class="form-control"
       >
 
-        <option [value]="'Nenhum'" selected>Nenhum</option>
         <option *ngFor="let item of items" [value]="item.value">{{item.value}}</option>
       </select>
 

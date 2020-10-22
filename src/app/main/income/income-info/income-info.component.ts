@@ -13,6 +13,10 @@ export class IncomeInfoComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+    this.setResumeDeafultValue();
+  }
+
+  setResumeDeafultValue(): void {
     this.resume = {
       MaxDesc: '-',
       MaxValue: '0',

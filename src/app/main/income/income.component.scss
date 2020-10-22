@@ -72,6 +72,10 @@ ul .content-margin {
   text-align: center;
 }
 
+.delete {
+  margin-top: 0.625rem;
+}
+
 @include media-breakpoint-up(lg) {
   .income-filters {
     width: 40%;

@@ -1,6 +1,6 @@
 <ngx-datatable
   (activate)="dblClickItem($event)"
-  [columnMode]="'force'"
+  [columnMode]="columnMode.flex"
   [columns] = "columns"
   [footerHeight]="50"
   [headerHeight]="50"
@@ -20,6 +20,8 @@
       [resizeable]="true"
       [name]="col.name"
       [prop]="col.prop"
+      [flexGrow]="col.flex"
+      [cellClass]="col.align"
       [sortable]="false"
       [canAutoResize]="true"
     ></ngx-datatable-column>

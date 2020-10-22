@@ -16,6 +16,8 @@ export class IncomeService {
 
   gridCurrentPage: number = 1;
 
+  selectedItem: Receita;
+
   constructor(
     private apiClient: ApiClient,
     private storageService: LocalStorageService
@@ -45,6 +47,12 @@ export class IncomeService {
     const path = `income/insert`;
 
     return this.apiClient.post(path, incomeInfo);
+  }
+
+  deleteIncome(incomeId: number): Observable<any> {
+    const path = `income/delete/?receitaId=${incomeId}`;
+
+    return this.apiClient.delete(path);
   }
 
   updateIncome(incomeInfo: Receita): Observable<any> {

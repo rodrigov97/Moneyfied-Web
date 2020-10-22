@@ -48,6 +48,7 @@ export class IncomeComponent implements OnInit, OnDestroy {
   constructor(
     private responsiveService: ResponsiveService,
     private dateService: DateService,
+    private dataService: DataService,
     private dataChanged: ChangeDetectorRef,
     private incomeService: IncomeService
   ) {
@@ -72,12 +73,28 @@ export class IncomeComponent implements OnInit, OnDestroy {
       });
   }
 
+  get month(): AbstractControl {
+    return this.formFilters.get('Mes');
+  }
+
+  get year(): AbstractControl {
+    return this.formFilters.get('Ano');
+  }
+
+  get months(): DateAttributes[] {
+    return this.dateService.months;
+  }
+
+  get years(): any {
+    return this.dateService.years;
+  }
+
   ngOnInit(): void {
     var date = new Date(),
       month = date.getMonth() + 1,
       year = date.getFullYear();
 
-    this.columns = [{ name: 'Descrição', prop: 'Descricao' }, { nome: 'Valor', prop: 'Valor' }];
+
 
     this.getIncomeData(1);
     this.getIncomeResume(month, year);
@@ -86,14 +103,6 @@ export class IncomeComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.reloadEventSub.unsubscribe();
     this.changePageEventSub.unsubscribe();
-  }
-
-  get month(): AbstractControl {
-    return this.formFilters.get('Mes');
-  }
-
-  get year(): AbstractControl {
-    return this.formFilters.get('Ano');
   }
 
   currentMonth(current: number): string {
@@ -105,18 +114,30 @@ export class IncomeComponent implements OnInit, OnDestroy {
     this.dataChanged.detectChanges();
   }
 
-  get months(): DateAttributes[] {
-    return this.dateService.months;
-  }
-
-  get years(): any {
-    return this.dateService.years;
-  }
-
   onResize(): void {
     this.responsiveService.checkWidth();
     this.isMobile = this.responsiveService.isMobile;
     this.setHeight();
+    this.setGridColumns();
+  }
+
+  setGridColumns(): void {
+    if (!this.isMobile) {
+      this.columns = [{
+        name: 'Descrição', prop: 'Descricao', flex: 3, align: 'align-left'
+      }, {
+        name: 'Valor (R$)', prop: 'Valor', flex: 1, align: 'align-right'
+      }, {
+        name: 'Data de Recebimento', prop: 'DataRecebimento', flex: 1, align: 'align-center'
+      }];
+    }
+    else {
+      this.columns = [{
+        name: 'Descrição', prop: 'Descricao', flex: 3, align: 'align-left'
+      }, {
+        name: 'Valor (R$)', prop: 'Valor', flex: 1, align: 'align-right'
+      }];
+    }
   }
 
   setHeight(): void {
@@ -138,6 +159,29 @@ export class IncomeComponent implements OnInit, OnDestroy {
     });
   }
 
+  removeIncome(): void {
+    if (this.incomeService.selectedItem) {
+      var receitaId = this.incomeService.selectedItem.ReceitaId;
+
+      this.loadingIndicator = true;
+      this.incomeService.deleteIncome(receitaId).subscribe(
+        response => {
+          if (response.success) {
+            this.getIncomeData(this.incomeService.gridCurrentPage, this.currentMonthFilter, this.currentYearFilter);
+            this.getIncomeResume(this.currentMonthFilter, this.currentYearFilter);
+            this.loadingIndicator = false;
+          }
+          else {
+            this.dataService.openErrorDialogModal({
+              command: 'open',
+              title: 'Atenção',
+              content: 'Erro ao excluír a renda selecionada.'
+            });
+          }
+        });
+    }
+  }
+
   filterData(): void {
     var month = this.dateService.getMonthNumber(this.month.value),
       year = this.year.value;
@@ -150,19 +194,15 @@ export class IncomeComponent implements OnInit, OnDestroy {
   }
 
   getIncomeData(page: number, month?: number, year?: number): void {
-    var date = new Date(),
+    var currentPage = this.getPage(page),
+      date = new Date(),
       mes = month ? month : (this.currentMonthFilter ? this.currentMonthFilter : date.getMonth() + 1),
       ano = year ? year : (this.currentYearFilter ? this.currentYearFilter : date.getFullYear());
 
-    if (page === 1) {
-      page = 0;
-    }
-    else if (page > 1) {
-      page = (page * this.limit) - this.limit;
-    }
+
 
     this.loadingIndicator = true;
-    this.incomeService.getIncome(page, this.limit, mes, ano).subscribe(
+    this.incomeService.getIncome(currentPage, this.limit, mes, ano).subscribe(
       response => {
         this.rowCount = response.totalLinhas;
         this.rows = response.receitas;
@@ -170,9 +210,23 @@ export class IncomeComponent implements OnInit, OnDestroy {
       });
   }
 
-  getIncomeResume(month: number, year: number): void {
+  getPage(page: number): number {
+    var value = 0;
+    if (page === 1) {
+      value = 0;
+    }
+    else if (page > 1) {
+      value = (page * this.limit) - this.limit;
+    }
+    return value;
+  }
 
-    this.incomeService.getIncomeResume(month, year).subscribe(
+  getIncomeResume(month: number, year: number): void {
+    var date = new Date(),
+      mes = month ? month : (this.currentMonthFilter ? this.currentMonthFilter : date.getMonth() + 1),
+      ano = year ? year : (this.currentYearFilter ? this.currentYearFilter : date.getFullYear());
+
+    this.incomeService.getIncomeResume(mes, ano).subscribe(
       response => {
         if (response.success) {
           this.incomeResume = response.values;

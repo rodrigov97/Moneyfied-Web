@@ -1,5 +1,6 @@
 import { AfterViewInit, ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
-import { SelectionType } from '@swimlane/ngx-datatable';
+import { ColumnMode, SelectionType } from '@swimlane/ngx-datatable';
+import { Receita } from 'src/app/core/models/income.model';
 import { IncomeService } from '../income.service';
 
 @Component({
@@ -18,6 +19,7 @@ export class IncomeGridComponent implements OnInit, AfterViewInit {
   currentPage: number = 1;
   selectionType: SelectionType;
   selected: [] = [];
+  columnMode = ColumnMode;
 
   constructor(
     private incomeService: IncomeService,
@@ -48,6 +50,9 @@ export class IncomeGridComponent implements OnInit, AfterViewInit {
         formType: 'Alterar',
         data: event.row
       });
+    }
+    if (event.type === 'click') {
+      this.incomeService.selectedItem = new Receita(event.row);
     }
   }
 }
