@@ -6,6 +6,10 @@
 
   <div class="input-group">
 
+    <div *ngIf="append && type == 'number'" class="input-group-preppend">
+      <ng-content class="ng-content" select=".input-group-text"></ng-content>
+    </div>
+
     <ng-container [ngSwitch]="type">
 
       <input
@@ -18,6 +22,21 @@
         class="form-control"
         [readonly]="readonly"
         (blur)="onBlur()"
+      />
+
+      <input
+        *ngSwitchCase="'number'"
+        [name]="name"
+        [formControl]="control"
+        [id]="fieldId"
+        [placeholder]="placeholder"
+        [type]="'text'"
+        class="form-control align-input-right"
+        [readonly]="readonly"
+        (blur)="onBlur()"
+        (keyup)="onKeyUp($event)"
+        mask="separator.2"
+        thousandSeparator="."
       />
 
       <input
@@ -34,7 +53,7 @@
 
     </ng-container>
 
-    <div *ngIf="append" class="input-group-append">
+    <div *ngIf="append && type != 'number'" class="input-group-append">
       <ng-content class="ng-content" select=".input-group-text"></ng-content>
     </div>
 

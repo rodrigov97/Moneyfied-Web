@@ -30,9 +30,9 @@ export const MENUITEMS: MenuItem[] = [{
   Color: '#0277bd'
 }, {
   Icon: 'fas fa-plus-circle',
-  Name: 'Ganhos',
-  Tooltip: 'Seus ganhos',
-  Url: 'earnings',
+  Name: 'Renda',
+  Tooltip: 'Suas rendas',
+  Url: 'income',
   Color: '#13ca66'
 }, {
   Icon: 'fas fa-minus-circle',

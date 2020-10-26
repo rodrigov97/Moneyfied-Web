@@ -1,0 +1,34 @@
+<div [class.lableless]="!label" class="form-group" [class]="class">
+
+  <label [class.is-invalid]="isInvalid()" [for]="fieldId" *ngIf="!!label">
+    {{ label }}
+  </label>
+
+  <div class="input-group">
+
+      <select
+        [name]="name"
+        [formControl]="control"
+        class="form-control"
+      >
+
+        <option *ngFor="let item of items" [value]="item.value">{{item.value}}</option>
+      </select>
+
+    <div class="input-group-append">
+      <span class="icon-container input-group-text">
+        <i class="fas fa-chevron-down"></i>
+      </span>
+    </div>
+
+  </div>
+
+  <div>
+
+    <small *ngIf="isInvalid()" class="d-inline invalid-feedback">
+      {{ forceErrorMessage || errorMessage }}
+    </small>
+
+  </div>
+
+</div>

@@ -3,21 +3,28 @@ import { NgModule } from '@angular/core';
 
 import { AppComponent } from '../app.component';
 import { ErrorComponent } from './dialogs/error/error.component';
-import { SuccessComponent } from './dialogs/success/success.component';
-import { WarningComponent } from './dialogs/warning/warning.component';
 import { LoadSpinnerComponent } from './ui/load-spinner/load-spinner.component';
-import { TextInputComponent } from './components/text-input/text-input.component';
-import { ReactiveFormsModule } from '@angular/forms';
 import { MenuComponent } from './menu/menu.component';
 import { NavbarComponent } from './navbar/navbar.component';
-
+import { ReactiveFormsModule } from '@angular/forms';
+import { SuccessComponent } from './dialogs/success/success.component';
+import { TextInputComponent } from './components/text-input/text-input.component';
+import { WarningComponent } from './dialogs/warning/warning.component';
+import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+import { SelectComponent } from './components/select/select.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { DatepickerComponent } from './components/datepicker/datepicker.component';
+import { NgxMaskModule } from 'ngx-mask';
 
 
 @NgModule({
   imports: [
     // Angular
     CommonModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgxDatatableModule,
+    NgbModule,
+    NgxMaskModule.forChild()
   ],
   declarations: [
     // App
@@ -27,7 +34,9 @@ import { NavbarComponent } from './navbar/navbar.component';
     LoadSpinnerComponent,
     TextInputComponent,
     MenuComponent,
-    NavbarComponent
+    NavbarComponent,
+    SelectComponent,
+    DatepickerComponent
   ],
   exports: [
     // App
@@ -37,7 +46,9 @@ import { NavbarComponent } from './navbar/navbar.component';
     LoadSpinnerComponent,
     TextInputComponent,
     MenuComponent,
-    NavbarComponent
+    NavbarComponent,
+    SelectComponent,
+    DatepickerComponent
   ],
   bootstrap: [AppComponent]
 })

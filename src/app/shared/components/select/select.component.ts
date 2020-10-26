@@ -4,40 +4,20 @@ import { FormControl, AbstractControl, ValidationErrors } from '@angular/forms';
 import { Validations } from "src/app/core/services/validation-handler";
 import { ErrorHandlerService } from 'src/app/core/services/error-handler.service';
 
-export enum InputType {
-  Datetime = 'datetime',
-  Email = 'email',
-  Number = 'number',
-  Password = 'password',
-  Phone = 'phone',
-  Text = 'text',
-  Url = 'url',
-  Textarea = 'textarea',
-}
-
 @Component({
-  selector: 'app-text-input',
-  templateUrl: './text-input.component.html',
-  styleUrls: ['./text-input.component.scss']
+  selector: 'app-select',
+  templateUrl: './select.component.html',
+  styleUrls: ['./select.component.scss']
 })
-export class TextInputComponent extends Validations implements OnInit {
+export class SelectComponent extends Validations implements OnInit {
 
   @Input() label: string;
   @Input() fieldId: string;
   @Input() name: string;
-  @Input() type: string;
-  @Input() placeholder: string;
   @Input() control: FormControl = new FormControl();
   @Input() readonly: boolean = false;
-  @Input() append: boolean;
-  @Input() trim: boolean = false;
   @Input() class: string = '';
-
-  @Input() hasCounter: boolean;
-  @Input() max: number;
-  @Input() maxlength: number;
-  @Input() min: number;
-  @Input() minlength: number;
+  @Input() items: any;
 
   @Input() forceErrorMessage: string;
 
@@ -66,22 +46,10 @@ export class TextInputComponent extends Validations implements OnInit {
     return this.setErrorMessage(this.control);
   }
 
-  onBlur(): void {
-    this.fieldBlur.emit();
-    if (this.trim) { this.trimField(); }
-  }
-
   private trimField(): void {
     if (!this.control.value) { return; }
 
     const trimControl = this.control.value.trim();
     this.control.setValue(trimControl);
-  }
-
-  onKeyUp(event: any): void {
-    if (!this.control.value) { return; }
-
-    const spaceControl = this.control.value.replaceAll('.', '');
-    this.control.setValue(spaceControl);
   }
 }

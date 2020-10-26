@@ -1,5 +1,6 @@
 @import "./assets/style/variables";
 @import "./assets/style/_bootstrap-overrides";
+@import "./assets/style/ngx-datatable-style";
 @import "../node_modules/bootstrap/scss/bootstrap.scss";
 @import "../node_modules/bootstrap/scss/mixins/_breakpoints.scss";
 
@@ -14,10 +15,10 @@ p {
 
 * {
   user-select: none; /* supported by Chrome and Opera */
- -webkit-user-select: none; /* Safari */
- -khtml-user-select: none; /* Konqueror HTML */
- -moz-user-select: none; /* Firefox */
- -ms-user-select: none; /* Internet Explorer/Edge */
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
 }
 
 /* Defaults */
@@ -25,6 +26,7 @@ p {
 /* width */
 ::-webkit-scrollbar {
   width: 0.1875rem;
+  height: 0.1875rem;
 }
 
 /* Track */
@@ -66,4 +68,22 @@ button:focus {
 
 .click {
   cursor: pointer;
+}
+
+.no-border-radius {
+  border-radius: 0rem !important;
+}
+
+/* Alignment Classes*/
+
+.align-center {
+  text-align: center !important;
+}
+
+.align-left {
+  text-align: left !important;
+}
+
+.align-right {
+  text-align: right !important;
 }

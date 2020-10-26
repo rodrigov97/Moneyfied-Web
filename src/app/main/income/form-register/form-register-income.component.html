@@ -1,0 +1,55 @@
+<ng-template #formModal let-modal data-keyboard="false" data-backdrop="static">
+  <app-load-spinner *ngIf="isLoading"></app-load-spinner>
+  <div *ngIf="!isLoading">
+    <div class="modal-header">
+      <h5 class="modal-title">
+        <i>
+
+        </i>
+        {{formType}} - {{form}}
+      </h5>
+    </div>
+    <form [formGroup]="formIncome">
+      <div class="modal-body">
+
+        <app-text-input
+          [control]="descricao"
+          [trim]="true"
+          fieldId="descricao"
+          label="Descrição"
+          name="descricao"
+          placeholder="Descrição"
+          type="text"
+        ></app-text-input>
+
+        <app-text-input
+          [append]="true"
+          [control]="valor"
+          [trim]="true"
+          fieldId="valor"
+          label="Valor"
+          name="valor"
+          placeholder="0,00"
+          type="number"
+        >
+            <span class="icon-container input-group-text">
+              R$
+            </span>
+        </app-text-input>
+
+        <app-datepicker
+          [control]="dataRecebimento"
+          fieldId="dataRecebimento"
+          label="Data de Recebimento"
+          name="dataRecebimento"
+        ></app-datepicker>
+
+      </div>
+        <div class="modal-footer d-flex">
+          <button type="button" class="btn btn-cancel" (click)="onClose()" data-dismiss="modal">Cancelar</button>
+          <span class="fill"></span>
+          <button type="button" class="btn btn-add" (click)="incomeOperations()" data-dismiss="modal">Salvar</button>
+        </div>
+    </form>
+  </div>
+</ng-template>

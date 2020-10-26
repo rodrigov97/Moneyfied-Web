@@ -1,5 +1,5 @@
 <section class="top-bar d-flex align-items-center" (window:resize)="onResize()">
-  <button (click)="toggleMenu()" class="btn menu-toggler">
+  <button *ngIf="isMobile" (click)="toggleMenu()" class="btn menu-toggler">
     <i class="fa fa-bars"></i>
   </button>
   <span class="fill"></span>

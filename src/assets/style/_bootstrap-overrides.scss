@@ -5,6 +5,8 @@
 
 textarea,
 textarea.form-control,
+select,
+select.form-control,
 input.form-control,
 input[type="text"],
 input[type="password"],
@@ -20,6 +22,8 @@ input[type="number"],
 
 textarea:focus,
 textarea.form-control:focus,
+select:focus,
+select.form-control:focus,
 input.form-control:focus,
 input[type="text"]:focus,
 input[type="password"]:focus,
@@ -34,6 +38,20 @@ input[type="number"]:focus,
   border: 0.0625rem solid $indigo-light;
 }
 
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+.align-input-right {
+  text-align: right !important;
+}
+
 button,
 button:focus,
 button:active,
@@ -42,6 +60,7 @@ button:active,
 .btn:active {
   outline: none !important;
   box-shadow: none !important;
+  border-radius: 0rem !important;
   border: none;
 }
 
@@ -51,10 +70,18 @@ button:active,
   background-color: $indigo;
 }
 
-.btn.btn-primary:active,
 .btn.btn-primary:focus,
 .btn.btn-primary:hover {
   background-color: $indigo-light !important;
+}
+
+.btn.btn-primary:active {
+  background-color: $indigo !important;
+}
+
+.btn.btn-add:active {
+  background-color: $green !important;
+  color: $white;
 }
 
 .btn.btn-secondary {
@@ -63,10 +90,49 @@ button:active,
   background-color: $lignt-blue;
 }
 
-.btn.btn-secondary:active,
 .btn.btn-secondary:focus,
 .btn.btn-secondary:hover {
   background-color: $lignt-blue-light !important;
+}
+
+.btn.btn-secondary:active {
+  background-color: $lignt-blue !important;
+}
+
+.btn.btn-add {
+  border: none;
+  border-radius: 0rem !important;
+  background-color: $green;
+  color: $white;
+}
+
+.btn.btn-add i {
+  margin-right: 0.625rem;
+  color: $white;
+}
+
+.btn.btn-add:focus,
+.btn.btn-add:hover {
+  background-color: $green-light !important;
+  color: $white;
+}
+
+.btn.btn-cancel {
+  border: none;
+  border-radius: 0rem !important;
+  background-color: $red;
+  color: $white;
+}
+
+.btn.btn-cancel i {
+  margin-right: 0.625rem;
+  color: $white;
+}
+
+.btn.btn-cancel:focus,
+.btn.btn-cancel:hover {
+  background-color: $red-light !important;
+  color: $white;
 }
 
 .btn-success,
@@ -87,8 +153,8 @@ button:active,
 }
 
 .modal-content {
-  border-radius: 0rem;
-  border: none;
+  border-radius: 0rem !important;
+  border: none !important;
 }
 
 .modal-header,
@@ -103,6 +169,13 @@ button:active,
   border-radius: 0rem;
 }
 
+.input-group-preppend span {
+  background-color: transparent;
+  border-radius: 0rem;
+  height: 100%;
+  border-right: none;
+}
+
 .input-group-text i {
   color: inherit;
 }
@@ -110,4 +183,43 @@ button:active,
 .form-control:disabled,
 .form-control[readonly] {
   background-color: $white !important;
+}
+
+/* NgBootstrap */
+
+ngb-datepicker {
+  position: absolute;
+  background-color: $white;
+  border-radius: 0 !important;
+
+  .ngb-dp-header,
+  .ngb-dp-weekdays {
+    background-color: $whitesmoke;
+  }
+
+  .ngb-dp-weekday {
+    color: $blue-grey;
+    font-style: normal;
+  }
+
+  .btn-light:focus {
+    outline: none !important;
+    border-radius: 0 !important;
+    border: 1px solid $blue-grey !important;
+  }
+
+  .btn-light.bg-primary {
+    background-color: $blue-grey !important;
+    border-radius: 0 !important;
+    color: $white !important;
+  }
+
+  select.custom-select {
+    box-shadow: none !important;
+  }
+
+  select.custom-select:focus {
+    box-shadow: none !important;
+    border: 0.0625rem solid $blue-grey !important;
+  }
 }

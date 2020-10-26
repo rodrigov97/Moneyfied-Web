@@ -40,10 +40,6 @@ export class NavbarComponent implements OnInit {
     this.dataService.toggleMenuView(!this.isMobile);
   }
 
-  hideItemName(): void {
-    this.hideName = !this.hideName;
-  }
-
   toggleMenu(): void {
     var toggleValue = !this.hideMenu;
     this.dataService.toggleMenuView(toggleValue);
