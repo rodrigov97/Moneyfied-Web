@@ -16,6 +16,8 @@
 
         <button class="delete btn btn-cancel" (click)="removeIncome()"><i class="fas fa-times"></i>Excluir Receita</button>
 
+        <button class="category btn btn-add" (click)="callFormCategory()"><i class="fas fa-list"></i>Categorias</button>
+
         <hr>
 
         <button class="btn btn-add" (click)="filterData()"><i class="fas fa-filter"></i>Filtrar</button>
@@ -53,4 +55,5 @@
     </div>
   </div>
   <app-form-register-income></app-form-register-income>
+  <app-form-category></app-form-category>
 </section>

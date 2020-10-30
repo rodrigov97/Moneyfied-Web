@@ -15,7 +15,6 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { ProfileService } from './my-profile/profile.service';
 import { ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../shared/shared.module';
-import { IncomeInfoComponent } from './income/income-info/income-info.component';
 import { IncomeModule } from './income/income.module';
 
 @NgModule({

@@ -159,6 +159,13 @@ export class IncomeComponent implements OnInit, OnDestroy {
     });
   }
 
+  callFormCategory(): void {
+    this.incomeService.openFormCategory({
+      command: 'open',
+      formType: 'Cadastro'
+    });
+  }
+
   removeIncome(): void {
     if (this.incomeService.selectedItem) {
       var receitaId = this.incomeService.selectedItem.ReceitaId;

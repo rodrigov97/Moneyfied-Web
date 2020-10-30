@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { ApiClient } from 'src/app/core/clients/api.client';
 import { Receita } from 'src/app/core/models/income.model';
+import { CategoriaReceita } from 'src/app/core/models/incomeCategory.model';
 import { LocalStorageService } from 'src/app/core/services/local-storage.service';
 
 @Injectable({
@@ -12,7 +13,8 @@ export class IncomeService {
 
   private reloadGrid = new Subject<any>();
   private changePage = new Subject<any>();
-  private openForm = new Subject<any>();
+  private openIncomeForm = new Subject<any>();
+  private openCategoryForm = new Subject<any>();
 
   gridCurrentPage: number = 1;
 
@@ -22,14 +24,6 @@ export class IncomeService {
     private apiClient: ApiClient,
     private storageService: LocalStorageService
   ) { }
-
-  openFormIncome(pageNumber: any): void {
-    this.openForm.next(pageNumber);
-  }
-
-  callOpenFormIncome(): Observable<any> {
-    return this.openForm.asObservable();
-  }
 
   getIncome(start: number, limit: number, month: number, year: number): Observable<any> {
     const path = `income/get/?start=${start}&limit=${limit}&userId=${this.storageService.userId}&month=${month}&year=${year}`;
@@ -59,6 +53,46 @@ export class IncomeService {
     const path = `income/update`;
 
     return this.apiClient.put(path, incomeInfo);
+  }
+
+  getCategories(): Observable<any> {
+    const path = `income/categories/get`;
+
+    return this.apiClient.get(path);
+  }
+
+  createCategory(category: CategoriaReceita): Observable<any> {
+    const path = `income/categories/create`;
+
+    return this.apiClient.post(path, category);
+  }
+
+  deleteCategory(categoryId: number): Observable<any> {
+    const path = `income/categories/delete?Id=${categoryId}`;
+
+    return this.apiClient.delete(path);
+  }
+
+  updateCategory(category: CategoriaReceita): Observable<any> {
+    const path = `income/categories/update`;
+
+    return this.apiClient.put(path, category);
+  }
+
+  openFormIncome(data: any): void {
+    this.openIncomeForm.next(data);
+  }
+
+  callOpenFormIncome(): Observable<any> {
+    return this.openIncomeForm.asObservable();
+  }
+
+  openFormCategory(data: any): void {
+    this.openCategoryForm.next(data);
+  }
+
+  callOpenFormCategory(): Observable<any> {
+    return this.openCategoryForm.asObservable();
   }
 
   reloadGridEvent() {

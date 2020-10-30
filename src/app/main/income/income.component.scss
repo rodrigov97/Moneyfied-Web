@@ -76,6 +76,10 @@ ul .content-margin {
   margin-top: 0.625rem;
 }
 
+.category {
+  margin-top: 0.625rem;
+}
+
 @include media-breakpoint-up(lg) {
   .income-filters {
     width: 40%;
