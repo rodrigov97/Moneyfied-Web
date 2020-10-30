@@ -119,6 +119,7 @@ export class MyProfileComponent implements OnInit {
 
   cancelEditing(): void {
     this.formDisabled = !this.formDisabled;
+    this.formState();
     this.formProfile.reset();
     this.loadUserInfo();
   }

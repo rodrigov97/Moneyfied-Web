@@ -92,6 +92,15 @@ export class DateService {
     }
   }
 
+  buildDateDefaultFormat(date: string): Date {
+    var dateParts = date.split("/"),
+      year = parseInt(dateParts[2]),
+      month = parseInt(dateParts[1]) - 1,
+      day = parseInt(dateParts[0]);
+
+    return new Date(year, month, day);
+  }
+
   getMonthNumber(name: string): number {
     var month = this.months.find(month => month.value === name);
     return month.number;

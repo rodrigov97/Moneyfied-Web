@@ -102,7 +102,7 @@ export class FormRegisterIncomeComponent implements OnInit, OnDestroy {
     this.formIncome.setValue({
       Descricao: this.formValue.Descricao,
       Valor: this.formValue.Valor,
-      DataRecebimento: new Date(this.formValue.DataRecebimento),
+      DataRecebimento: this.dateService.buildDateDefaultFormat(this.formValue.DataRecebimento),
     });
   }
 

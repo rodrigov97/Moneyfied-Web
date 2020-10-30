@@ -231,6 +231,15 @@ export class IncomeComponent implements OnInit, OnDestroy {
         if (response.success) {
           this.incomeResume = response.values;
         }
+        else {
+          this.incomeResume = {
+            MaxDesc: '-',
+            MaxValue: '0',
+            MinDesc: '-',
+            MinValue: '0',
+            TotalValue: '0',
+          };
+        }
       });
   }
 }
