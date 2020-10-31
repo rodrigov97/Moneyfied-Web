@@ -55,20 +55,20 @@ export class IncomeService {
     return this.apiClient.put(path, incomeInfo);
   }
 
-  getCategories(): Observable<any> {
-    const path = `income/categories/get`;
+  getCategories(userId: number): Observable<any> {
+    const path = `income/categories/get?userId=${userId}`;
 
     return this.apiClient.get(path);
   }
 
   createCategory(category: CategoriaReceita): Observable<any> {
-    const path = `income/categories/create`;
+    const path = `income/categories/insert`;
 
     return this.apiClient.post(path, category);
   }
 
   deleteCategory(categoryId: number): Observable<any> {
-    const path = `income/categories/delete?Id=${categoryId}`;
+    const path = `income/categories/delete?CategoriaId=${categoryId}`;
 
     return this.apiClient.delete(path);
   }

@@ -3,6 +3,7 @@ import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/fo
 import { NgbModal, NgbModalOptions, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { Subscription } from 'rxjs';
 import { CategoriaReceita } from 'src/app/core/models/incomeCategory.model';
+import { LocalStorageService } from 'src/app/core/services/local-storage.service';
 import { IncomeService } from '../income.service';
 
 @Component({
@@ -31,22 +32,24 @@ export class FormCategoryComponent implements OnInit, OnDestroy {
   edit: boolean = false;
   type: string = 'Lista';
 
+  currentCategoryId: number = 0;
+
   constructor(
     private incomeService: IncomeService,
     private modalService: NgbModal,
+    private localStorage: LocalStorageService
   ) {
 
     this.formCategory = new FormGroup({
-      Categoria: new FormControl(null, [Validators.required])
+      Nome: new FormControl(null, [Validators.required])
     });
   }
 
   get category(): AbstractControl {
-    return this.formCategory.get('Categoria');
+    return this.formCategory.get('Nome');
   }
 
   ngOnInit(): void {
-    this.loadCategories();
   }
 
   ngOnDestroy(): void {
@@ -63,6 +66,8 @@ export class FormCategoryComponent implements OnInit, OnDestroy {
       if (value.command === 'open') {
         this.formType = value.formType;
 
+        this.loadCategories();
+
         this.myModal = this.modalService.open(this.modal, this.modalOption);
 
         if (this.formType === 'Alterar')
@@ -78,9 +83,12 @@ export class FormCategoryComponent implements OnInit, OnDestroy {
   }
 
   loadCategories(): void {
-    this.incomeService.getCategories().subscribe(
+    this.isLoading = true;
+
+    this.incomeService.getCategories(this.localStorage.userId).subscribe(
       response => {
         if (response.success) {
+          this.isLoading = false;
           this.categories = response.categories;
         }
       });
@@ -88,26 +96,37 @@ export class FormCategoryComponent implements OnInit, OnDestroy {
 
   getCategoryId(name: string): number {
     var category = this.categories.find(category => category.value === name);
-    return category.number;
+    return category.CategoriaReceitaId;
   }
 
   deleteCategory(): void {
-    var categoryId = this.getCategoryId(this.category.value);
+    if (this.formIsValid) {
+      var categoryId = this.getCategoryId(this.category.value);
+      this.isLoading = true;
 
-    this.incomeService.deleteCategory(categoryId).subscribe(
-      response => {
-
-      });
+      this.incomeService.deleteCategory(categoryId).subscribe(
+        response => {
+          if (response.success) {
+            this.isLoading = false;
+            this.loadCategories();
+          }
+        });
+    }
   }
 
   editCategory(): void {
-    this.edit = !this.edit;
-    this.type = 'Editar';
+    if (this.formIsValid) {
+      this.edit = !this.edit;
+      this.type = 'Editar';
+
+      this.currentCategoryId = this.getCategoryId(this.category.value);
+    }
   }
 
   addCategory(): void {
     this.edit = !this.edit;
     this.type = 'Cadastrar';
+    this.formCategory.reset();
   }
 
   saveCategory(): void {
@@ -125,23 +144,38 @@ export class FormCategoryComponent implements OnInit, OnDestroy {
 
   create(): void {
     var category = new CategoriaReceita(this.formCategory.value);
+    this.isLoading = true;
+
+    category.UsuarioId = this.localStorage.userId;
 
     this.incomeService.createCategory(category).subscribe(
       response => {
-
+        if (response.success) {
+          this.isLoading = false;
+          this.loadCategories();
+          this.cancel();
+        }
       });
   }
 
   update(): void {
     var category = new CategoriaReceita(this.formCategory.value);
 
+    category.CategoriaReceitaId = this.currentCategoryId;
+    category.UsuarioId = this.localStorage.userId;
+
     this.incomeService.updateCategory(category).subscribe(
       response => {
-
+        if (response.success) {
+          this.isLoading = false;
+          this.loadCategories();
+          this.cancel();
+        }
       });
   }
 
   get formIsValid(): boolean {
+    this.formCategory.markAllAsTouched();
     return this.formCategory.valid;
   }
 
@@ -158,7 +192,7 @@ export class FormCategoryComponent implements OnInit, OnDestroy {
 
   resetFormValue(): void {
     this.formCategory.setValue({
-      Categoria: null
+      Nome: ''
     });
     this.formCategory.markAsUntouched();
   }
