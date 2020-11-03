@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ReceitaResumo } from 'src/app/core/models/income.model';
+import { ReceitaResumo } from 'src/app/core/models/receita.model';
 
 @Component({
   selector: 'app-income-info',

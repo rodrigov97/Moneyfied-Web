@@ -2,9 +2,10 @@ import { flatten } from '@angular/compiler';
 import { Component, OnInit, ElementRef, ViewChild, ChangeDetectorRef, OnDestroy } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
-import { Receita } from 'src/app/core/models/income.model';
+import { Receita } from 'src/app/core/models/receita.model';
 import { CustomValidators } from 'src/app/core/services/custom-validators';
 import { DateAttributes, DateService } from 'src/app/core/services/date.service';
+import { LocalStorageService } from 'src/app/core/services/local-storage.service';
 import { ResponsiveService } from 'src/app/core/services/responsive.service';
 import { DataService } from 'src/app/shared/data.service';
 import { IncomeService } from './income.service';
@@ -31,6 +32,8 @@ export class IncomeComponent implements OnInit, OnDestroy {
 
   isLoading: boolean = false;
 
+  categoryItems: any = []
+
   columns: any = [];
   rows: Receita[] = [];
   rowCount: number;
@@ -44,9 +47,11 @@ export class IncomeComponent implements OnInit, OnDestroy {
 
   currentMonthFilter: number;
   currentYearFilter: number;
+  currentCategoryId: number = 0;
 
   constructor(
     private responsiveService: ResponsiveService,
+    private localStorage: LocalStorageService,
     private dateService: DateService,
     private dataService: DataService,
     private dataChanged: ChangeDetectorRef,
@@ -59,17 +64,18 @@ export class IncomeComponent implements OnInit, OnDestroy {
     this.formFilters = new FormGroup({
       Mes: new FormControl(this.currentMonth(month)),
       Ano: new FormControl(year),
+      Categoria: new FormControl('Nenhum')
     });
 
     this.reloadEventSub = this.incomeService.callReloadGridFunction().subscribe(
       () => {
-        this.getIncomeData(this.incomeService.gridCurrentPage, this.currentMonthFilter, this.currentYearFilter);
+        this.getIncomeData(this.incomeService.gridCurrentPage, this.currentCategoryId, this.currentMonthFilter, this.currentYearFilter);
         this.getIncomeResume(this.currentMonthFilter, this.currentYearFilter);
       });
 
     this.changePageEventSub = this.incomeService.callGridPageChange().subscribe(
       page => {
-        this.getIncomeData(page)
+        this.getIncomeData(page, 0)
       });
   }
 
@@ -81,6 +87,10 @@ export class IncomeComponent implements OnInit, OnDestroy {
     return this.formFilters.get('Ano');
   }
 
+  get category(): AbstractControl {
+    return this.formFilters.get('Categoria');
+  }
+
   get months(): DateAttributes[] {
     return this.dateService.months;
   }
@@ -89,6 +99,7 @@ export class IncomeComponent implements OnInit, OnDestroy {
     return this.dateService.years;
   }
 
+
   ngOnInit(): void {
     var date = new Date(),
       month = date.getMonth() + 1,
@@ -96,8 +107,9 @@ export class IncomeComponent implements OnInit, OnDestroy {
 
 
 
-    this.getIncomeData(1);
+    this.getIncomeData(1, 0);
     this.getIncomeResume(month, year);
+    this.loadCategories();
   }
 
   ngOnDestroy(): void {
@@ -121,6 +133,11 @@ export class IncomeComponent implements OnInit, OnDestroy {
     this.setGridColumns();
   }
 
+  getCategoryId(name: string): number {
+    var category = this.categoryItems.find(category => category.value === name);
+    return category.CategoriaReceitaId;
+  }
+
   setGridColumns(): void {
     if (!this.isMobile) {
       this.columns = [{
@@ -128,7 +145,9 @@ export class IncomeComponent implements OnInit, OnDestroy {
       }, {
         name: 'Valor (R$)', prop: 'Valor', flex: 1, align: 'align-right'
       }, {
-        name: 'Data de Recebimento', prop: 'DataRecebimento', flex: 1, align: 'align-center'
+        name: 'Categoria', prop: 'Categoria', flex: 1, align: 'align-center'
+      }, {
+        name: 'Data de Recebimento', prop: 'DataRecebimento', flex: 1.2, align: 'align-center'
       }];
     }
     else {
@@ -174,7 +193,7 @@ export class IncomeComponent implements OnInit, OnDestroy {
       this.incomeService.deleteIncome(receitaId).subscribe(
         response => {
           if (response.success) {
-            this.getIncomeData(this.incomeService.gridCurrentPage, this.currentMonthFilter, this.currentYearFilter);
+            this.getIncomeData(this.incomeService.gridCurrentPage, this.currentCategoryId, this.currentMonthFilter, this.currentYearFilter);
             this.getIncomeResume(this.currentMonthFilter, this.currentYearFilter);
             this.loadingIndicator = false;
           }
@@ -195,25 +214,37 @@ export class IncomeComponent implements OnInit, OnDestroy {
 
     this.currentMonthFilter = month;
     this.currentYearFilter = year;
+    this.currentCategoryId = this.getCategoryId(this.category.value);
 
-    this.getIncomeData(1, month, year);
+    this.getIncomeData(1, this.currentCategoryId, month, year);
     this.getIncomeResume(month, year);
   }
 
-  getIncomeData(page: number, month?: number, year?: number): void {
+  getIncomeData(page: number, categoryId: number, month?: number, year?: number): void {
     var currentPage = this.getPage(page),
       date = new Date(),
       mes = month ? month : (this.currentMonthFilter ? this.currentMonthFilter : date.getMonth() + 1),
-      ano = year ? year : (this.currentYearFilter ? this.currentYearFilter : date.getFullYear());
+      ano = year ? year : (this.currentYearFilter ? this.currentYearFilter : date.getFullYear()),
+      categoryId = categoryId === undefined ? 0 : categoryId;
 
 
 
     this.loadingIndicator = true;
-    this.incomeService.getIncome(currentPage, this.limit, mes, ano).subscribe(
+    this.incomeService.getIncome(currentPage, this.limit, categoryId, mes, ano).subscribe(
       response => {
         this.rowCount = response.totalLinhas;
         this.rows = response.receitas;
         this.loadingIndicator = false;
+      });
+  }
+
+  loadCategories(): void {
+    this.incomeService.getCategories(this.localStorage.userId).subscribe(
+      response => {
+        if (response.success) {
+          response.categories.unshift({ value: 'Nenhum', CategoriId: 0 });
+          this.categoryItems = response.categories;
+        }
       });
   }
 

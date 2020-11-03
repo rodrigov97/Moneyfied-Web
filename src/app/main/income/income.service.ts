@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { ApiClient } from 'src/app/core/clients/api.client';
-import { Receita } from 'src/app/core/models/income.model';
-import { CategoriaReceita } from 'src/app/core/models/incomeCategory.model';
+import { Receita } from 'src/app/core/models/receita.model';
+import { CategoriaReceita } from 'src/app/core/models/receitaCategoria.model';
 import { LocalStorageService } from 'src/app/core/services/local-storage.service';
 
 @Injectable({
@@ -25,8 +25,8 @@ export class IncomeService {
     private storageService: LocalStorageService
   ) { }
 
-  getIncome(start: number, limit: number, month: number, year: number): Observable<any> {
-    const path = `income/get/?start=${start}&limit=${limit}&userId=${this.storageService.userId}&month=${month}&year=${year}`;
+  getIncome(start: number, limit: number, categoryId: number, month: number, year: number): Observable<any> {
+    const path = `income/get/?start=${start}&limit=${limit}&userId=${this.storageService.userId}&categoryId=${categoryId}&month=${month}&year=${year}`;
 
     return this.apiClient.get(path);
   }

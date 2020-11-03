@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 import { NgbModal, NgbModalOptions, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { Subscription } from 'rxjs';
-import { CategoriaReceita } from 'src/app/core/models/incomeCategory.model';
+import { CategoriaReceita } from 'src/app/core/models/receitaCategoria.model';
 import { LocalStorageService } from 'src/app/core/services/local-storage.service';
 import { IncomeService } from '../income.service';
 

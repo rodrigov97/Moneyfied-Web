@@ -2,7 +2,7 @@ import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/co
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 import { NgbModal, NgbModalOptions, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { Subscription } from 'rxjs';
-import { Receita } from 'src/app/core/models/income.model';
+import { Receita } from 'src/app/core/models/receita.model';
 import { DateService } from 'src/app/core/services/date.service';
 import { LocalStorageService } from 'src/app/core/services/local-storage.service';
 import { NumberHandlerService } from 'src/app/core/services/number-handler.service';
@@ -39,6 +39,8 @@ export class FormRegisterIncomeComponent implements OnInit, OnDestroy {
 
   subFormIncome: Subscription;
 
+  categoryItems: any = [];
+
   constructor(
     private modalService: NgbModal,
     private dateService: DateService,
@@ -51,6 +53,7 @@ export class FormRegisterIncomeComponent implements OnInit, OnDestroy {
       Descricao: new FormControl(null, [Validators.required]),
       Valor: new FormControl(null, [Validators.required]),
       DataRecebimento: new FormControl(new Date(), [Validators.required]),
+      Categoria: new FormControl(null, [Validators.required])
     });
   }
 
@@ -66,10 +69,16 @@ export class FormRegisterIncomeComponent implements OnInit, OnDestroy {
     return this.formIncome.get('DataRecebimento');
   }
 
+  get categoria(): AbstractControl {
+    return this.formIncome.get('Categoria');
+  }
+
   ngOnInit(): void {
     if (this.form === 'Alterar') {
       this.setIncomeItem();
     }
+
+    this.loadCategories();
   }
 
   ngAfterViewInit() {
@@ -102,8 +111,19 @@ export class FormRegisterIncomeComponent implements OnInit, OnDestroy {
     this.formIncome.setValue({
       Descricao: this.formValue.Descricao,
       Valor: this.formValue.Valor,
+      Categoria: this.setCategory(this.formValue.CategoriaReceitaId),
       DataRecebimento: this.dateService.buildDateDefaultFormat(this.formValue.DataRecebimento),
     });
+  }
+
+  loadCategories(): void {
+    this.incomeService.getCategories(this.storageService.userId).subscribe(
+      response => {
+        if (response.success) {
+          response.categories.unshift({ value: 'Nenhum', CategoriId: 0 });
+          this.categoryItems = response.categories;
+        }
+      });
   }
 
   incomeOperations(): void {
@@ -123,6 +143,7 @@ export class FormRegisterIncomeComponent implements OnInit, OnDestroy {
     var formValue = {
       ReceitaId: null,
       UsuarioId: null,
+      CategoriaReceitaId: this.getCategoryId(this.categoria.value),
       Descricao: this.descricao.value,
       Valor: this.numberHandler.formatValue(this.valor.value),
       DataRecebimento: this.dateService.buildDateObj(this.dataRecebimento.value)
@@ -151,6 +172,7 @@ export class FormRegisterIncomeComponent implements OnInit, OnDestroy {
     var formValue = {
       ReceitaId: this.formValue.ReceitaId,
       UsuarioId: this.formValue.UsuarioId,
+      CategoriaReceitaId: this.getCategoryId(this.categoria.value),
       Descricao: this.descricao.value,
       Valor: this.numberHandler.formatValue(this.valor.value),
       DataRecebimento: this.dateService.buildDateObj(this.dataRecebimento.value)
@@ -175,6 +197,16 @@ export class FormRegisterIncomeComponent implements OnInit, OnDestroy {
       });
   }
 
+  getCategoryId(name: string): number {
+    var category = this.categoryItems.find(category => category.value === name);
+    return category.CategoriaReceitaId;
+  }
+
+  setCategory(id: number): number {
+    var category = this.categoryItems.find(category => category.CategoriaReceitaId === id);
+    return category.value;
+  }
+
   onClose(): void {
     this.resetFormValue();
     this.modalService.dismissAll();
@@ -184,6 +216,7 @@ export class FormRegisterIncomeComponent implements OnInit, OnDestroy {
     this.formIncome.setValue({
       Descricao: null,
       Valor: null,
+      Categoria: null,
       DataRecebimento: new Date()
     });
     this.formIncome.markAsUntouched();

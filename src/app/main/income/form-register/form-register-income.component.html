@@ -30,6 +30,13 @@
         >
         </app-text-input>
 
+        <app-select
+          name="nome"
+          label="Categoria"
+          [items]="categoryItems"
+          [control]="categoria"
+        ></app-select>
+
         <app-datepicker
           [control]="dataRecebimento"
           fieldId="dataRecebimento"

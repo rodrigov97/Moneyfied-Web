@@ -1,6 +1,6 @@
 import { AfterViewInit, ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { ColumnMode, SelectionType } from '@swimlane/ngx-datatable';
-import { Receita } from 'src/app/core/models/income.model';
+import { Receita } from 'src/app/core/models/receita.model';
 import { IncomeService } from '../income.service';
 
 @Component({
