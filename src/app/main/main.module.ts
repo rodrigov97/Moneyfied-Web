@@ -16,6 +16,7 @@ import { ProfileService } from './my-profile/profile.service';
 import { ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../shared/shared.module';
 import { IncomeModule } from './income/income.module';
+import { ExpenseModule } from './expense/expense.module';
 
 @NgModule({
   imports: [
@@ -26,7 +27,8 @@ import { IncomeModule } from './income/income.module';
     ReactiveFormsModule,
     NgxDatatableModule,
     SharedModule,
-    IncomeModule
+    IncomeModule,
+    ExpenseModule
   ],
   declarations: [
     // App

@@ -1,17 +1,16 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
-import { NgbModal, NgbModalOptions, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { FormGroup, FormControl, Validators, AbstractControl } from '@angular/forms';
+import { NgbModalOptions, NgbModalRef, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Subscription } from 'rxjs';
-import { CategoriaReceita } from 'src/app/core/models/receitaCategoria.model';
 import { LocalStorageService } from 'src/app/core/services/local-storage.service';
-import { IncomeService } from '../income.service';
+import { ExpenseService } from '../expense.service';
 
 @Component({
-  selector: 'app-form-category',
-  templateUrl: './form-category.component.html',
-  styleUrls: ['./form-category.component.scss']
+  selector: 'app-form-category-expense',
+  templateUrl: './form-category-expense.component.html',
+  styleUrls: ['./form-category-expense.component.scss']
 })
-export class FormCategoryComponent implements OnInit, OnDestroy {
+export class FormCategoryComponent implements OnInit {
 
   modalOption: NgbModalOptions = {};
 
@@ -35,7 +34,7 @@ export class FormCategoryComponent implements OnInit, OnDestroy {
   currentCategoryId: number = 0;
 
   constructor(
-    private incomeService: IncomeService,
+    private expenseService: ExpenseService,
     private modalService: NgbModal,
     private localStorage: LocalStorageService
   ) {
@@ -62,7 +61,7 @@ export class FormCategoryComponent implements OnInit, OnDestroy {
     this.modalOption.centered = true;
     this.modalOption.windowClass = 'no-border-radius';
 
-    this.subFormCategory = this.incomeService.callOpenFormCategory().subscribe(value => {
+    this.subFormCategory = this.expenseService.callOpenFormCategory().subscribe(value => {
       if (value.command === 'open') {
         this.formType = value.formType;
 
@@ -83,35 +82,16 @@ export class FormCategoryComponent implements OnInit, OnDestroy {
   }
 
   loadCategories(): void {
-    this.isLoading = true;
 
-    this.incomeService.getCategories(this.localStorage.userId).subscribe(
-      response => {
-        if (response.success) {
-          this.isLoading = false;
-          this.categories = response.categories;
-        }
-      });
   }
 
   getCategoryId(name: string): number {
     var category = this.categories.find(category => category.value === name);
-    return category.CategoriaReceitaId;
+    return category.CategoriaDespesaId;
   }
 
   deleteCategory(): void {
-    if (this.formIsValid) {
-      var categoryId = this.getCategoryId(this.category.value);
-      this.isLoading = true;
 
-      this.incomeService.deleteCategory(categoryId).subscribe(
-        response => {
-          if (response.success) {
-            this.isLoading = false;
-            this.loadCategories();
-          }
-        });
-    }
   }
 
   editCategory(): void {
@@ -143,35 +123,11 @@ export class FormCategoryComponent implements OnInit, OnDestroy {
   }
 
   create(): void {
-    var category = new CategoriaReceita(this.formCategory.value);
-    this.isLoading = true;
 
-    category.UsuarioId = this.localStorage.userId;
-
-    this.incomeService.createCategory(category).subscribe(
-      response => {
-        if (response.success) {
-          this.isLoading = false;
-          this.loadCategories();
-          this.cancel();
-        }
-      });
   }
 
   update(): void {
-    var category = new CategoriaReceita(this.formCategory.value);
 
-    category.CategoriaReceitaId = this.currentCategoryId;
-    category.UsuarioId = this.localStorage.userId;
-
-    this.incomeService.updateCategory(category).subscribe(
-      response => {
-        if (response.success) {
-          this.isLoading = false;
-          this.loadCategories();
-          this.cancel();
-        }
-      });
   }
 
   get formIsValid(): boolean {

@@ -30,6 +30,18 @@
         class="form-control align-input-right"
         [readonly]="readonly"
         (blur)="onBlur()"
+      />
+
+      <input
+        *ngSwitchCase="'decimal-number'"
+        [name]="name"
+        [formControl]="control"
+        [id]="fieldId"
+        [placeholder]="placeholder"
+        [type]="'text'"
+        class="form-control align-input-right"
+        [readonly]="readonly"
+        (blur)="onBlur()"
         (keyup)="onKeyUp($event)"
         mask="separator.2"
         thousandSeparator="."

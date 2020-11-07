@@ -1,0 +1,131 @@
+@import "../../../assets/style/_variables.scss";
+@import "../../../../node_modules/bootstrap/scss/mixins/_breakpoints.scss";
+
+section {
+  height: 100%;
+  width: 100%;
+  background-color: $whitesmoke;
+}
+
+i {
+  margin-left: 0.625rem;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+ul .title {
+  width: 11.5625rem;
+  padding: 0.3125rem 0.625rem;
+  margin-bottom: -0.625rem;
+  margin-left: 0.625rem !important;
+  background-color: $red-dark;
+  color: $white;
+  position: relative;
+  z-index: 1;
+}
+
+ul .content {
+  padding: 0.9375rem 0.9375rem;
+  background-color: $white;
+  //box-shadow: 2px 2px 5px -2px rgba(133, 133, 133, 0.75);
+}
+
+ul .content-margin {
+  margin: 0rem 0.625rem 0.625rem 0;
+}
+
+.last {
+  margin: 0rem 0rem 0.625rem 0 !important;
+}
+
+/* Lista de Gastos */
+
+.data {
+  margin-top: 0.625rem;
+  width: 100%;
+}
+
+.expense-list,
+.expense-filters {
+  background-color: $white;
+}
+
+.expense-filters {
+  padding: 0.625rem;
+  box-sizing: border-box;
+}
+
+.expense-filters button {
+  width: 100%;
+}
+
+.icon-container {
+  text-align: center;
+}
+
+.delete {
+  margin-top: 0.625rem;
+}
+
+.category {
+  margin-top: 0.625rem;
+}
+
+.btn-cancel {
+  background-color: $red;
+}
+
+.btn.btn-add-expense {
+  border: none;
+  border-radius: 0rem !important;
+  background-color: $red-dark;
+  color: $white;
+}
+
+.btn.btn-add-expense i {
+  margin-right: 0.625rem;
+  color: $white;
+}
+
+.btn.btn-add-expense:focus,
+.btn.btn-add-expense:hover {
+  background-color: $red-light !important;
+  color: $white;
+}
+
+@include media-breakpoint-up(lg) {
+  .expense-filters {
+    width: 40%;
+    margin-right: 0.625rem;
+  }
+
+  .expense-list {
+    width: 100%;
+  }
+
+  .data {
+    display: flex;
+  }
+}
+
+@include media-breakpoint-down(md) {
+  .expense-filters {
+    width: 100%;
+    margin-bottom: 0.625rem;
+  }
+
+  .expense-list {
+    height: 100%;
+    width: 100%;
+    margin-bottom: 0.625rem;
+  }
+}

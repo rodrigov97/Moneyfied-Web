@@ -3,24 +3,24 @@
   <div *ngIf="!isLoading">
     <div #headerInfo>
 
-      <app-income-info
+      <app-expense-info
         [isMobile]="isMobile"
-        [resume]="incomeResume"
-      ></app-income-info>
+        [resume]="expenseResume"
+      ></app-expense-info>
 
     </div>
     <div #dataContent [style.height.px]="dataHeight" class="data">
-      <div class="income-filters">
+      <div class="expense-filters">
 
-        <button class="btn btn-add" (click)="addIncome()"><i class="fas fa-plus"></i>Nova Receita</button>
+        <button class="btn btn-add-expense" (click)="addExpense()"><i class="fas fa-plus"></i>Nova Receita</button>
 
-        <button class="delete btn btn-cancel" (click)="removeIncome()"><i class="fas fa-times"></i>Excluir Receita</button>
+        <button class="delete btn btn-cancel" (click)="removeExpense()"><i class="fas fa-times"></i>Excluir Receita</button>
 
-        <button class="category btn btn-add" (click)="callFormCategory()"><i class="fas fa-list"></i>Categorias</button>
+        <button class="category btn btn-add-expense" (click)="callFormCategory()"><i class="fas fa-list"></i>Categorias</button>
 
         <hr>
 
-        <button class="btn btn-add" (click)="filterData()"><i class="fas fa-filter"></i>Filtrar</button>
+        <button class="btn btn-add-expense" (click)="filterData()"><i class="fas fa-filter"></i>Filtrar</button>
 
         <hr>
 
@@ -47,20 +47,20 @@
 
       </div>
 
-      <div class="income-list">
+      <div class="expense-list">
 
-        <app-income-grid
+        <app-expense-grid
           [columns]="columns"
           [loadingIndicator]="loadingIndicator"
           [rows]="rows"
           [rowCount]="rowCount"
           [limit]="limit"
           >
-        </app-income-grid>
+        </app-expense-grid>
 
       </div>
     </div>
   </div>
-  <app-form-register-income></app-form-register-income>
-  <app-form-category-income></app-form-category-income>
+  <app-form-register-expense></app-form-register-expense>
+  <app-form-category-expense></app-form-category-expense>
 </section>
