@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormControl, Validators, AbstractControl } from '@angular/forms';
 import { NgbModalOptions, NgbModalRef, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Subscription } from 'rxjs';
+import { CategoriaDespesa } from 'src/app/core/models/despesaCategoria.model';
 import { LocalStorageService } from 'src/app/core/services/local-storage.service';
 import { ExpenseService } from '../expense.service';
 
@@ -82,7 +83,15 @@ export class FormCategoryComponent implements OnInit {
   }
 
   loadCategories(): void {
+    this.isLoading = true;
 
+    this.expenseService.getCategories(this.localStorage.userId).subscribe(
+      response => {
+        if (response.success) {
+          this.isLoading = false;
+          this.categories = response.categories;
+        }
+      });
   }
 
   getCategoryId(name: string): number {
@@ -91,7 +100,18 @@ export class FormCategoryComponent implements OnInit {
   }
 
   deleteCategory(): void {
+    if (this.formIsValid) {
+      var categoryId = this.getCategoryId(this.category.value);
+      this.isLoading = true;
 
+      this.expenseService.deleteCategory(categoryId).subscribe(
+        response => {
+          if (response.success) {
+            this.isLoading = false;
+            this.loadCategories();
+          }
+        });
+    }
   }
 
   editCategory(): void {
@@ -123,11 +143,35 @@ export class FormCategoryComponent implements OnInit {
   }
 
   create(): void {
+    var category = new CategoriaDespesa(this.formCategory.value);
+    this.isLoading = true;
 
+    category.UsuarioId = this.localStorage.userId;
+
+    this.expenseService.createCategory(category).subscribe(
+      response => {
+        if (response.success) {
+          this.isLoading = false;
+          this.loadCategories();
+          this.cancel();
+        }
+      });
   }
 
   update(): void {
+    var category = new CategoriaDespesa(this.formCategory.value);
 
+    category.CategoriaDespesaId = this.currentCategoryId;
+    category.UsuarioId = this.localStorage.userId;
+
+    this.expenseService.updateCategory(category).subscribe(
+      response => {
+        if (response.success) {
+          this.isLoading = false;
+          this.loadCategories();
+          this.cancel();
+        }
+      });
   }
 
   get formIsValid(): boolean {
@@ -138,12 +182,14 @@ export class FormCategoryComponent implements OnInit {
   close(): void {
     this.resetFormValue();
     this.modalService.dismissAll();
+    this.expenseService.loadComboCategories();
   }
 
   cancel(): void {
     this.edit = !this.edit;
     this.type = 'Lista';
     this.resetFormValue();
+    this.expenseService.loadComboCategories();
   }
 
   resetFormValue(): void {

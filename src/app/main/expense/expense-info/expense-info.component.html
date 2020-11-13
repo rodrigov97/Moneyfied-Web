@@ -4,8 +4,7 @@
     <li [ngClass]="{'content-margin': !isMobile}" class="content d-flex">{{resume.MaxDesc}} <span
         class="fill"></span>
       <a class="result" [ngStyle]="expenseStatus(resume.MaxValue)">R$ {{resume.MaxValue}}</a>
-      <i *ngIf="biggerThanZero(resume.MaxValue)" [ngStyle]="expenseStatus(resume.MaxValue)" class="positive fas fa-chevron-up"></i>
-      <i *ngIf="lowerThanZero(resume.MaxValue)" [ngStyle]="expenseStatus(resume.MaxValue)" class="negative fas fa-chevron-down"></i>
+      <i *ngIf="biggerThanZero(resume.MaxValue)" [ngStyle]="expenseStatus(resume.MaxValue)" class="negative fas fa-chevron-down"></i>
     </li>
   </ul>
   <ul class="col-4" [ngClass]="{'col-12': isMobile}">
@@ -13,8 +12,7 @@
     <li [ngClass]="{'content-margin': !isMobile}" class="content d-flex">{{resume.MinDesc}} <span
         class="fill"></span>
       <a class="result" [ngStyle]="expenseStatus(resume.MinValue)">R$ {{resume.MinValue}}</a>
-      <i *ngIf="biggerThanZero(resume.MinValue)" [ngStyle]="expenseStatus(resume.MinValue)" class="positive fas fa-chevron-up"></i>
-      <i *ngIf="lowerThanZero(resume.MinValue)" [ngStyle]="expenseStatus(resume.MinValue)" class="negative fas fa-chevron-down"></i>
+      <i *ngIf="biggerThanZero(resume.MinValue)" [ngStyle]="expenseStatus(resume.MinValue)" class="negative fas fa-chevron-down"></i>
     </li>
   </ul>
   <ul class="col-4" [ngClass]="{'col-12': isMobile}">
@@ -22,8 +20,7 @@
     <li [ngClass]="{'content-margin': !isMobile}" class="content last d-flex">Despesa Total do Mês <span
         class="fill"></span>
       <a class="result" [ngStyle]="expenseStatus(resume.TotalValue)">R$ {{resume.TotalValue}}</a>
-      <i *ngIf="biggerThanZero(resume.TotalValue)" [ngStyle]="expenseStatus(resume.TotalValue)" class="positive fas fa-chevron-up"></i>
-      <i *ngIf="lowerThanZero(resume.TotalValue)" [ngStyle]="expenseStatus(resume.TotalValue)" class="negative fas fa-chevron-down"></i>
+      <i *ngIf="biggerThanZero(resume.TotalValue)" [ngStyle]="expenseStatus(resume.TotalValue)" class="negative fas fa-chevron-down"></i>
     </li>
   </ul>
 </div>

@@ -42,6 +42,7 @@ export class ExpenseComponent implements OnInit {
 
   reloadEventSub: Subscription;
   changePageEventSub: Subscription;
+  reloadComboCategories: Subscription;
 
   currentMonthFilter: number;
   currentYearFilter: number;
@@ -63,6 +64,21 @@ export class ExpenseComponent implements OnInit {
       Mes: new FormControl(this.currentMonth(month)),
       Ano: new FormControl(year),
       Categoria: new FormControl('Nenhum')
+    });
+
+    this.reloadEventSub = this.expenseService.callReloadGridFunction().subscribe(
+      () => {
+        this.getExpenseData(this.expenseService.gridCurrentPage, this.currentCategoryId, this.currentMonthFilter, this.currentYearFilter);
+        this.getExpenseResume(this.currentMonthFilter, this.currentYearFilter);
+      });
+
+    this.changePageEventSub = this.expenseService.callGridPageChange().subscribe(
+      page => {
+        this.getExpenseData(page, 0)
+      });
+
+    this.reloadComboCategories = this.expenseService.callLoadComboCategories().subscribe(() => {
+      this.loadCategories();
     });
   }
 
@@ -87,6 +103,15 @@ export class ExpenseComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    var date = new Date(),
+    month = date.getMonth() + 1,
+    year = date.getFullYear();
+
+
+
+  this.getExpenseData(1, 0);
+  this.getExpenseResume(month, year);
+  this.loadCategories();
   }
 
   ngAfterViewInit(): void {
@@ -116,18 +141,18 @@ export class ExpenseComponent implements OnInit {
       this.columns = [{
         name: 'Descrição', prop: 'Descricao', flex: 3, align: 'align-left'
       }, {
-        name: 'Valor (R$)', prop: 'Valor', flex: 1, align: 'align-right'
+        name: 'Valor (R$)', prop: 'ParcelaValor', flex: 1, align: 'align-right'
       }, {
         name: 'Categoria', prop: 'Categoria', flex: 1, align: 'align-center'
       }, {
-        name: 'Data de Recebimento', prop: 'DataRecebimento', flex: 1.2, align: 'align-center'
+        name: 'Data de Pagamento', prop: 'DataPagamento', flex: 1.2, align: 'align-center'
       }];
     }
     else {
       this.columns = [{
         name: 'Descrição', prop: 'Descricao', flex: 3, align: 'align-left'
       }, {
-        name: 'Valor (R$)', prop: 'Valor', flex: 1, align: 'align-right'
+        name: 'Valor (R$)', prop: 'ParcelaValor', flex: 1, align: 'align-right'
       }];
     }
   }
@@ -149,7 +174,60 @@ export class ExpenseComponent implements OnInit {
   }
 
   filterData(): void {
+    var month = this.dateService.getMonthNumber(this.month.value),
+      year = this.year.value;
 
+    this.currentMonthFilter = month;
+    this.currentYearFilter = year;
+    this.currentCategoryId = this.getCategoryId(this.category.value);
+
+    this.getExpenseData(1, this.currentCategoryId, month, year);
+    this.getExpenseResume(month, year);
+  }
+
+  getCategoryId(name: string): number {
+    var category = this.categoryItems.find(category => category.value === name);
+    return category.CategoriaDespesaId;
+  }
+
+  getExpenseData(page: number, categoryId: number, month?: number, year?: number): void {
+    var currentPage = this.getPage(page),
+      date = new Date(),
+      mes = month ? month : (this.currentMonthFilter ? this.currentMonthFilter : date.getMonth() + 1),
+      ano = year ? year : (this.currentYearFilter ? this.currentYearFilter : date.getFullYear()),
+      categoryId = categoryId === undefined ? 0 : categoryId;
+
+
+
+    this.loadingIndicator = true;
+    this.expenseService.getExpense(currentPage, this.limit, categoryId, mes, ano).subscribe(
+      response => {
+        this.rowCount = response.totalLinhas;
+        this.rows = response.despesas;
+        this.loadingIndicator = false;
+      });
+  }
+
+  getExpenseResume(month: number, year: number): void {
+    var date = new Date(),
+      mes = month ? month : (this.currentMonthFilter ? this.currentMonthFilter : date.getMonth() + 1),
+      ano = year ? year : (this.currentYearFilter ? this.currentYearFilter : date.getFullYear());
+
+    this.expenseService.getExpenseResume(mes, ano).subscribe(
+      response => {
+        if (response.success) {
+          this.expenseResume = response.values;
+        }
+        else {
+          this.expenseResume = {
+            MaxDesc: '-',
+            MaxValue: '0',
+            MinDesc: '-',
+            MinValue: '0',
+            TotalValue: '0',
+          };
+        }
+      });
   }
 
   addExpense(): void {
@@ -163,7 +241,26 @@ export class ExpenseComponent implements OnInit {
   }
 
   removeExpense(): void {
+    if (this.expenseService.selectedItem) {
+      var despesaId = this.expenseService.selectedItem.DespesaId;
 
+      this.loadingIndicator = true;
+      this.expenseService.deleteExpense(despesaId).subscribe(
+        response => {
+          if (response.success) {
+            this.getExpenseData(this.expenseService.gridCurrentPage, this.currentCategoryId, this.currentMonthFilter, this.currentYearFilter);
+            this.getExpenseResume(this.currentMonthFilter, this.currentYearFilter);
+            this.loadingIndicator = false;
+          }
+          else {
+            this.dataService.openErrorDialogModal({
+              command: 'open',
+              title: 'Atenção',
+              content: 'Erro ao excluír a renda selecionada.'
+            });
+          }
+        });
+    }
   }
 
   callFormCategory(): void {
@@ -171,5 +268,16 @@ export class ExpenseComponent implements OnInit {
       command: 'open',
       formType: 'Cadastro'
     });
+  }
+
+
+  loadCategories(): void {
+    this.expenseService.getCategories(this.localStorage.userId).subscribe(
+      response => {
+        if (response.success) {
+          response.categories.unshift({ value: 'Nenhum', CategoriId: 0 });
+          this.categoryItems = response.categories;
+        }
+      });
   }
 }

@@ -71,6 +71,7 @@
               >
               </app-text-input>
 
+
             </div>
           </div>
           <div class="form-row">
@@ -105,9 +106,18 @@
           name="dataPagamento"
         ></app-datepicker>
 
+        <app-select
+          name="nome"
+          label="Categoria"
+          [items]="categoryItems"
+          [control]="categoria"
+        ></app-select>
+
       </div>
         <div class="modal-footer d-flex">
-
+          <button type="button" class="btn btn-cancel" (click)="onClose()" data-dismiss="modal">Cancelar</button>
+          <span class="fill"></span>
+          <button type="button" class="btn btn-add" (click)="expenseOperations()" data-dismiss="modal">Salvar</button>
         </div>
     </form>
   </div>

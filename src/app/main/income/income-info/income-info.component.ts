@@ -28,12 +28,9 @@ export class IncomeInfoComponent implements OnInit {
 
   incomeStatus(value: string): {} {
     var amount = parseFloat(value);
-    if (amount < 0) {
-      return {
-        'color': '#e71426'
-      }
-    }
-    else if (amount > 0) {
+
+    if (amount) {
+
       return {
         'color': '#13ca66'
       }

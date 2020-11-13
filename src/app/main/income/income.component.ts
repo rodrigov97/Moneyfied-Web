@@ -44,6 +44,7 @@ export class IncomeComponent implements OnInit, OnDestroy {
 
   reloadEventSub: Subscription;
   changePageEventSub: Subscription;
+  reloadComboCategories: Subscription;
 
   currentMonthFilter: number;
   currentYearFilter: number;
@@ -77,6 +78,10 @@ export class IncomeComponent implements OnInit, OnDestroy {
       page => {
         this.getIncomeData(page, 0)
       });
+
+    this.reloadComboCategories = this.incomeService.callLoadComboCategories().subscribe(() => {
+      this.loadCategories();
+    });
   }
 
   get month(): AbstractControl {

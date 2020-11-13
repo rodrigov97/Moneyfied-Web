@@ -3,7 +3,6 @@ import { FormGroup, FormControl, Validators, AbstractControl } from '@angular/fo
 import { NgbModalOptions, NgbModalRef, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Subscription } from 'rxjs';
 import { Despesa } from 'src/app/core/models/despesa.model';
-import { Receita } from 'src/app/core/models/receita.model';
 import { DateService } from 'src/app/core/services/date.service';
 import { LocalStorageService } from 'src/app/core/services/local-storage.service';
 import { NumberHandlerService } from 'src/app/core/services/number-handler.service';
@@ -43,6 +42,10 @@ export class FormRegisterComponent implements OnInit {
 
   categoryItems: any = [];
 
+  parcelaChange: Subscription;
+  valorChange: Subscription;
+  reloadComboCategories: Subscription;
+
   constructor(
     private modalService: NgbModal,
     private dateService: DateService,
@@ -60,7 +63,8 @@ export class FormRegisterComponent implements OnInit {
       ParcelaValor: new FormControl(null),
       DataInicial: new FormControl(null),
       DataFinal: new FormControl(null),
-      DataPagamento: new FormControl(date, [Validators.required])
+      DataPagamento: new FormControl(date, [Validators.required]),
+      Categoria: new FormControl(null, [Validators.required])
     });
   }
 
@@ -96,12 +100,37 @@ export class FormRegisterComponent implements OnInit {
     return this.formExpense.get('DataPagamento');
   }
 
+  get categoria(): AbstractControl {
+    return this.formExpense.get('Categoria');
+  }
+
   ngOnInit(): void {
     if (this.form === 'Alterar') {
-      this.setIncomeItem();
+      this.setExpenseItem();
     }
 
+    this.initFormListeners();
     this.loadCategories();
+  }
+
+  initFormListeners(): void {
+    this.parcelaChange = this.parcelaQtd.valueChanges.subscribe(value => {
+      var valor = parseFloat(this.valor.value.replace(',', '.')),
+        parcelas = parseInt(value);
+
+      if (valor > 0) {
+        this.parcelaValor.setValue((valor / parcelas).toString().replace('.', ','));
+      }
+    });
+
+    this.valorChange = this.valor.valueChanges.subscribe(value => {
+      var valor = parseFloat(value.replace(',', '.')),
+        parcelas = parseInt(this.parcelaQtd.value);
+
+      if (valor > 0 && parcelas > 0) {
+        this.parcelaValor.setValue((valor / parcelas).toString().replace('.', ','));
+      }
+    });
   }
 
   ngAfterViewInit() {
@@ -122,7 +151,7 @@ export class FormRegisterComponent implements OnInit {
         this.myModal = this.modalService.open(this.modal, this.modalOption);
 
         if (this.formType === 'Alterar')
-          this.setIncomeItem();
+          this.setExpenseItem();
       }
     });
   }
@@ -139,7 +168,7 @@ export class FormRegisterComponent implements OnInit {
       this.dataFinal.setValue(null);
     }
     else {
-      var date =  new Date();
+      var date = new Date();
       this.dataInicial.setValue(date);
       this.dataFinal.setValue(date);
     }
@@ -149,33 +178,113 @@ export class FormRegisterComponent implements OnInit {
     this.subFormExpense.unsubscribe();
   }
 
-  setIncomeItem(): void {
+  setExpenseItem(): void {
+    this.formExpense.setValue({
+      Descricao: this.formValue.Descricao,
+      Valor: this.formValue.Valor,
+      Parcelado: this.formValue.Parcelado,
+      ParcelaQtd: this.formValue.ParcelaQtd,
+      ParcelaValor: this.formValue.ParcelaValor,
+      DataInicial: this.dateService.buildDateDefaultFormat(this.formValue.DataInicial),
+      DataFinal: this.dateService.buildDateDefaultFormat(this.formValue.DataFinal),
+      DataPagamento: this.dateService.buildDateDefaultFormat(this.formValue.DataPagamento),
+      Categoria: this.setCategory(this.formValue.CategoriaDespesaId)
+    });
 
+    this.hideFields = !this.formValue.Parcelado;
   }
 
   loadCategories(): void {
-
+    this.expenseService.getCategories(this.storageService.userId).subscribe(
+      response => {
+        if (response.success) {
+          response.categories.unshift({ value: 'Nenhum', CategoriId: 0 });
+          this.categoryItems = response.categories;
+        }
+      });
   }
 
-  incomeOperations(): void {
+  expenseOperations(): void {
     this.formExpense.markAllAsTouched();
 
     if (this.formExpense.valid) {
       if (this.formType === 'Cadastro') {
-        this.insertIncome();
+        this.insertExpense();
       }
       else if (this.formType === 'Alterar') {
-        this.updateIncome();
+        this.updateExpense();
       }
     }
   }
 
-  insertIncome(): void {
+  insertExpense(): void {
+    var formValue = {
+      DespesaId: null,
+      UsuarioId: this.storageService.userId,
+      CategoriaDespesaId: this.getCategoryId(this.categoria.value),
+      Descricao: this.descricao.value,
+      Valor: this.numberHandler.formatValue(this.valor.value),
+      Parcelado: this.parcelado.value,
+      ParcelaQtd: this.parcelado.value ? this.parcelaQtd.value : 1,
+      ParcelaValor: this.parcelado.value ?
+        this.numberHandler.formatValue(this.parcelaValor.value) :
+        this.numberHandler.formatValue(this.valor.value),
+      DataInicial: this.dateService.buildDateObj(this.dataInicial.value),
+      DataFinal: this.dateService.buildDateObj(this.dataFinal.value),
+      DataPagamento: this.dateService.buildDateObj(this.dataPagamento.value)
+    },
+      receita = new Despesa(formValue);
 
+    this.isLoading = true;
+
+    this.expenseService.insertExpense(receita).subscribe(
+      response => {
+        if (response.success) {
+          this.isLoading = false;
+          this.resetFormValue();
+          this.expenseService.reloadGridEvent();
+          this.modalService.dismissAll();
+        }
+        else {
+          this.isLoading = false;
+        }
+      });
   }
 
-  updateIncome(): void {
+  updateExpense(): void {
+    var formValue = {
+      DespesaId: this.formValue.DespesaId,
+      UsuarioId: this.formValue.UsuarioId,
+      CategoriaDespesaId: this.getCategoryId(this.categoria.value),
+      Descricao: this.descricao.value,
+      Valor: this.numberHandler.formatValue(this.valor.value),
+      Parcelado: this.parcelado.value,
+      ParcelaQtd: this.parcelado.value ? this.parcelaQtd.value : 1,
+      ParcelaValor: this.parcelado.value ?
+        this.numberHandler.formatValue(this.parcelaValor.value) :
+        this.numberHandler.formatValue(this.valor.value),
+      DataInicial: this.dateService.buildDateObj(this.dataInicial.value),
+      DataFinal: this.dateService.buildDateObj(this.dataFinal.value),
+      DataPagamento: this.dateService.buildDateObj(this.dataPagamento.value)
+    },
+      receita = new Despesa(formValue);
 
+    receita.UsuarioId = this.storageService.userId;
+
+    this.isLoading = true;
+
+    this.expenseService.updateExpense(receita).subscribe(
+      response => {
+        if (response.success) {
+          this.isLoading = false;
+          this.resetFormValue();
+          this.expenseService.reloadGridEvent();
+          this.modalService.dismissAll();
+        }
+        else {
+          this.isLoading = false;
+        }
+      });
   }
 
   getCategoryId(name: string): number {
@@ -197,9 +306,17 @@ export class FormRegisterComponent implements OnInit {
     this.formExpense.setValue({
       Descricao: null,
       Valor: null,
-      Categoria: null,
-      DataRecebimento: new Date()
+      Parcelado: null,
+      ParcelaQtd: null,
+      ParcelaValor: null,
+      DataInicial: new Date(),
+      DataFinal: new Date(),
+      DataPagamento: new Date(),
+      Categoria: null
     });
+    this.hideFields = false;
     this.formExpense.markAsUntouched();
+    this.parcelaChange.unsubscribe();
+    this.valorChange.unsubscribe();
   }
 }

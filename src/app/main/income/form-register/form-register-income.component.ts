@@ -142,15 +142,13 @@ export class FormRegisterIncomeComponent implements OnInit, OnDestroy {
   insertIncome(): void {
     var formValue = {
       ReceitaId: null,
-      UsuarioId: null,
+      UsuarioId: this.storageService.userId,
       CategoriaReceitaId: this.getCategoryId(this.categoria.value),
       Descricao: this.descricao.value,
       Valor: this.numberHandler.formatValue(this.valor.value),
       DataRecebimento: this.dateService.buildDateObj(this.dataRecebimento.value)
     },
       receita = new Receita(formValue);
-
-    receita.UsuarioId = this.storageService.userId;
 
     this.isLoading = true;
 

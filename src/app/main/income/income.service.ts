@@ -9,12 +9,13 @@ import { LocalStorageService } from 'src/app/core/services/local-storage.service
   providedIn: 'root'
 })
 export class IncomeService {
-
+  private readonly ROUTE_URL = 'income';
 
   private reloadGrid = new Subject<any>();
   private changePage = new Subject<any>();
   private openIncomeForm = new Subject<any>();
   private openCategoryForm = new Subject<any>();
+  private loadCategories = new Subject<any>();
 
   gridCurrentPage: number = 1;
 
@@ -26,55 +27,55 @@ export class IncomeService {
   ) { }
 
   getIncome(start: number, limit: number, categoryId: number, month: number, year: number): Observable<any> {
-    const path = `income/get/?start=${start}&limit=${limit}&userId=${this.storageService.userId}&categoryId=${categoryId}&month=${month}&year=${year}`;
+    const path = `${this.ROUTE_URL}/get/?start=${start}&limit=${limit}&userId=${this.storageService.userId}&categoryId=${categoryId}&month=${month}&year=${year}`;
 
     return this.apiClient.get(path);
   }
 
   getIncomeResume(month: number, year: number): Observable<any> {
-    const path = `income/info/?userId=${this.storageService.userId}&month=${month}&year=${year}`;
+    const path = `${this.ROUTE_URL}/info/?userId=${this.storageService.userId}&month=${month}&year=${year}`;
 
     return this.apiClient.get(path);
   }
 
   insertIncome(incomeInfo: Receita): Observable<any> {
-    const path = `income/insert`;
+    const path = `${this.ROUTE_URL}/insert`;
 
     return this.apiClient.post(path, incomeInfo);
   }
 
   deleteIncome(incomeId: number): Observable<any> {
-    const path = `income/delete/?receitaId=${incomeId}`;
+    const path = `${this.ROUTE_URL}/delete/?receitaId=${incomeId}`;
 
     return this.apiClient.delete(path);
   }
 
   updateIncome(incomeInfo: Receita): Observable<any> {
-    const path = `income/update`;
+    const path = `${this.ROUTE_URL}/update`;
 
     return this.apiClient.put(path, incomeInfo);
   }
 
   getCategories(userId: number): Observable<any> {
-    const path = `income/categories/get?userId=${userId}`;
+    const path = `${this.ROUTE_URL}/categories/get?userId=${userId}`;
 
     return this.apiClient.get(path);
   }
 
   createCategory(category: CategoriaReceita): Observable<any> {
-    const path = `income/categories/insert`;
+    const path = `${this.ROUTE_URL}/categories/insert`;
 
     return this.apiClient.post(path, category);
   }
 
   deleteCategory(categoryId: number): Observable<any> {
-    const path = `income/categories/delete?CategoriaId=${categoryId}`;
+    const path = `${this.ROUTE_URL}/categories/delete?CategoriaId=${categoryId}`;
 
     return this.apiClient.delete(path);
   }
 
   updateCategory(category: CategoriaReceita): Observable<any> {
-    const path = `income/categories/update`;
+    const path = `${this.ROUTE_URL}/categories/update`;
 
     return this.apiClient.put(path, category);
   }
@@ -109,5 +110,13 @@ export class IncomeService {
 
   callGridPageChange(): Observable<any> {
     return this.changePage.asObservable();
+  }
+
+  loadComboCategories(): void {
+    this.loadCategories.next();
+  }
+
+  callLoadComboCategories(): Observable<any> {
+    return this.loadCategories.asObservable();
   }
 }

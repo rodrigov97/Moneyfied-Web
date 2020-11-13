@@ -182,12 +182,14 @@ export class FormCategoryComponent implements OnInit, OnDestroy {
   close(): void {
     this.resetFormValue();
     this.modalService.dismissAll();
+    this.incomeService.loadComboCategories();
   }
 
   cancel(): void {
     this.edit = !this.edit;
     this.type = 'Lista';
     this.resetFormValue();
+    this.incomeService.loadComboCategories();
   }
 
   resetFormValue(): void {
