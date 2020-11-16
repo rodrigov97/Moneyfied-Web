@@ -104,14 +104,14 @@ export class ExpenseComponent implements OnInit {
 
   ngOnInit(): void {
     var date = new Date(),
-    month = date.getMonth() + 1,
-    year = date.getFullYear();
+      month = date.getMonth() + 1,
+      year = date.getFullYear();
 
 
 
-  this.getExpenseData(1, 0);
-  this.getExpenseResume(month, year);
-  this.loadCategories();
+    this.getExpenseData(1, 0);
+    this.getExpenseResume(month, year);
+    this.loadCategories();
   }
 
   ngAfterViewInit(): void {
@@ -145,7 +145,9 @@ export class ExpenseComponent implements OnInit {
       }, {
         name: 'Categoria', prop: 'Categoria', flex: 1, align: 'align-center'
       }, {
-        name: 'Data de Pagamento', prop: 'DataPagamento', flex: 1.2, align: 'align-center'
+        name: 'Pagamento', prop: 'DataPagamento', flex: 1.2, align: 'align-center'
+      }, {
+        name: 'Nº Parcela', prop: 'ParcelaNumero', flex: 1, align: 'align-center'
       }];
     }
     else {
@@ -153,6 +155,8 @@ export class ExpenseComponent implements OnInit {
         name: 'Descrição', prop: 'Descricao', flex: 3, align: 'align-left'
       }, {
         name: 'Valor (R$)', prop: 'ParcelaValor', flex: 1, align: 'align-right'
+      }, {
+        name: 'Nº Parcela', prop: 'ParcelaNumero', flex: 1, align: 'align-center'
       }];
     }
   }

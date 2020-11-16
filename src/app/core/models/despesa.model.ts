@@ -6,6 +6,7 @@ interface DespesaAttributes {
   Valor: number;
   Parcelado: boolean;
   ParcelaQtd: number;
+  ParcelaNumero?: number;
   ParcelaValor: number;
   DataInicial: string;
   DataFinal: string;
@@ -28,6 +29,7 @@ export class Despesa implements DespesaAttributes {
   Valor: number;
   Parcelado: boolean;
   ParcelaQtd: number;
+  ParcelaNumero?: number;
   ParcelaValor: number;
   DataInicial: string;
   DataFinal: string;
@@ -41,6 +43,7 @@ export class Despesa implements DespesaAttributes {
     this.Valor = attr.Valor;
     this.Parcelado = attr.Parcelado;
     this.ParcelaQtd = attr.ParcelaQtd;
+    this.ParcelaNumero = attr.ParcelaNumero;
     this.ParcelaValor = attr.ParcelaValor;
     this.DataInicial = attr.DataInicial;
     this.DataFinal = attr.DataFinal;

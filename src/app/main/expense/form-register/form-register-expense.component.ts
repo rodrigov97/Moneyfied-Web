@@ -37,6 +37,7 @@ export class FormRegisterComponent implements OnInit {
   formValue: Despesa;
 
   isLoading: boolean = false;
+  isParcelado: boolean = false;
 
   subFormExpense: Subscription;
 
@@ -115,20 +116,24 @@ export class FormRegisterComponent implements OnInit {
 
   initFormListeners(): void {
     this.parcelaChange = this.parcelaQtd.valueChanges.subscribe(value => {
-      var valor = parseFloat(this.valor.value.replace(',', '.')),
-        parcelas = parseInt(value);
+      if (this.valor.value) {
+        var valor = parseFloat(this.valor.value.replace(',', '.')),
+          parcelas = parseInt(value);
 
-      if (valor > 0) {
-        this.parcelaValor.setValue((valor / parcelas).toString().replace('.', ','));
+        if (valor > 0) {
+          this.parcelaValor.setValue((valor / parcelas).toString().replace('.', ','));
+        }
       }
     });
 
     this.valorChange = this.valor.valueChanges.subscribe(value => {
-      var valor = parseFloat(value.replace(',', '.')),
-        parcelas = parseInt(this.parcelaQtd.value);
+      if (this.valor.value) {
+        var valor = parseFloat(value.replace(',', '.')),
+          parcelas = parseInt(this.parcelaQtd.value);
 
-      if (valor > 0 && parcelas > 0) {
-        this.parcelaValor.setValue((valor / parcelas).toString().replace('.', ','));
+        if (valor > 0 && parcelas > 0) {
+          this.parcelaValor.setValue((valor / parcelas).toString().replace('.', ','));
+        }
       }
     });
   }
@@ -150,8 +155,12 @@ export class FormRegisterComponent implements OnInit {
 
         this.myModal = this.modalService.open(this.modal, this.modalOption);
 
-        if (this.formType === 'Alterar')
+        if (this.formType === 'Alterar') {
           this.setExpenseItem();
+
+          if (this.formValue.Parcelado)
+            this.isParcelado = true;
+        }
       }
     });
   }
@@ -226,6 +235,7 @@ export class FormRegisterComponent implements OnInit {
       Valor: this.numberHandler.formatValue(this.valor.value),
       Parcelado: this.parcelado.value,
       ParcelaQtd: this.parcelado.value ? this.parcelaQtd.value : 1,
+      ParcelaNumero: null,
       ParcelaValor: this.parcelado.value ?
         this.numberHandler.formatValue(this.parcelaValor.value) :
         this.numberHandler.formatValue(this.valor.value),
@@ -300,6 +310,7 @@ export class FormRegisterComponent implements OnInit {
   onClose(): void {
     this.resetFormValue();
     this.modalService.dismissAll();
+    this.isParcelado = false;
   }
 
   resetFormValue(): void {
@@ -314,7 +325,7 @@ export class FormRegisterComponent implements OnInit {
       DataPagamento: new Date(),
       Categoria: null
     });
-    this.hideFields = false;
+    this.hideFields = true;
     this.formExpense.markAsUntouched();
     this.parcelaChange.unsubscribe();
     this.valorChange.unsubscribe();

@@ -21,6 +21,7 @@
 
         <app-text-input
           [control]="valor"
+          [readonly]="isParcelado"
           [trim]="true"
           fieldId="valor"
           label="Valor (R$)"
@@ -48,6 +49,7 @@
 
               <app-text-input
                 [control]="parcelaQtd"
+                [readonly]="isParcelado"
                 [trim]="true"
                 fieldId="parcelas"
                 label="Parcelas"
@@ -62,6 +64,7 @@
 
               <app-text-input
                 [control]="parcelaValor"
+                [readonly]="true"
                 [trim]="true"
                 fieldId="valorparcela"
                 label="Valor da Parcela (R$)"
