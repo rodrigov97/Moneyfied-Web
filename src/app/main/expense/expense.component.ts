@@ -5,6 +5,7 @@ import { Despesa } from 'src/app/core/models/despesa.model';
 import { DateAttributes, DateService } from 'src/app/core/services/date.service';
 import { LocalStorageService } from 'src/app/core/services/local-storage.service';
 import { ResponsiveService } from 'src/app/core/services/responsive.service';
+import { TokenErrorHandlerService } from 'src/app/core/services/token-error-handler.service';
 import { DataService } from 'src/app/shared/data.service';
 import { ExpenseService } from './expense.service';
 
@@ -54,7 +55,8 @@ export class ExpenseComponent implements OnInit {
     private dateService: DateService,
     private dataService: DataService,
     private dataChanged: ChangeDetectorRef,
-    private expenseService: ExpenseService
+    private expenseService: ExpenseService,
+    private tokenErrorHandler: TokenErrorHandlerService
   ) {
     const date = new Date(),
       month = date.getMonth(),
@@ -201,14 +203,16 @@ export class ExpenseComponent implements OnInit {
       ano = year ? year : (this.currentYearFilter ? this.currentYearFilter : date.getFullYear()),
       categoryId = categoryId === undefined ? 0 : categoryId;
 
-
-
     this.loadingIndicator = true;
     this.expenseService.getExpense(currentPage, this.limit, categoryId, mes, ano).subscribe(
       response => {
         this.rowCount = response.totalLinhas;
         this.rows = response.despesas;
         this.loadingIndicator = false;
+      },
+      error => {
+        if (error.error)
+          this.tokenErrorHandler.handleError(error.error);
       });
   }
 
@@ -231,6 +235,10 @@ export class ExpenseComponent implements OnInit {
             TotalValue: '0',
           };
         }
+      },
+      error => {
+        if (error.error)
+          this.tokenErrorHandler.handleError(error.error);
       });
   }
 
@@ -263,6 +271,10 @@ export class ExpenseComponent implements OnInit {
               content: 'Erro ao excluír a renda selecionada.'
             });
           }
+        },
+        error => {
+          if (error.error)
+            this.tokenErrorHandler.handleError(error.error);
         });
     }
   }
@@ -282,6 +294,10 @@ export class ExpenseComponent implements OnInit {
           response.categories.unshift({ value: 'Nenhum', CategoriId: 0 });
           this.categoryItems = response.categories;
         }
+      },
+      error => {
+        if (error.error)
+          this.tokenErrorHandler.handleError(error.error);
       });
   }
 }

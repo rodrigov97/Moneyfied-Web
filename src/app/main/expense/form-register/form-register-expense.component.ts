@@ -6,6 +6,7 @@ import { Despesa } from 'src/app/core/models/despesa.model';
 import { DateService } from 'src/app/core/services/date.service';
 import { LocalStorageService } from 'src/app/core/services/local-storage.service';
 import { NumberHandlerService } from 'src/app/core/services/number-handler.service';
+import { TokenErrorHandlerService } from 'src/app/core/services/token-error-handler.service';
 import { ExpenseService } from '../expense.service';
 
 @Component({
@@ -52,7 +53,8 @@ export class FormRegisterComponent implements OnInit {
     private dateService: DateService,
     private expenseService: ExpenseService,
     private storageService: LocalStorageService,
-    private numberHandler: NumberHandlerService
+    private numberHandler: NumberHandlerService,
+    private tokenErrorHandler: TokenErrorHandlerService
   ) {
     var date = new Date();
 
@@ -210,6 +212,10 @@ export class FormRegisterComponent implements OnInit {
           response.categories.unshift({ value: 'Nenhum', CategoriId: 0 });
           this.categoryItems = response.categories;
         }
+      },
+      error => {
+        if (error.error)
+          this.tokenErrorHandler.handleError(error.error);
       });
   }
 
@@ -258,6 +264,10 @@ export class FormRegisterComponent implements OnInit {
         else {
           this.isLoading = false;
         }
+      },
+      error => {
+        if (error.error)
+          this.tokenErrorHandler.handleError(error.error);
       });
   }
 
@@ -294,6 +304,10 @@ export class FormRegisterComponent implements OnInit {
         else {
           this.isLoading = false;
         }
+      },
+      error => {
+        if (error.error)
+          this.tokenErrorHandler.handleError(error.error);
       });
   }
 

@@ -6,6 +6,7 @@ import { Receita } from 'src/app/core/models/receita.model';
 import { DateService } from 'src/app/core/services/date.service';
 import { LocalStorageService } from 'src/app/core/services/local-storage.service';
 import { NumberHandlerService } from 'src/app/core/services/number-handler.service';
+import { TokenErrorHandlerService } from 'src/app/core/services/token-error-handler.service';
 import { DataService } from 'src/app/shared/data.service';
 import { IncomeService } from '../income.service';
 
@@ -46,7 +47,8 @@ export class FormRegisterIncomeComponent implements OnInit, OnDestroy {
     private dateService: DateService,
     private incomeService: IncomeService,
     private storageService: LocalStorageService,
-    private numberHandler: NumberHandlerService
+    private numberHandler: NumberHandlerService,
+    private tokenErrorHandler: TokenErrorHandlerService
   ) {
 
     this.formIncome = new FormGroup({
@@ -123,6 +125,10 @@ export class FormRegisterIncomeComponent implements OnInit, OnDestroy {
           response.categories.unshift({ value: 'Nenhum', CategoriId: 0 });
           this.categoryItems = response.categories;
         }
+      },
+      error => {
+        if (error.error)
+          this.tokenErrorHandler.handleError(error.error);
       });
   }
 
@@ -163,6 +169,10 @@ export class FormRegisterIncomeComponent implements OnInit, OnDestroy {
         else {
           this.isLoading = false;
         }
+      },
+      error => {
+        if (error.error)
+          this.tokenErrorHandler.handleError(error.error);
       });
   }
 
@@ -175,7 +185,7 @@ export class FormRegisterIncomeComponent implements OnInit, OnDestroy {
       Valor: this.numberHandler.formatValue(this.valor.value),
       DataRecebimento: this.dateService.buildDateObj(this.dataRecebimento.value)
     },
-    receita = new Receita(formValue);
+      receita = new Receita(formValue);
 
     receita.UsuarioId = this.storageService.userId;
 
@@ -192,6 +202,10 @@ export class FormRegisterIncomeComponent implements OnInit, OnDestroy {
         else {
           this.isLoading = false;
         }
+      },
+      error => {
+        if (error.error)
+          this.tokenErrorHandler.handleError(error.error);
       });
   }
 

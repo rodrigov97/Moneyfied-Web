@@ -4,6 +4,7 @@ import { NgbModal, NgbModalOptions, NgbModalRef } from '@ng-bootstrap/ng-bootstr
 import { Subscription } from 'rxjs';
 import { CategoriaReceita } from 'src/app/core/models/receitaCategoria.model';
 import { LocalStorageService } from 'src/app/core/services/local-storage.service';
+import { TokenErrorHandlerService } from 'src/app/core/services/token-error-handler.service';
 import { IncomeService } from '../income.service';
 
 @Component({
@@ -37,7 +38,8 @@ export class FormCategoryComponent implements OnInit, OnDestroy {
   constructor(
     private incomeService: IncomeService,
     private modalService: NgbModal,
-    private localStorage: LocalStorageService
+    private localStorage: LocalStorageService,
+    private tokenErrorHandler: TokenErrorHandlerService
   ) {
 
     this.formCategory = new FormGroup({
@@ -91,6 +93,10 @@ export class FormCategoryComponent implements OnInit, OnDestroy {
           this.isLoading = false;
           this.categories = response.categories;
         }
+      },
+      error => {
+        if (error.error)
+          this.tokenErrorHandler.handleError(error.error);
       });
   }
 
@@ -110,6 +116,10 @@ export class FormCategoryComponent implements OnInit, OnDestroy {
             this.isLoading = false;
             this.loadCategories();
           }
+        },
+        error => {
+          if (error.error)
+            this.tokenErrorHandler.handleError(error.error);
         });
     }
   }
@@ -155,6 +165,10 @@ export class FormCategoryComponent implements OnInit, OnDestroy {
           this.loadCategories();
           this.cancel();
         }
+      },
+      error => {
+        if (error.error)
+          this.tokenErrorHandler.handleError(error.error);
       });
   }
 
@@ -171,6 +185,10 @@ export class FormCategoryComponent implements OnInit, OnDestroy {
           this.loadCategories();
           this.cancel();
         }
+      },
+      error => {
+        if (error.error)
+          this.tokenErrorHandler.handleError(error.error);
       });
   }
 

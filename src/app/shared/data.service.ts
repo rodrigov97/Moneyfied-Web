@@ -22,6 +22,10 @@ export class DataService {
   private toggleErrorDialogValue = new BehaviorSubject<any>(this.toggleErrorDialog);
   currentToggleErrorDialogValue = this.toggleErrorDialogValue.asObservable();
 
+  toggleTokenErrorDialog: any = { command: '' };
+  private toggleTokenErrorDialogValue = new BehaviorSubject<any>(this.toggleTokenErrorDialog);
+  currentToggleTokenErrorDialogValue = this.toggleTokenErrorDialogValue.asObservable();
+
   constructor() { }
 
   toggleMenuView(value: boolean): void {
@@ -38,5 +42,9 @@ export class DataService {
 
   openErrorDialogModal(value: any): void {
     this.toggleErrorDialogValue.next(value);
+  }
+
+  openTokenErrorDialogModal(value: any): void {
+    this.toggleTokenErrorDialogValue.next(value);
   }
 }

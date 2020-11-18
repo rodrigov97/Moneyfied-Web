@@ -7,6 +7,7 @@ import { CustomValidators } from 'src/app/core/services/custom-validators';
 import { DateAttributes, DateService } from 'src/app/core/services/date.service';
 import { LocalStorageService } from 'src/app/core/services/local-storage.service';
 import { ResponsiveService } from 'src/app/core/services/responsive.service';
+import { TokenErrorHandlerService } from 'src/app/core/services/token-error-handler.service';
 import { DataService } from 'src/app/shared/data.service';
 import { IncomeService } from './income.service';
 
@@ -56,7 +57,8 @@ export class IncomeComponent implements OnInit, OnDestroy {
     private dateService: DateService,
     private dataService: DataService,
     private dataChanged: ChangeDetectorRef,
-    private incomeService: IncomeService
+    private incomeService: IncomeService,
+    private tokenErrorHandler: TokenErrorHandlerService
   ) {
     const date = new Date(),
       month = date.getMonth(),
@@ -209,6 +211,10 @@ export class IncomeComponent implements OnInit, OnDestroy {
               content: 'Erro ao excluír a renda selecionada.'
             });
           }
+        },
+        error => {
+          if (error.error)
+            this.tokenErrorHandler.handleError(error.error);
         });
     }
   }
@@ -240,6 +246,10 @@ export class IncomeComponent implements OnInit, OnDestroy {
         this.rowCount = response.totalLinhas;
         this.rows = response.receitas;
         this.loadingIndicator = false;
+      },
+      error => {
+        if (error.error)
+          this.tokenErrorHandler.handleError(error.error);
       });
   }
 
@@ -250,6 +260,10 @@ export class IncomeComponent implements OnInit, OnDestroy {
           response.categories.unshift({ value: 'Nenhum', CategoriId: 0 });
           this.categoryItems = response.categories;
         }
+      },
+      error => {
+        if (error.error)
+          this.tokenErrorHandler.handleError(error.error);
       });
   }
 
@@ -283,6 +297,10 @@ export class IncomeComponent implements OnInit, OnDestroy {
             TotalValue: '0',
           };
         }
+      },
+      error => {
+        if (error.error)
+          this.tokenErrorHandler.handleError(error.error);
       });
   }
 }
