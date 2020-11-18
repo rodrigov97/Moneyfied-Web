@@ -32,7 +32,7 @@ export const MENUITEMS: MenuItem[] = [{
   Icon: 'fas fa-plus-circle',
   Name: 'Renda',
   Tooltip: 'Suas rendas',
-  Url: 'income',
+  Url: 'incomes',
   Color: '#13ca66'
 }, {
   Icon: 'fas fa-minus-circle',

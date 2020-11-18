@@ -1,15 +1,15 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ReceitaResumo } from 'src/app/core/models/receita.model';
+import { DespesaResumo } from 'src/app/core/models/despesa.model';
 
 @Component({
-  selector: 'app-income-info',
-  templateUrl: './income-info.component.html',
-  styleUrls: ['./income-info.component.scss']
+  selector: 'app-expense-info',
+  templateUrl: './expense-info.component.html',
+  styleUrls: ['./expense-info.component.scss']
 })
-export class IncomeInfoComponent implements OnInit {
+export class ExpenseInfoComponent implements OnInit {
 
   @Input() isMobile: boolean = false;
-  @Input() resume: ReceitaResumo;
+  @Input() resume: DespesaResumo;
   constructor() { }
 
   ngOnInit(): void {
@@ -26,13 +26,13 @@ export class IncomeInfoComponent implements OnInit {
     };
   }
 
-  incomeStatus(value: string): {} {
+  expenseStatus(value: string): {} {
     var amount = parseFloat(value);
 
     if (amount) {
 
       return {
-        'color': '#13ca66'
+        'color': '#e71426'
       }
     }
   }

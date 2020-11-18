@@ -7,6 +7,7 @@ import { ProfileService } from './profile.service';
 import { ResponsiveService } from 'src/app/core/services/responsive.service';
 import { Usuario } from 'src/app/core/models/usuario.model';
 import { FilesHandlerService } from 'src/app/core/services/files-handler.service';
+import { TokenErrorHandlerService } from 'src/app/core/services/token-error-handler.service';
 
 @Component({
   selector: 'app-my-profile',
@@ -34,7 +35,8 @@ export class MyProfileComponent implements OnInit {
     private localStorage: LocalStorageService,
     private profileService: ProfileService,
     private dataService: DataService,
-    private filesHandler: FilesHandlerService
+    private filesHandler: FilesHandlerService,
+    private tokenErrorHandler: TokenErrorHandlerService
   ) {
     this.formProfile = new FormGroup({
       Nome: new FormControl('', [
@@ -86,6 +88,10 @@ export class MyProfileComponent implements OnInit {
           this.userName = user.Nome;
           this.userProfilePicture = user.ImagemPerfil;
         }
+      },
+      error => {
+        if (error.error)
+          this.tokenErrorHandler.handleError(error.error);
       });
   }
 
@@ -158,6 +164,10 @@ export class MyProfileComponent implements OnInit {
               content: response.message
             });
           }
+        },
+        error => {
+          if (error.error)
+            this.tokenErrorHandler.handleError(error.error);
         });
     }
   }
@@ -194,6 +204,10 @@ export class MyProfileComponent implements OnInit {
             content: response.message
           });
         }
+      },
+      error => {
+        if (error.error)
+          this.tokenErrorHandler.handleError(error.error);
       });
   }
 }

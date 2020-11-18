@@ -3,9 +3,6 @@
   <div *ngIf="!isLoading">
     <div class="modal-header">
       <h5 class="modal-title">
-        <i>
-
-        </i>
         {{formType}} - {{form}}
       </h5>
     </div>
@@ -29,9 +26,16 @@
           label="Valor (R$)"
           name="valor"
           placeholder="0,00"
-          type="number"
+          type="decimal-number"
         >
         </app-text-input>
+
+        <app-select
+          name="nome"
+          label="Categoria"
+          [items]="categoryItems"
+          [control]="categoria"
+        ></app-select>
 
         <app-datepicker
           [control]="dataRecebimento"

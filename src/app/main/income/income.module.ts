@@ -10,6 +10,7 @@ import { IncomeService } from './income.service';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { FormCategoryComponent } from './form-category/form-category-income.component';
 
 
 @NgModule({
@@ -26,6 +27,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
     IncomeComponent,
     IncomeGridComponent,
     FormRegisterIncomeComponent,
+    FormCategoryComponent,
     IncomeInfoComponent
   ],
   providers: [

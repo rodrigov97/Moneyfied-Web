@@ -1,0 +1,127 @@
+<ng-template #formModal let-modal data-keyboard="false" data-backdrop="static">
+  <app-load-spinner *ngIf="isLoading"></app-load-spinner>
+  <div *ngIf="!isLoading">
+    <div class="modal-header">
+      <h5 class="modal-title">
+        {{formType}} - {{form}}
+      </h5>
+    </div>
+    <form [formGroup]="formExpense">
+      <div class="modal-body">
+
+        <app-text-input
+          [control]="descricao"
+          [trim]="true"
+          fieldId="descricao"
+          label="Descrição"
+          name="descricao"
+          placeholder="Descrição"
+          type="text"
+        ></app-text-input>
+
+        <app-text-input
+          [control]="valor"
+          [readonly]="isParcelado"
+          [trim]="true"
+          fieldId="valor"
+          label="Valor (R$)"
+          name="valor"
+          placeholder="0,00"
+          type="decimal-number"
+        >
+        </app-text-input>
+
+        <div class="form-check mb-3">
+          <input
+            [formControl]="parcelado"
+            (change)="cmbPagamentoChange($event)"
+            type="checkbox"
+            class="form-check-input"
+            name="parcelado"
+            id="pagamento">
+          <label class="form-check-label" for="parcelado">Parcelado</label>
+        </div>
+
+        <div *ngIf="!hideFields">
+
+          <div class="form-row">
+            <div class="col-3">
+
+              <app-text-input
+                [control]="parcelaQtd"
+                [readonly]="isParcelado"
+                [trim]="true"
+                fieldId="parcelas"
+                label="Parcelas"
+                name="parcelas"
+                placeholder="0"
+                type="number"
+              >
+              </app-text-input>
+
+            </div>
+            <div class="col-9">
+
+              <app-text-input
+                [control]="parcelaValor"
+                [readonly]="true"
+                [trim]="true"
+                fieldId="valorparcela"
+                label="Valor da Parcela (R$)"
+                name="valorparcela"
+                placeholder="0,00"
+                type="decimal-number"
+              >
+              </app-text-input>
+
+
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="col-6">
+
+              <app-datepicker
+                [control]="dataInicial"
+                fieldId="dataInicial"
+                label="Data Inicial"
+                name="dataInicial"
+              ></app-datepicker>
+
+            </div>
+            <div class="col-6">
+
+              <app-datepicker
+                [control]="dataFinal"
+                fieldId="dataFinal"
+                label="Data Final"
+                name="dataFinal"
+              ></app-datepicker>
+
+            </div>
+          </div>
+
+        </div>
+
+        <app-datepicker
+          [control]="dataPagamento"
+          fieldId="dataPagamento"
+          label="Data do Pagamento"
+          name="dataPagamento"
+        ></app-datepicker>
+
+        <app-select
+          name="nome"
+          label="Categoria"
+          [items]="categoryItems"
+          [control]="categoria"
+        ></app-select>
+
+      </div>
+        <div class="modal-footer d-flex">
+          <button type="button" class="btn btn-cancel" (click)="onClose()" data-dismiss="modal">Cancelar</button>
+          <span class="fill"></span>
+          <button type="button" class="btn btn-add" (click)="expenseOperations()" data-dismiss="modal">Salvar</button>
+        </div>
+    </form>
+  </div>
+</ng-template>

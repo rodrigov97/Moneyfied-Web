@@ -17,7 +17,8 @@ registerLocaleData(localePt);
 
 const maskConfig: Partial<IConfig> = {
   validation: false,
-  dropSpecialCharacters: false
+  dropSpecialCharacters: false,
+  thousandSeparator: ''
 };
 
 @NgModule({

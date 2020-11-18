@@ -1,59 +1,59 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { ApiClient } from 'src/app/core/clients/api.client';
-import { Receita } from 'src/app/core/models/receita.model';
-import { CategoriaReceita } from 'src/app/core/models/receitaCategoria.model';
+import { Despesa } from 'src/app/core/models/despesa.model';
+import { CategoriaDespesa } from 'src/app/core/models/despesaCategoria.model';
 import { LocalStorageService } from 'src/app/core/services/local-storage.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class IncomeService {
-  private readonly ROUTE_URL = 'income';
+export class ExpenseService {
+  private readonly ROUTE_URL = 'expense';
 
   private reloadGrid = new Subject<any>();
   private changePage = new Subject<any>();
-  private openIncomeForm = new Subject<any>();
+  private openExpenseForm = new Subject<any>();
   private openCategoryForm = new Subject<any>();
   private loadCategories = new Subject<any>();
 
   gridCurrentPage: number = 1;
 
-  selectedItem: Receita;
+  selectedItem: Despesa;
 
   constructor(
     private apiClient: ApiClient,
     private storageService: LocalStorageService
   ) { }
 
-  getIncome(start: number, limit: number, categoryId: number, month: number, year: number): Observable<any> {
+  getExpense(start: number, limit: number, categoryId: number, month: number, year: number): Observable<any> {
     const path = `${this.ROUTE_URL}/get/?start=${start}&limit=${limit}&userId=${this.storageService.userId}&categoryId=${categoryId}&month=${month}&year=${year}`;
 
     return this.apiClient.get(path);
   }
 
-  getIncomeResume(month: number, year: number): Observable<any> {
+  getExpenseResume(month: number, year: number): Observable<any> {
     const path = `${this.ROUTE_URL}/info/?userId=${this.storageService.userId}&month=${month}&year=${year}`;
 
     return this.apiClient.get(path);
   }
 
-  insertIncome(incomeInfo: Receita): Observable<any> {
+  insertExpense(expenseInfo: Despesa): Observable<any> {
     const path = `${this.ROUTE_URL}/insert`;
 
-    return this.apiClient.post(path, incomeInfo);
+    return this.apiClient.post(path, expenseInfo);
   }
 
-  deleteIncome(incomeId: number): Observable<any> {
-    const path = `${this.ROUTE_URL}/delete/?receitaId=${incomeId}`;
-
-    return this.apiClient.delete(path);
-  }
-
-  updateIncome(incomeInfo: Receita): Observable<any> {
+  updateExpense(expenseInfo: Despesa): Observable<any> {
     const path = `${this.ROUTE_URL}/update`;
 
-    return this.apiClient.put(path, incomeInfo);
+    return this.apiClient.put(path, expenseInfo);
+  }
+
+  deleteExpense(expenseId: number): Observable<any> {
+    const path = `${this.ROUTE_URL}/delete/?receitaId=${expenseId}`;
+
+    return this.apiClient.delete(path);
   }
 
   getCategories(userId: number): Observable<any> {
@@ -62,10 +62,16 @@ export class IncomeService {
     return this.apiClient.get(path);
   }
 
-  createCategory(category: CategoriaReceita): Observable<any> {
+  createCategory(category: CategoriaDespesa): Observable<any> {
     const path = `${this.ROUTE_URL}/categories/insert`;
 
     return this.apiClient.post(path, category);
+  }
+
+  updateCategory(category: CategoriaDespesa): Observable<any> {
+    const path = `${this.ROUTE_URL}/categories/update`;
+
+    return this.apiClient.put(path, category);
   }
 
   deleteCategory(categoryId: number): Observable<any> {
@@ -74,18 +80,12 @@ export class IncomeService {
     return this.apiClient.delete(path);
   }
 
-  updateCategory(category: CategoriaReceita): Observable<any> {
-    const path = `${this.ROUTE_URL}/categories/update`;
-
-    return this.apiClient.put(path, category);
+  openFormExpense(data: any): void {
+    this.openExpenseForm.next(data);
   }
 
-  openFormIncome(data: any): void {
-    this.openIncomeForm.next(data);
-  }
-
-  callOpenFormIncome(): Observable<any> {
-    return this.openIncomeForm.asObservable();
+  callOpenFormExpense(): Observable<any> {
+    return this.openExpenseForm.asObservable();
   }
 
   openFormCategory(data: any): void {

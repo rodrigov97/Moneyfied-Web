@@ -1,14 +1,14 @@
-import { AfterViewInit, ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
-import { ColumnMode, SelectionType } from '@swimlane/ngx-datatable';
-import { Receita } from 'src/app/core/models/receita.model';
-import { IncomeService } from '../income.service';
+import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
+import { SelectionType, ColumnMode } from '@swimlane/ngx-datatable';
+import { Despesa } from 'src/app/core/models/despesa.model';
+import { ExpenseService } from '../expense.service';
 
 @Component({
-  selector: 'app-income-grid',
-  templateUrl: './income-grid.component.html',
-  styleUrls: ['./income-grid.component.scss']
+  selector: 'app-expense-grid',
+  templateUrl: './expense-grid.component.html',
+  styleUrls: ['./expense-grid.component.scss']
 })
-export class IncomeGridComponent implements OnInit, AfterViewInit {
+export class ExpenseGridComponent implements OnInit {
 
   @Input() rows = [];
   @Input() columns = [];
@@ -22,7 +22,7 @@ export class IncomeGridComponent implements OnInit, AfterViewInit {
   columnMode = ColumnMode;
 
   constructor(
-    private incomeService: IncomeService,
+    private expenseService: ExpenseService,
     private dataChanged: ChangeDetectorRef
   ) { }
 
@@ -37,13 +37,13 @@ export class IncomeGridComponent implements OnInit, AfterViewInit {
 
   setPageData(pageNumber: any): void {
     this.currentPage = pageNumber.page;
-    this.incomeService.gridCurrentPage = this.currentPage;
-    this.incomeService.gridPageChange(pageNumber.page);
+    this.expenseService.gridCurrentPage = this.currentPage;
+    this.expenseService.gridPageChange(pageNumber.page);
   }
 
   dblClickItem(event: any): void {
     if (event.type === 'dblclick') {
-      this.incomeService.openFormIncome({
+      this.expenseService.openFormExpense({
         command: 'open',
         title: 'Atenção',
         form: 'Receita',
@@ -52,7 +52,7 @@ export class IncomeGridComponent implements OnInit, AfterViewInit {
       });
     }
     if (event.type === 'click') {
-      this.incomeService.selectedItem = new Receita(event.row);
+      this.expenseService.selectedItem = new Despesa(event.row);
     }
   }
 }

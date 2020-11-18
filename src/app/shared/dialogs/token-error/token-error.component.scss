@@ -1,0 +1,19 @@
+@import "../../../../assets/style/variables";
+
+.svg-icon {
+  width: 30px;
+  height: 30px;
+  margin-bottom: 5px;
+  margin-right: 15px;
+}
+
+.svg-icon path,
+.svg-icon polygon,
+.svg-icon rect {
+  fill: $danger;
+}
+
+.svg-icon circle {
+  stroke: f1cf0c;
+  stroke-width: 1;
+}

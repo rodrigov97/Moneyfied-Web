@@ -1,0 +1,41 @@
+<ng-template #formCategoryModal let-modal data-keyboard="false" data-backdrop="static">
+  <app-load-spinner *ngIf="isLoading"></app-load-spinner>
+  <div *ngIf="!isLoading">
+    <div class="modal-header">
+      <h5 class="modal-title">
+        Categorias - {{type}}
+      </h5>
+    </div>
+    <form [formGroup]="formCategory">
+      <div class="modal-body">
+
+        <app-select *ngIf="!edit"
+          name="nome"
+          label="Categoria"
+          [items]="categories"
+          [control]="category"
+        ></app-select>
+
+        <app-text-input *ngIf="edit"
+          [control]="category"
+          [trim]="true"
+          fieldId="categoria"
+          label="Categoria"
+          name="categoria"
+          placeholder="Categoria"
+          type="text"
+        ></app-text-input>
+
+      </div>
+        <div class="modal-footer d-flex">
+          <button *ngIf="!edit" type="button" class="btn btn-cancel" (click)="close()" data-dismiss="modal">Fechar</button>
+          <button *ngIf="!edit" type="button" class="btn btn-cancel" (click)="deleteCategory()" data-dismiss="modal">Apagar</button>
+          <button *ngIf="edit" type="button" class="btn btn-cancel" (click)="cancel()" data-dismiss="modal">Cancelar</button>
+          <span class="fill"></span>
+          <button *ngIf="!edit && type != 'Criar'" type="button" class="btn btn-add" (click)="editCategory()" data-dismiss="modal">Editar</button>
+          <button *ngIf="!edit" type="button" class="btn btn-add" (click)="addCategory()" data-dismiss="modal">Cadastrar</button>
+          <button *ngIf="edit" type="button" class="btn btn-add" (click)="saveCategory()" data-dismiss="modal">Salvar</button>
+        </div>
+    </form>
+  </div>
+</ng-template>
