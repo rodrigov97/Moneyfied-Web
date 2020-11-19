@@ -111,9 +111,6 @@ export class FormRegisterComponent implements OnInit {
     if (this.form === 'Alterar') {
       this.setExpenseItem();
     }
-
-    this.initFormListeners();
-    this.loadCategories();
   }
 
   initFormListeners(): void {
@@ -163,6 +160,9 @@ export class FormRegisterComponent implements OnInit {
           if (this.formValue.Parcelado)
             this.isParcelado = true;
         }
+
+        this.initFormListeners();
+        this.loadCategories();
       }
     });
   }
