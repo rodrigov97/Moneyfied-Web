@@ -156,9 +156,9 @@ export class ExpenseComponent implements OnInit {
       this.columns = [{
         name: 'Descrição', prop: 'Descricao', flex: 3, align: 'align-left'
       }, {
-        name: 'Valor (R$)', prop: 'ParcelaValor', flex: 1, align: 'align-right'
+        name: 'R$', prop: 'ParcelaValor', flex: 1, align: 'align-right'
       }, {
-        name: 'Nº Parcela', prop: 'ParcelaNumero', flex: 1, align: 'align-center'
+        name: 'Nº', prop: 'ParcelaNumero', flex: 1, align: 'align-center'
       }];
     }
   }

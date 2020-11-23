@@ -50,6 +50,7 @@ export class ExpenseGridComponent implements OnInit {
         formType: 'Alterar',
         data: event.row
       });
+      this.expenseService.selectedItem = new Despesa(event.row);
     }
     if (event.type === 'click') {
       this.expenseService.selectedItem = new Despesa(event.row);

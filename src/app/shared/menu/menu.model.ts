@@ -40,6 +40,12 @@ export const MENUITEMS: MenuItem[] = [{
   Tooltip: 'Suas despesas',
   Url: 'expenses',
   Color: '#e71426'
+},{
+  Icon: 'fas fa-bullseye',
+  Name: 'Metas',
+  Tooltip: 'Seus Objetivos',
+  Url: 'goals',
+  Color: '#3949ab'
 }, {
   Icon: 'far fa-user',
   Name: 'Meu Perfil',

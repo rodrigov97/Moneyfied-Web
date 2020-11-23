@@ -1,0 +1,31 @@
+<ng-template #formAddAmount let-modal data-keyboard="false" data-backdrop="static">
+  <app-load-spinner *ngIf="isLoading"></app-load-spinner>
+  <div *ngIf="!isLoading">
+    <div class="modal-header">
+      <h5 class="modal-title">
+        Adicionar Quantia - {{goalData ? goalData.Nome : ''}}
+      </h5>
+    </div>
+    <form [formGroup]="formAdd">
+      <div class="modal-body">
+
+        <app-text-input
+          [control]="valor"
+          [trim]="true"
+          fieldId="valor"
+          label="Valor (R$)"
+          name="valor"
+          placeholder="0,00"
+          type="decimal-number"
+        >
+        </app-text-input>
+
+      </div>
+      <div class="modal-footer d-flex">
+        <button type="button" class="btn btn-cancel" (click)="onClose()" data-dismiss="modal">Cancelar</button>
+        <span class="fill"></span>
+        <button type="button" class="btn btn-add" (click)="addAmount()" data-dismiss="modal">Salvar</button>
+      </div>
+    </form>
+  </div>
+</ng-template>

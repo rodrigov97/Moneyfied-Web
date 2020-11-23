@@ -50,6 +50,7 @@ export class IncomeGridComponent implements OnInit, AfterViewInit {
         formType: 'Alterar',
         data: event.row
       });
+      this.incomeService.selectedItem = new Receita(event.row);
     }
     if (event.type === 'click') {
       this.incomeService.selectedItem = new Receita(event.row);

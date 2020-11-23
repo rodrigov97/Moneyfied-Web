@@ -1,0 +1,25 @@
+<section (window:resize)="onResize()">
+  <div class="filters">
+    <button class="btn btn-add-goal margin-b-10" (click)="openFormGoal()"><i class="fas fa-plus"></i>Nova Meta</button>
+
+    <button class="btn btn-cancel margin-b-10"><i class="fas fa-times"></i>Excluir Meta</button>
+
+    <button class="btn btn-add-goal" (click)="openFormAddAmount()"><i class="fas fa-dollar-sign"></i>Adicionar Quantia</button>
+
+    <hr>
+
+  </div>
+  <div class="goals-list">
+
+    <app-goal-grid
+     [columns]="columns"
+     [loadingIndicator]="loadingIndicator"
+     [rows]="rows"
+     [rowCount]="rowCount"
+     [limit]="limit"
+    ></app-goal-grid>
+
+  </div>
+  <app-form-register-goal></app-form-register-goal>
+  <app-form-add-amount></app-form-add-amount>
+</section>

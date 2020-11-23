@@ -1,4 +1,4 @@
-@import '../../../../assets/style/_variables.scss';
+@import "../../../../assets/style/_variables.scss";
 
 ngx-datatable {
   height: 100%;
@@ -18,11 +18,11 @@ ngx-datatable {
 }
 
 :host ::ng-deep .progress-linear .container .bar {
-  background: $green !important;
+  background: $indigo !important;
 }
 
 :host ::ng-deep .progress-linear .container {
-  background: $green-light !important;
+  background: $indigo-light !important;
 }
 
 :host ::ng-deep .datatable-body-row {
@@ -30,7 +30,7 @@ ngx-datatable {
 }
 
 :host ::ng-deep .ngx-datatable.material.single-selection .datatable-body-row.active .datatable-row-group {
-  background: $green !important;
+  background: $indigo !important;
 }
 :host ::ng-deep .datatable-body-row.active span {
   color: $white !important;
