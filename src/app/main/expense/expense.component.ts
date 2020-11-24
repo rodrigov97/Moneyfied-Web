@@ -109,8 +109,6 @@ export class ExpenseComponent implements OnInit {
       month = date.getMonth() + 1,
       year = date.getFullYear();
 
-
-
     this.getExpenseData(1, 0);
     this.getExpenseResume(month, year);
     this.loadCategories();

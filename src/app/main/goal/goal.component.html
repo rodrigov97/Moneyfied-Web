@@ -1,24 +1,47 @@
 <section (window:resize)="onResize()">
-  <div class="filters">
-    <button class="btn btn-add-goal margin-b-10" (click)="openFormGoal()"><i class="fas fa-plus"></i>Nova Meta</button>
+  <app-load-spinner *ngIf="isLoading"></app-load-spinner>
+  <div class="content-container" *ngIf="!isLoading">
+    <div class="filters">
+      <button class="btn btn-add-goal margin-b-10" (click)="openFormGoal()"><i class="fas fa-plus"></i>Nova Meta</button>
 
-    <button class="btn btn-cancel margin-b-10"><i class="fas fa-times"></i>Excluir Meta</button>
+      <button class="btn btn-cancel margin-b-10" (click)="deleteGoal()"><i class="fas fa-times"></i>Excluir Meta</button>
 
-    <button class="btn btn-add-goal" (click)="openFormAddAmount()"><i class="fas fa-dollar-sign"></i>Adicionar Quantia</button>
+      <button class="btn btn-add-goal" (click)="openFormAddAmount()"><i class="fas fa-dollar-sign"></i>Adicionar Quantia</button>
 
-    <hr>
+      <hr>
 
-  </div>
-  <div class="goals-list">
+      <button class="btn btn-add-goal" (click)="filterData()"><i class="fas fa-filter"></i>Filtrar</button>
 
-    <app-goal-grid
-     [columns]="columns"
-     [loadingIndicator]="loadingIndicator"
-     [rows]="rows"
-     [rowCount]="rowCount"
-     [limit]="limit"
-    ></app-goal-grid>
+      <hr>
 
+      <app-select
+        name="mes"
+        label="Mês"
+        [control]="month"
+        [items]="months"
+      ></app-select>
+
+      <app-select
+        name="ano"
+        label="Ano"
+        [control]="year"
+        [items]="years"
+        [class]="'margin-b-none'"
+      ></app-select>
+
+    </div>
+
+    <div class="goals-list">
+
+      <app-goal-grid
+        [columns]="columns"
+        [loadingIndicator]="loadingIndicator"
+        [rows]="rows"
+        [rowCount]="rowCount"
+        [limit]="limit"
+      ></app-goal-grid>
+
+    </div>
   </div>
   <app-form-register-goal></app-form-register-goal>
   <app-form-add-amount></app-form-add-amount>

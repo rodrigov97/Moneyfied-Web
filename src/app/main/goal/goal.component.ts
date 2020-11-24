@@ -1,6 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { Objetivo } from 'src/app/core/models/objetivos.model';
+import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
+import { Subscription } from 'rxjs';
+import { Objetivo } from 'src/app/core/models/objetivo.model';
+import { DateAttributes, DateService } from 'src/app/core/services/date.service';
 import { ResponsiveService } from 'src/app/core/services/responsive.service';
+import { TokenErrorHandlerService } from 'src/app/core/services/token-error-handler.service';
+import { DataService } from 'src/app/shared/data.service';
 import { GoalService } from './goal.service';
 
 @Component({
@@ -12,18 +17,68 @@ export class GoalComponent implements OnInit {
 
   isMobile: boolean = false;
 
+  isLoading: boolean = false;
+
   columns: any = [];
   rows: Objetivo[] = [];
   rowCount: number;
   limit: number = 10;
   loadingIndicator: boolean = false;
 
+  formFilters: FormGroup;
+
+  reloadEventSub: Subscription;
+  changePageEventSub: Subscription;
+
+  currentMonthFilter: number;
+  currentYearFilter: number;
+
   constructor(
     private responsiveService: ResponsiveService,
-    private goalService: GoalService
-  ) { }
+    private goalService: GoalService,
+    private dateService: DateService,
+    private dataService: DataService,
+    private tokenErrorHandler: TokenErrorHandlerService
+  ) {
+    const date = new Date(),
+      month = date.getMonth(),
+      year = date.getFullYear();
+
+    this.formFilters = new FormGroup({
+      Mes: new FormControl(this.currentMonth(month)),
+      Ano: new FormControl(year)
+    });
+
+    this.reloadEventSub = this.goalService.callReloadGridFunction().subscribe(
+      () => {
+        this.getGoalData(this.goalService.gridCurrentPage, this.currentMonthFilter, this.currentYearFilter);
+      });
+
+    this.changePageEventSub = this.goalService.callGridPageChange().subscribe(
+      page => {
+        this.getGoalData(page, 0)
+      });
+  }
+
+  get month(): AbstractControl {
+    return this.formFilters.get('Mes');
+  }
+
+  get year(): AbstractControl {
+    return this.formFilters.get('Ano');
+  }
+
+  get months(): DateAttributes[] {
+    return this.dateService.months;
+  }
+
+  get years(): any {
+    return this.dateService.years;
+  }
 
   ngOnInit(): void {
+    this.getGoalData(1, 0);
+
     this.onResize();
   }
 
@@ -31,6 +86,10 @@ export class GoalComponent implements OnInit {
     this.responsiveService.checkWidth();
     this.isMobile = this.responsiveService.isMobile;
     this.setGridColumns();
+  }
+
+  currentMonth(current: number): string {
+    return this.dateService.months[current].value;
   }
 
   setGridColumns(): void {
@@ -67,17 +126,73 @@ export class GoalComponent implements OnInit {
     return value;
   }
 
-  openFormGoal():void {
+  filterData(): void {
+    var month = this.dateService.getMonthNumber(this.month.value),
+      year = this.year.value;
+
+    this.currentMonthFilter = month;
+    this.currentYearFilter = year;
+
+    this.getGoalData(1, month, year);
+  }
+
+  openFormGoal(): void {
     this.goalService.openFormGoal({
       command: 'open',
       formType: 'Cadastro'
     });
   }
 
-  openFormAddAmount():void {
+  openFormAddAmount(): void {
     this.goalService.openFormAddAmount({
       command: 'open',
       formType: 'Cadastro'
     });
+  }
+
+  getGoalData(page: number, month?: number, year?: number): void {
+    var currentPage = this.getPage(page),
+      date = new Date(),
+      mes = month ? month : (this.currentMonthFilter ? this.currentMonthFilter : date.getMonth() + 1),
+      ano = year ? year : (this.currentYearFilter ? this.currentYearFilter : date.getFullYear());
+
+    this.loadingIndicator = true;
+    this.goalService.getGoal(currentPage, this.limit, mes, ano).subscribe(
+      response => {
+        this.rowCount = response.totalLinhas;
+        this.rows = response.objetivos;
+        this.loadingIndicator = false;
+      },
+      error => {
+        if (error.error)
+          this.tokenErrorHandler.handleError(error.error);
+      });
+  }
+
+  deleteGoal(): void {
+    if (this.goalService.selectedItem) {
+      var despesaId = this.goalService.selectedItem.ObjetivoId;
+
+      this.loadingIndicator = true;
+
+      this.goalService.deleteGoal(despesaId).subscribe(
+        response => {
+          if (response.success) {
+            this.getGoalData(this.goalService.gridCurrentPage, this.currentMonthFilter, this.currentYearFilter);
+            this.loadingIndicator = false;
+          }
+          else {
+            this.dataService.openErrorDialogModal({
+              command: 'open',
+              title: 'Atenção',
+              content: 'Erro ao excluír o objetivo selecionado.'
+            });
+          }
+        },
+        error => {
+          if (error.error)
+            this.tokenErrorHandler.handleError(error.error);
+        });
+    }
   }
 }

@@ -7,6 +7,11 @@ section {
   background-color: $whitesmoke;
 }
 
+.content-container {
+  height: 100%;
+  width: 100%;
+}
+
 .filters {
   padding: 0.625rem;
 }
@@ -38,7 +43,8 @@ section {
 }
 
 @include media-breakpoint-up(lg) {
-  section {
+  section,
+  .content-container {
     display: flex;
     align-items: center;
     justify-content: center;

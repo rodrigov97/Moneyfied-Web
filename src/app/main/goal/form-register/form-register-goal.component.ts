@@ -2,8 +2,10 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 import { NgbModalOptions, NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { Subscription } from 'rxjs';
-import { Objetivo } from 'src/app/core/models/objetivos.model';
+import { Objetivo } from 'src/app/core/models/objetivo.model';
+import { DateService } from 'src/app/core/services/date.service';
 import { LocalStorageService } from 'src/app/core/services/local-storage.service';
+import { TokenErrorHandlerService } from 'src/app/core/services/token-error-handler.service';
 import { GoalService } from '../goal.service';
 
 @Component({
@@ -39,7 +41,9 @@ export class FormRegisterGoalComponent implements OnInit {
   constructor(
     private modalService: NgbModal,
     private localStorage: LocalStorageService,
-    private goalService: GoalService
+    private goalService: GoalService,
+    private dateService: DateService,
+    private tokenErrorHandler: TokenErrorHandlerService
   ) {
 
     this.formGoal = new FormGroup({
@@ -118,15 +122,54 @@ export class FormRegisterGoalComponent implements OnInit {
     this.formGoal.markAllAsTouched();
 
     if (this.isFormValid) {
-      if (this.formType === 'Cadastrar') {
+      this.isLoading = true;
 
+      if (this.formType === 'Cadastro') {
+        this.addGoal();
       }
       else if (this.formType === 'Alterar') {
 
       }
-
     }
+  }
 
+  addGoal(): void {
+    var goal = new Objetivo(this.formGoal.value);
+
+    goal.UsuarioId = this.localStorage.userId;
+    goal.DataObjetivo = this.dateService.ISOdateFormat(new Date());
+
+    this.goalService.addGoal(goal).subscribe(
+      response => {
+        if (response.success) {
+          this.isLoading = false;
+          this.resetForm();
+          this.goalService.reloadGridEvent();
+          this.modalService.dismissAll();
+        }
+      },
+      error => {
+        if (error.error)
+          this.tokenErrorHandler.handleError(error.error);
+      });
+  }
+
+  updateGoal(): void {
+    var goal = new Objetivo(this.formGoal.value);
+
+    this.goalService.updateGoal(goal).subscribe(
+      response => {
+        if (response.success) {
+          this.isLoading = false;
+          this.resetForm();
+          this.goalService.reloadGridEvent();
+          this.modalService.dismissAll();
+        }
+      },
+      error => {
+        if (error.error)
+          this.tokenErrorHandler.handleError(error.error);
+      });
   }
 
   get isFormValid(): boolean {

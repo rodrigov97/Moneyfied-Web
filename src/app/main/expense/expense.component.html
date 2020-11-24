@@ -1,6 +1,4 @@
 <section #main (window:resize)="onResize()">
-  <app-load-spinner *ngIf="isLoading"></app-load-spinner>
-  <div *ngIf="!isLoading">
     <div #headerInfo>
 
       <app-expense-info
@@ -25,17 +23,17 @@
         <hr>
 
         <app-select
-          name="ano"
-          label="Ano"
-          [control]="year"
-          [items]="years"
-        ></app-select>
-
-        <app-select
           name="mes"
           label="Mês"
           [control]="month"
           [items]="months"
+        ></app-select>
+
+        <app-select
+          name="ano"
+          label="Ano"
+          [control]="year"
+          [items]="years"
         ></app-select>
 
         <app-select
@@ -60,7 +58,6 @@
         </app-expense-grid>
 
       </div>
-    </div>
   </div>
   <app-form-register-expense></app-form-register-expense>
   <app-form-category-expense></app-form-category-expense>

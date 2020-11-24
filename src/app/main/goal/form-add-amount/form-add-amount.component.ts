@@ -2,8 +2,9 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 import { NgbModalOptions, NgbModalRef, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Subscription } from 'rxjs';
-import { Objetivo } from 'src/app/core/models/objetivos.model';
+import { Objetivo } from 'src/app/core/models/objetivo.model';
 import { LocalStorageService } from 'src/app/core/services/local-storage.service';
+import { TokenErrorHandlerService } from 'src/app/core/services/token-error-handler.service';
 import { GoalService } from '../goal.service';
 
 @Component({
@@ -30,7 +31,8 @@ export class FormAddAmountComponent implements OnInit {
   constructor(
     private modalService: NgbModal,
     private localStorage: LocalStorageService,
-    private goalService: GoalService
+    private goalService: GoalService,
+    private tokenErrorHandler: TokenErrorHandlerService
   ) {
 
     this.formAdd = new FormGroup({
@@ -65,7 +67,27 @@ export class FormAddAmountComponent implements OnInit {
   }
 
   addAmount(): void {
+    this.formAdd.markAllAsTouched();
 
+    if (this.isFormValid) {
+      var amount = parseFloat(this.valor.value);
+
+      this.isLoading = false;
+
+      this.goalService.addAmount(this.goalData.ObjetivoId, amount).subscribe(
+        response => {
+          if (response.success) {
+            this.isLoading = false;
+            this.resetForm();
+            this.goalService.reloadGridEvent();
+            this.modalService.dismissAll();
+          }
+        },
+        error => {
+          if (error.error)
+            this.tokenErrorHandler.handleError(error.error);
+        });
+    }
   }
 
   onClose(): void {
@@ -79,5 +101,9 @@ export class FormAddAmountComponent implements OnInit {
     this.formAdd.setValue({
       Valor: null
     })
+  }
+
+  get isFormValid(): boolean {
+    return this.formAdd.valid;
   }
 }

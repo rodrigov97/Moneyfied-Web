@@ -1,6 +1,7 @@
 import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { SelectionType, ColumnMode } from '@swimlane/ngx-datatable';
 import { Despesa } from 'src/app/core/models/despesa.model';
+import { Objetivo } from 'src/app/core/models/objetivo.model';
 import { GoalService } from '../goal.service';
 
 @Component({
@@ -24,8 +25,10 @@ export class GoalGridComponent implements OnInit {
   constructor(
     private dataChanged: ChangeDetectorRef,
     private goalService: GoalService
-  ) { }
+  ) {
 
+
+  }
 
   ngOnInit(): void {
     window.dispatchEvent(new Event('resize'));
@@ -36,23 +39,21 @@ export class GoalGridComponent implements OnInit {
   }
 
   setPageData(pageNumber: any): void {
-    // this.currentPage = pageNumber.page;
-    // this.expenseService.gridCurrentPage = this.currentPage;
-    // this.expenseService.gridPageChange(pageNumber.page);
+    this.currentPage = pageNumber.page;
+    this.goalService.gridCurrentPage = this.currentPage;
+    this.goalService.gridPageChange(pageNumber.page);
   }
 
   dblClickItem(event: any): void {
-    // if (event.type === 'dblclick') {
-    //   this.expenseService.openFormExpense({
-    //     command: 'open',
-    //     title: 'Atenção',
-    //     form: 'Receita',
-    //     formType: 'Alterar',
-    //     data: event.row
-    //   });
-    // }
-    // if (event.type === 'click') {
-    //   this.expenseService.selectedItem = new Despesa(event.row);
-    // }
+    if (event.type === 'dblclick') {
+      this.goalService.openFormGoal({
+        command: 'open',
+        formType: 'Alterar',
+        data: event.row
+      });
+    }
+    if (event.type === 'click') {
+      this.goalService.selectedItem = new Objetivo(event.row);
+    }
   }
 }
