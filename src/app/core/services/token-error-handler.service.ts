@@ -11,7 +11,7 @@ export class TokenErrorHandlerService {
   ) { }
 
   handleError(error: any): void {
-    if (error.error) {
+    if (error.error && error.status !== 500) {
       this.handleTokenError(error);
     }
   }

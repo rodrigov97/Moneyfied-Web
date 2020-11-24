@@ -127,7 +127,7 @@ export class FormRegisterIncomeComponent implements OnInit, OnDestroy {
         }
       },
       error => {
-        if (error.error)
+        if (error.error && error.status !== 500)
           this.tokenErrorHandler.handleError(error.error);
       });
   }
@@ -171,7 +171,7 @@ export class FormRegisterIncomeComponent implements OnInit, OnDestroy {
         }
       },
       error => {
-        if (error.error)
+        if (error.error && error.status !== 500)
           this.tokenErrorHandler.handleError(error.error);
       });
   }
@@ -204,7 +204,7 @@ export class FormRegisterIncomeComponent implements OnInit, OnDestroy {
         }
       },
       error => {
-        if (error.error)
+        if (error.error && error.status !== 500)
           this.tokenErrorHandler.handleError(error.error);
       });
   }

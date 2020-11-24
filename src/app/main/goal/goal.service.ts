@@ -26,8 +26,8 @@ export class GoalService {
 
   private readonly ROUTE_URL = 'goal';
 
-  getGoal(start: number, limit: number, month: number, year: number): Observable<any> {
-    const path = `${this.ROUTE_URL}/get/?start=${start}&limit=${limit}&userId=${this.storageService.userId}&month=${month}&year=${year}`;
+  getGoal(start: number, limit: number, month: number, year: number, name: string): Observable<any> {
+    const path = `${this.ROUTE_URL}/get/?start=${start}&limit=${limit}&userId=${this.storageService.userId}&month=${month}&year=${year}&name=${name}`;
 
     return this.apiClient.get(path);
   }
@@ -47,7 +47,7 @@ export class GoalService {
   }
 
   addAmount(goalId: number, amount: number): Observable<any> {
-    return this.apiClient.put(`${this.ROUTE_URL}/add-amount?id=${goalId}&amount=${amount}`);
+    return this.apiClient.put(`${this.ROUTE_URL}/add-amount?goalId=${goalId}&amount=${amount}`);
   }
 
   openFormGoal(data: any): void {

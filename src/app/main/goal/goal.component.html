@@ -14,6 +14,21 @@
 
       <hr>
 
+      <app-text-input
+        [control]="name"
+        [trim]="true"
+        [append]="true"
+        fieldId="nome"
+        label="Nome"
+        name="nome"
+        placeholder="Nome do Objetivo"
+        type="text"
+      >
+        <span class="icon-container input-group-text">
+          <i class="fas fa-search"></i>
+        </span>
+      </app-text-input>
+
       <app-select
         name="mes"
         label="Mês"

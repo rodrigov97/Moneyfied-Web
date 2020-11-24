@@ -84,7 +84,7 @@ export class FormAddAmountComponent implements OnInit {
           }
         },
         error => {
-          if (error.error)
+          if (error.error && error.status !== 500)
             this.tokenErrorHandler.handleError(error.error);
         });
     }

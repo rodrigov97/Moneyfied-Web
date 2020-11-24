@@ -209,7 +209,7 @@ export class ExpenseComponent implements OnInit {
         this.loadingIndicator = false;
       },
       error => {
-        if (error.error)
+        if (error.error && error.status !== 500)
           this.tokenErrorHandler.handleError(error.error);
       });
   }
@@ -235,7 +235,7 @@ export class ExpenseComponent implements OnInit {
         }
       },
       error => {
-        if (error.error)
+        if (error.error && error.status !== 500)
           this.tokenErrorHandler.handleError(error.error);
       });
   }
@@ -271,7 +271,7 @@ export class ExpenseComponent implements OnInit {
           }
         },
         error => {
-          if (error.error)
+          if (error.error && error.status !== 500)
             this.tokenErrorHandler.handleError(error.error);
         });
     }
@@ -294,7 +294,7 @@ export class ExpenseComponent implements OnInit {
         }
       },
       error => {
-        if (error.error)
+        if (error.error && error.status !== 500)
           this.tokenErrorHandler.handleError(error.error);
       });
   }

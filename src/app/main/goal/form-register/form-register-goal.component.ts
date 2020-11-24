@@ -93,12 +93,22 @@ export class FormRegisterGoalComponent implements OnInit {
 
         if (this.formType === 'Alterar') {
           this.labelValue = 'Valor Atual (R$)';
+          this.setFormValue();
         }
         else {
           this.labelValue = 'Valor Inicial (R$)';
         }
 
       }
+    });
+  }
+
+  setFormValue(): void {
+    this.formGoal.setValue({
+      Nome: this.formValue.Nome,
+      ValorObjetivo: this.formValue.ValorObjetivo,
+      ValorAtual: this.formValue.ValorAtual,
+      DataLimite: this.formValue.DataLimite
     });
   }
 
@@ -128,7 +138,7 @@ export class FormRegisterGoalComponent implements OnInit {
         this.addGoal();
       }
       else if (this.formType === 'Alterar') {
-
+        this.updateGoal();
       }
     }
   }
@@ -143,13 +153,13 @@ export class FormRegisterGoalComponent implements OnInit {
       response => {
         if (response.success) {
           this.isLoading = false;
-          this.resetForm();
+          this.onClose();
           this.goalService.reloadGridEvent();
           this.modalService.dismissAll();
         }
       },
       error => {
-        if (error.error)
+        if (error.error && error.status !== 500)
           this.tokenErrorHandler.handleError(error.error);
       });
   }
@@ -157,17 +167,21 @@ export class FormRegisterGoalComponent implements OnInit {
   updateGoal(): void {
     var goal = new Objetivo(this.formGoal.value);
 
+    goal.ObjetivoId = this.formValue.ObjetivoId;
+    goal.UsuarioId = this.localStorage.userId;
+    goal.DataLimite = this.dateService.buildDateObj(goal.DataLimite);
+
     this.goalService.updateGoal(goal).subscribe(
       response => {
         if (response.success) {
           this.isLoading = false;
-          this.resetForm();
+          this.onClose();
           this.goalService.reloadGridEvent();
           this.modalService.dismissAll();
         }
       },
       error => {
-        if (error.error)
+        if (error.error && error.status !== 500)
           this.tokenErrorHandler.handleError(error.error);
       });
   }

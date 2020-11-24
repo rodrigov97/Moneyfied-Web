@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
+import { AbstractControl, FormControl, FormControlName, FormGroup } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { Objetivo } from 'src/app/core/models/objetivo.model';
 import { DateAttributes, DateService } from 'src/app/core/services/date.service';
@@ -32,6 +32,7 @@ export class GoalComponent implements OnInit {
 
   currentMonthFilter: number;
   currentYearFilter: number;
+  currentNameFilter: string = '';
 
   constructor(
     private responsiveService: ResponsiveService,
@@ -46,12 +47,13 @@ export class GoalComponent implements OnInit {
 
     this.formFilters = new FormGroup({
       Mes: new FormControl(this.currentMonth(month)),
-      Ano: new FormControl(year)
+      Ano: new FormControl(year),
+      Nome: new FormControl('')
     });
 
     this.reloadEventSub = this.goalService.callReloadGridFunction().subscribe(
       () => {
-        this.getGoalData(this.goalService.gridCurrentPage, this.currentMonthFilter, this.currentYearFilter);
+        this.getGoalData(this.goalService.gridCurrentPage, this.currentMonthFilter, this.currentYearFilter, this.currentNameFilter);
       });
 
     this.changePageEventSub = this.goalService.callGridPageChange().subscribe(
@@ -68,6 +70,10 @@ export class GoalComponent implements OnInit {
     return this.formFilters.get('Ano');
   }
 
+  get name(): AbstractControl {
+    return this.formFilters.get('Nome');
+  }
+
   get months(): DateAttributes[] {
     return this.dateService.months;
   }
@@ -77,7 +83,7 @@ export class GoalComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getGoalData(1, 0);
+    this.getGoalData(1, 0, 0, '');
 
     this.onResize();
   }
@@ -128,12 +134,14 @@ export class GoalComponent implements OnInit {
 
   filterData(): void {
     var month = this.dateService.getMonthNumber(this.month.value),
-      year = this.year.value;
+      year = this.year.value,
+      name = this.name.value;
 
     this.currentMonthFilter = month;
     this.currentYearFilter = year;
+    this.currentNameFilter = name;
 
-    this.getGoalData(1, month, year);
+    this.getGoalData(1, month, year, name);
   }
 
   openFormGoal(): void {
@@ -144,27 +152,29 @@ export class GoalComponent implements OnInit {
   }
 
   openFormAddAmount(): void {
-    this.goalService.openFormAddAmount({
-      command: 'open',
-      formType: 'Cadastro'
-    });
+    if (this.goalService.selectedItem) {
+      this.goalService.openFormAddAmount({
+        command: 'open',
+        data: this.goalService.selectedItem
+      });
+    }
   }
 
-  getGoalData(page: number, month?: number, year?: number): void {
+  getGoalData(page: number, month?: number, year?: number, name?: string): void {
     var currentPage = this.getPage(page),
       date = new Date(),
       mes = month ? month : (this.currentMonthFilter ? this.currentMonthFilter : date.getMonth() + 1),
       ano = year ? year : (this.currentYearFilter ? this.currentYearFilter : date.getFullYear());
 
     this.loadingIndicator = true;
-    this.goalService.getGoal(currentPage, this.limit, mes, ano).subscribe(
+    this.goalService.getGoal(currentPage, this.limit, mes, ano, name).subscribe(
       response => {
         this.rowCount = response.totalLinhas;
         this.rows = response.objetivos;
         this.loadingIndicator = false;
       },
       error => {
-        if (error.error)
+        if (error.error && error.status !== 500)
           this.tokenErrorHandler.handleError(error.error);
       });
   }
@@ -178,7 +188,7 @@ export class GoalComponent implements OnInit {
       this.goalService.deleteGoal(despesaId).subscribe(
         response => {
           if (response.success) {
-            this.getGoalData(this.goalService.gridCurrentPage, this.currentMonthFilter, this.currentYearFilter);
+            this.getGoalData(this.goalService.gridCurrentPage, this.currentMonthFilter, this.currentYearFilter, this.currentNameFilter);
             this.loadingIndicator = false;
           }
           else {
@@ -190,7 +200,7 @@ export class GoalComponent implements OnInit {
           }
         },
         error => {
-          if (error.error)
+          if (error.error && error.status !== 500)
             this.tokenErrorHandler.handleError(error.error);
         });
     }
