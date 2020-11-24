@@ -1,8 +1,18 @@
 @import "../../../../assets/style/_variables.scss";
+@import "../../../../../node_modules/bootstrap/scss/mixins/_breakpoints.scss";
 
-ngx-datatable {
-  height: 100%;
-  width: 100%;
+@include media-breakpoint-up(lg) {
+  ngx-datatable {
+    height: calc(100% - 2.5rem);
+    width: 100%;
+  }
+}
+
+@include media-breakpoint-down(sm) {
+  ngx-datatable {
+    height: calc(100% - 5.625rem);
+    width: 100%;
+  }
 }
 
 .ngx-datatable.material {
@@ -34,4 +44,22 @@ ngx-datatable {
 }
 :host ::ng-deep .datatable-body-row.active span {
   color: $white !important;
+}
+
+.success,
+.warning,
+.danger {
+  font-size: 1.0625rem;
+}
+
+.success {
+  color: $success;
+}
+
+.warning {
+  color: $warning;
+}
+
+.danger {
+  color: $danger;
 }

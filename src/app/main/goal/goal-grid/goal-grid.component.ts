@@ -2,6 +2,7 @@ import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { SelectionType, ColumnMode } from '@swimlane/ngx-datatable';
 import { Despesa } from 'src/app/core/models/despesa.model';
 import { Objetivo } from 'src/app/core/models/objetivo.model';
+import { DataService } from 'src/app/shared/data.service';
 import { GoalService } from '../goal.service';
 
 @Component({
@@ -21,14 +22,11 @@ export class GoalGridComponent implements OnInit {
   selectionType: SelectionType;
   selected: [] = [];
   columnMode = ColumnMode;
-
   constructor(
     private dataChanged: ChangeDetectorRef,
-    private goalService: GoalService
-  ) {
-
-
-  }
+    private goalService: GoalService,
+    private dataService: DataService
+  ) { }
 
   ngOnInit(): void {
     window.dispatchEvent(new Event('resize'));
@@ -46,11 +44,21 @@ export class GoalGridComponent implements OnInit {
 
   dblClickItem(event: any): void {
     if (event.type === 'dblclick') {
-      this.goalService.openFormGoal({
-        command: 'open',
-        formType: 'Alterar',
-        data: event.row
-      });
+
+      if (event.row.Status === 'Alcancado') {
+        this.dataService.openWarningDialogModal({
+          command: 'open',
+          title: 'Atenção',
+          content: 'Esse objetivo já foi alcançado !'
+        });
+      }
+      else {
+        this.goalService.openFormGoal({
+          command: 'open',
+          formType: 'Alterar',
+          data: event.row
+        });
+      }
     }
     if (event.type === 'click') {
       this.goalService.selectedItem = new Objetivo(event.row);

@@ -8,6 +8,12 @@ import { TokenErrorHandlerService } from 'src/app/core/services/token-error-hand
 import { DataService } from 'src/app/shared/data.service';
 import { GoalService } from './goal.service';
 
+export enum GoalStatus {
+  Alcancado = 'Alcancado',
+  EmAndamento = 'EmAndamento',
+  NaoAlcancado = 'NaoAlcancado',
+}
+
 @Component({
   selector: 'app-goal',
   templateUrl: './goal.component.html',
@@ -22,7 +28,7 @@ export class GoalComponent implements OnInit {
   columns: any = [];
   rows: Objetivo[] = [];
   rowCount: number;
-  limit: number = 10;
+  limit: number = 12;
   loadingIndicator: boolean = false;
 
   formFilters: FormGroup;
@@ -152,11 +158,20 @@ export class GoalComponent implements OnInit {
   }
 
   openFormAddAmount(): void {
-    if (this.goalService.selectedItem) {
-      this.goalService.openFormAddAmount({
+    if (this.goalService.selectedItem.Status === 'Alcancado') {
+      this.dataService.openWarningDialogModal({
         command: 'open',
-        data: this.goalService.selectedItem
+        title: 'Atenção',
+        content: 'Esse objetivo já foi alcançado !'
       });
+    }
+    else {
+      if (this.goalService.selectedItem) {
+        this.goalService.openFormAddAmount({
+          command: 'open',
+          data: this.goalService.selectedItem
+        });
+      }
     }
   }
 

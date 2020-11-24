@@ -6,7 +6,7 @@ interface ObjetivoAttributes {
   ValorAtual: number;
   DataLimite: string;
   DataObjetivo: string;
-  Atingido: boolean;
+  Status: string;
   Porcentagem?: string;
 }
 
@@ -19,7 +19,7 @@ export class Objetivo implements ObjetivoAttributes {
   ValorAtual: number;
   DataLimite: string;
   DataObjetivo: string;
-  Atingido: boolean;
+  Status: string;
   Porcentagem?: string;
 
   constructor(attr: ObjetivoAttributes) {
@@ -30,7 +30,7 @@ export class Objetivo implements ObjetivoAttributes {
       this.ValorAtual = attr.ValorAtual;
       this.DataLimite = attr.DataLimite;
       this.DataObjetivo = attr.DataObjetivo;
-      this.Atingido = attr.Atingido;
+      this.Status = attr.Status;
       this.Porcentagem = attr.Porcentagem;
   }
 }

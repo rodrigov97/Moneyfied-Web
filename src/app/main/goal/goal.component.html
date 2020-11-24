@@ -48,6 +48,18 @@
 
     <div class="goals-list">
 
+      <div class="list-subtitle">
+        <div class="sub d-flex align-items-center justify-content-center">
+          <p class="d-flex"><i class="success fas fa-check-circle"></i>Alcançado</p>
+        </div>
+        <div class="sub d-flex align-items-center justify-content-center">
+          <p class="d-flex"><i class="warning fas fa-dot-circle"></i>Em Andamento</p>
+        </div>
+        <div class="sub margin-b-none d-flex align-items-center justify-content-center">
+          <p class="d-flex"><i class="danger fas fa-times-circle"></i>Não Alcançado</p>
+        </div>
+      </div>
+
       <app-goal-grid
         [columns]="columns"
         [loadingIndicator]="loadingIndicator"
