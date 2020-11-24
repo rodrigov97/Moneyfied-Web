@@ -1,0 +1,61 @@
+<ng-template #formGoalModal let-modal data-keyboard="false" data-backdrop="static">
+  <app-load-spinner *ngIf="isLoading"></app-load-spinner>
+  <div *ngIf="!isLoading">
+    <div class="modal-header">
+      <h5 class="modal-title">
+        {{formType}} - Objetivo
+      </h5>
+    </div>
+    <form [formGroup]="formGoal">
+      <div class="modal-body">
+
+        <app-text-input
+          [control]="nome"
+          [trim]="true"
+          fieldId="nome"
+          label="Nome"
+          name="nome"
+          placeholder="Nome do Objetivo"
+          type="text"
+        ></app-text-input>
+
+        <app-text-input
+          [control]="valorObjetivo"
+          [trim]="true"
+          fieldId="valorObjetivo"
+          label="Valor do Objetivo (R$)"
+          name="valorObjetivo"
+          placeholder="0,00"
+          type="decimal-number"
+        >
+        </app-text-input>
+
+        <app-text-input
+          [control]="valorAtual"
+          [trim]="true"
+          fieldId="valorAtual"
+          [label]="labelValue"
+          name="valorAtual"
+          placeholder="0,00"
+          type="decimal-number"
+        >
+        </app-text-input>
+
+        <app-datepicker
+          [control]="dataLimite"
+          fieldId="dataLimite"
+          label="Data Limite"
+          name="dataLimite"
+        ></app-datepicker>
+
+
+      </div>
+        <div class="modal-footer d-flex">
+          <button type="button" class="btn btn-cancel" (click)="onClose()" data-dismiss="modal">Cancelar</button>
+          <span class="fill"></span>
+          <button type="button" class="btn btn-add" (click)="goalOperations()" data-dismiss="modal">Salvar</button>
+        </div>
+    </form>
+  </div>
+</ng-template>
+

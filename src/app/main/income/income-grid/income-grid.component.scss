@@ -7,11 +7,14 @@ ngx-datatable {
 
 .ngx-datatable.material {
   box-shadow: none !important;
-  border-radius: 0.3125rem;
 }
 
 :host ::ng-deep span {
   font-weight: normal !important;
+}
+
+:host ::ng-deep .empty-row {
+  text-align: center !important;
 }
 
 :host ::ng-deep .progress-linear .container .bar {

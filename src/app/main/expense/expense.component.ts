@@ -109,8 +109,6 @@ export class ExpenseComponent implements OnInit {
       month = date.getMonth() + 1,
       year = date.getFullYear();
 
-
-
     this.getExpenseData(1, 0);
     this.getExpenseResume(month, year);
     this.loadCategories();
@@ -156,9 +154,9 @@ export class ExpenseComponent implements OnInit {
       this.columns = [{
         name: 'Descrição', prop: 'Descricao', flex: 3, align: 'align-left'
       }, {
-        name: 'Valor (R$)', prop: 'ParcelaValor', flex: 1, align: 'align-right'
+        name: 'R$', prop: 'ParcelaValor', flex: 1, align: 'align-right'
       }, {
-        name: 'Nº Parcela', prop: 'ParcelaNumero', flex: 1, align: 'align-center'
+        name: 'Nº', prop: 'ParcelaNumero', flex: 1, align: 'align-center'
       }];
     }
   }
@@ -211,7 +209,7 @@ export class ExpenseComponent implements OnInit {
         this.loadingIndicator = false;
       },
       error => {
-        if (error.error)
+        if (error.error && error.status !== 500)
           this.tokenErrorHandler.handleError(error.error);
       });
   }
@@ -237,7 +235,7 @@ export class ExpenseComponent implements OnInit {
         }
       },
       error => {
-        if (error.error)
+        if (error.error && error.status !== 500)
           this.tokenErrorHandler.handleError(error.error);
       });
   }
@@ -273,7 +271,7 @@ export class ExpenseComponent implements OnInit {
           }
         },
         error => {
-          if (error.error)
+          if (error.error && error.status !== 500)
             this.tokenErrorHandler.handleError(error.error);
         });
     }
@@ -296,7 +294,7 @@ export class ExpenseComponent implements OnInit {
         }
       },
       error => {
-        if (error.error)
+        if (error.error && error.status !== 500)
           this.tokenErrorHandler.handleError(error.error);
       });
   }

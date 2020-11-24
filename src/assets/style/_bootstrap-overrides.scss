@@ -117,6 +117,10 @@ button:active,
   color: $white;
 }
 
+.btn.btn-add:active {
+  background-color: $green !important;
+}
+
 .btn.btn-cancel {
   border: none;
   border-radius: 0rem !important;
@@ -133,6 +137,10 @@ button:active,
 .btn.btn-cancel:hover {
   background-color: $red-light !important;
   color: $white;
+}
+
+.btn.btn-cancel:active {
+  background-color: $red !important;
 }
 
 .btn-success,

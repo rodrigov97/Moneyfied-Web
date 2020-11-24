@@ -6,7 +6,7 @@
   [headerHeight]="50"
   [limit]="limit"
   [loadingIndicator]="loadingIndicator"
-  [messages]="{emptyMessage: 'Nenhuma Despesa disponível'}"
+  [messages]="{emptyMessage: 'Nenhuma Meta disponível'}"
   [rowHeight]="50"
   [rows]="rows"
   [count]="rowCount"
@@ -15,6 +15,27 @@
   [selected]="selected"
   [selectionType]="'single'"
   class="material">
+
+    <ngx-datatable-column
+      [resizeable]="false"
+      [name]="''"
+      [prop]="'Status'"
+      [cellClass]="'align-center'"
+      [sortable]="false"
+      [canAutoResize]="false"
+      [width]="30"
+    >
+      <ng-template let-value="value" ngx-datatable-cell-template>
+        <i *ngIf="value === 'Alcancado'" class="success fas fa-check-circle"
+        data-toggle="tooltip" data-placement="top" title="Objetivo Ancançado"></i>
+
+        <i *ngIf="value === 'EmAndamento'" class="warning fas fa-dot-circle"
+        data-toggle="tooltip" data-placement="top" title="Objetivo em Andamento"></i>
+
+        <i *ngIf="value === 'NaoAlcancado'" class="danger fas fa-times-circle"
+        data-toggle="tooltip" data-placement="top" title="Objetivo Não Alcançado"></i>
+      </ng-template>
+    </ngx-datatable-column>
 
     <ngx-datatable-column *ngFor="let col of columns"
       [resizeable]="true"

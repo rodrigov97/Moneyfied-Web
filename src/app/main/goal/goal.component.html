@@ -1,0 +1,75 @@
+<section (window:resize)="onResize()">
+  <app-load-spinner *ngIf="isLoading"></app-load-spinner>
+  <div class="content-container" *ngIf="!isLoading">
+    <div class="filters">
+      <button class="btn btn-add-goal margin-b-10" (click)="openFormGoal()"><i class="fas fa-plus"></i>Nova Meta</button>
+
+      <button class="btn btn-cancel margin-b-10" (click)="deleteGoal()"><i class="fas fa-times"></i>Excluir Meta</button>
+
+      <button class="btn btn-add-goal" (click)="openFormAddAmount()"><i class="fas fa-dollar-sign"></i>Adicionar Quantia</button>
+
+      <hr>
+
+      <button class="btn btn-add-goal" (click)="filterData()"><i class="fas fa-filter"></i>Filtrar</button>
+
+      <hr>
+
+      <app-text-input
+        [control]="name"
+        [trim]="true"
+        [append]="true"
+        fieldId="nome"
+        label="Nome"
+        name="nome"
+        placeholder="Nome do Objetivo"
+        type="text"
+      >
+        <span class="icon-container input-group-text">
+          <i class="fas fa-search"></i>
+        </span>
+      </app-text-input>
+
+      <app-select
+        name="mes"
+        label="Mês"
+        [control]="month"
+        [items]="months"
+      ></app-select>
+
+      <app-select
+        name="ano"
+        label="Ano"
+        [control]="year"
+        [items]="years"
+        [class]="'margin-b-none'"
+      ></app-select>
+
+    </div>
+
+    <div class="goals-list">
+
+      <div class="list-subtitle">
+        <div class="sub d-flex align-items-center justify-content-center">
+          <p class="d-flex"><i class="success fas fa-check-circle"></i>Alcançado</p>
+        </div>
+        <div class="sub d-flex align-items-center justify-content-center">
+          <p class="d-flex"><i class="warning fas fa-dot-circle"></i>Em Andamento</p>
+        </div>
+        <div class="sub margin-b-none d-flex align-items-center justify-content-center">
+          <p class="d-flex"><i class="danger fas fa-times-circle"></i>Não Alcançado</p>
+        </div>
+      </div>
+
+      <app-goal-grid
+        [columns]="columns"
+        [loadingIndicator]="loadingIndicator"
+        [rows]="rows"
+        [rowCount]="rowCount"
+        [limit]="limit"
+      ></app-goal-grid>
+
+    </div>
+  </div>
+  <app-form-register-goal></app-form-register-goal>
+  <app-form-add-amount></app-form-add-amount>
+</section>

@@ -5,10 +5,6 @@ import { AppComponent } from '../app.component';
 import { MainRoutingModule } from './main.routing.module';
 
 import { DashboardComponent } from './dashboard/dashboard.component';
-import { FormRegisterIncomeComponent } from './income/form-register/form-register-income.component';
-import { IncomeComponent } from './income/income.component';
-import { IncomeGridComponent } from './income/income-grid/income-grid.component';
-import { IncomeService } from './income/income.service';
 import { MainComponent } from './main.component';
 import { MyProfileComponent } from './my-profile/my-profile.component';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
@@ -17,6 +13,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../shared/shared.module';
 import { IncomeModule } from './income/income.module';
 import { ExpenseModule } from './expense/expense.module';
+import { GoalModule } from './goal/goal.module';
 
 @NgModule({
   imports: [
@@ -28,13 +25,14 @@ import { ExpenseModule } from './expense/expense.module';
     NgxDatatableModule,
     SharedModule,
     IncomeModule,
-    ExpenseModule
+    ExpenseModule,
+    GoalModule
   ],
   declarations: [
     // App
     MainComponent,
     DashboardComponent,
-    MyProfileComponent
+    MyProfileComponent,
   ],
   providers: [
     // App

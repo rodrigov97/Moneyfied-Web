@@ -3,6 +3,7 @@
 @import "./assets/style/ngx-datatable-style";
 @import "../node_modules/bootstrap/scss/bootstrap.scss";
 @import "../node_modules/bootstrap/scss/mixins/_breakpoints.scss";
+@import "../node_modules/bootstrap/scss/_tooltip.scss";
 
 /* Setting Margin and Padding */
 
@@ -86,4 +87,14 @@ button:focus {
 
 .align-right {
   text-align: right !important;
+}
+
+/* Margin */
+
+.margin-b-none {
+  margin-bottom: 0rem !important;
+}
+
+.margin-b-10 {
+  margin-bottom: 0.625rem;
 }

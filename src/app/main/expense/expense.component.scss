@@ -7,6 +7,11 @@ section {
   background-color: $whitesmoke;
 }
 
+.content-container {
+  height: 100%;
+  width: 100%;
+}
+
 i {
   margin-left: 0.625rem;
 }
@@ -80,10 +85,6 @@ ul .content-margin {
   margin-top: 0.625rem;
 }
 
-.btn-cancel {
-  background-color: $red;
-}
-
 .btn.btn-add-expense {
   border: none;
   border-radius: 0rem !important;
@@ -100,6 +101,10 @@ ul .content-margin {
 .btn.btn-add-expense:hover {
   background-color: $red-light !important;
   color: $white;
+}
+
+.btn.btn-add-expense:active {
+  background-color: $red-dark !important;
 }
 
 @include media-breakpoint-up(lg) {

@@ -1,5 +1,6 @@
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { ExpenseComponent } from './expense/expense.component';
+import { GoalComponent } from './goal/goal.component';
 import { IncomeComponent } from './income/income.component';
 import { MainComponent } from './main.component';
 import { MyProfileComponent } from './my-profile/my-profile.component';
@@ -16,12 +17,15 @@ const ROUTES: Routes = [{
   }, {
     path: 'dashboard',
     component: DashboardComponent
-  },{
+  }, {
     path: 'incomes',
     component: IncomeComponent
-  },{
+  }, {
     path: 'expenses',
     component: ExpenseComponent
+  }, {
+    path: 'goals',
+    component: GoalComponent
   }, {
     path: 'my-profile',
     component: MyProfileComponent

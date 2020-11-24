@@ -213,7 +213,7 @@ export class IncomeComponent implements OnInit, OnDestroy {
           }
         },
         error => {
-          if (error.error)
+          if (error.error && error.status !== 500)
             this.tokenErrorHandler.handleError(error.error);
         });
     }
@@ -248,7 +248,7 @@ export class IncomeComponent implements OnInit, OnDestroy {
         this.loadingIndicator = false;
       },
       error => {
-        if (error.error)
+        if (error.error && error.status !== 500)
           this.tokenErrorHandler.handleError(error.error);
       });
   }
@@ -262,7 +262,7 @@ export class IncomeComponent implements OnInit, OnDestroy {
         }
       },
       error => {
-        if (error.error)
+        if (error.error && error.status !== 500)
           this.tokenErrorHandler.handleError(error.error);
       });
   }
@@ -299,7 +299,7 @@ export class IncomeComponent implements OnInit, OnDestroy {
         }
       },
       error => {
-        if (error.error)
+        if (error.error && error.status !== 500)
           this.tokenErrorHandler.handleError(error.error);
       });
   }

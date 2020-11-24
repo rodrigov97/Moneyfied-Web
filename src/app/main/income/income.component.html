@@ -25,13 +25,6 @@
         <hr>
 
         <app-select
-          name="ano"
-          label="Ano"
-          [control]="year"
-          [items]="years"
-        ></app-select>
-
-        <app-select
           name="mes"
           label="Mês"
           [control]="month"
@@ -39,10 +32,18 @@
         ></app-select>
 
         <app-select
+          name="ano"
+          label="Ano"
+          [control]="year"
+          [items]="years"
+        ></app-select>
+
+        <app-select
           name="categoria"
           label="Categoria"
           [items]="categoryItems"
           [control]="category"
+          [class]="'margin-b-none'"
         ></app-select>
 
       </div>

@@ -1,0 +1,130 @@
+@import "../../../assets/style/_variables.scss";
+@import "../../../../node_modules/bootstrap/scss/mixins/_breakpoints.scss";
+
+section {
+  height: 100%;
+  width: 100%;
+  background-color: $whitesmoke;
+}
+
+.content-container {
+  height: 100%;
+  width: 100%;
+}
+
+.filters {
+  padding: 0.625rem;
+}
+
+.filters button {
+  width: 100%;
+}
+
+.btn.btn-add-goal {
+  border: none;
+  border-radius: 0rem !important;
+  background-color: $indigo;
+  color: $white;
+}
+
+.btn.btn-add-goal i {
+  margin-right: 0.625rem;
+  color: $white;
+}
+
+.btn.btn-add-goal:focus,
+.btn.btn-add-goal:hover {
+  background-color: $indigo-light !important;
+  color: $white;
+}
+
+.btn.btn-add-goal:active {
+  background-color: $indigo !important;
+}
+
+.success,
+.warning,
+.danger {
+  font-size: 1.0625rem;
+}
+
+.success {
+  color: $success;
+}
+
+.warning {
+  color: $warning;
+}
+
+.danger {
+  color: $danger;
+}
+
+.sub p {
+  margin: 0;
+}
+
+.sub p i {
+  margin-right: 0.625rem;
+  margin-top: 4px;
+}
+
+@include media-breakpoint-up(lg) {
+  section,
+  .content-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .filters {
+    height: 100%;
+    width: 30%;
+    margin-right: 0.625rem;
+    background-color: $white;
+  }
+
+  .list-subtitle {
+    height: 2.5rem;
+    width: 100%;
+    display: flex;
+  }
+
+  .sub {
+    width: calc(100% / 3);
+    height: 100%;
+  }
+
+  .goals-list {
+    height: 100%;
+    width: 70%;
+    background-color: $white;
+  }
+}
+
+@include media-breakpoint-down(md) {
+  .filters {
+    width: 100%;
+    background-color: $white;
+  }
+
+  .list-subtitle {
+    padding: 0.3125rem;
+    height: 5.625rem;
+    width: 100%;
+    display: list-item;
+  }
+
+  .sub {
+    width: 100%;
+    margin-bottom: 0.3125rem;
+  }
+
+  .goals-list {
+    height: calc(100% - 2.5rem);
+    width: 100%;
+    background-color: $white;
+    margin-top: 0.625rem;
+    margin-bottom: 0.625rem;
+  }
+}
