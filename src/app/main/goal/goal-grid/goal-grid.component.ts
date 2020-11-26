@@ -46,7 +46,7 @@ export class GoalGridComponent implements OnInit {
     if (event.type === 'dblclick') {
 
       if (event.row.Status === 'Alcancado') {
-        this.dataService.openWarningDialogModal({
+        this.dataService.openWarningDialog({
           command: 'open',
           title: 'Atenção',
           content: 'Esse objetivo já foi alcançado !'

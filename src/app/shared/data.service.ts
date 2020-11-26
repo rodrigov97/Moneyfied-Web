@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable, Subject, Subscription } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -10,21 +10,19 @@ export class DataService {
   private toggleMenuValue = new BehaviorSubject<boolean>(this.toggleMenu);
   currentToggleValue = this.toggleMenuValue.asObservable();
 
-  toggleSuccessDialog: any = { command: '' };
-  private toggleSuccessDialogValue = new BehaviorSubject<any>(this.toggleSuccessDialog);
-  currentToggleSuccessDialogValue = this.toggleSuccessDialogValue.asObservable();
+  toggleHideItem: boolean = true;
+  private toggleHideItemValue = new BehaviorSubject<boolean>(this.toggleHideItem);
+  currentToggleHideItem = this.toggleHideItemValue.asObservable();
 
-  toggleWarningDialog: any = { command: '' };
-  private toggleWarningDialogValue = new BehaviorSubject<any>(this.toggleWarningDialog);
-  currentToggleWarningDialogValue = this.toggleWarningDialogValue.asObservable();
+  toggleSuccessDialog = new Subject<any>();
 
-  toggleErrorDialog: any = { command: '' };
-  private toggleErrorDialogValue = new BehaviorSubject<any>(this.toggleErrorDialog);
-  currentToggleErrorDialogValue = this.toggleErrorDialogValue.asObservable();
+  toggleWarningDialog = new Subject<any>();
 
-  toggleTokenErrorDialog: any = { command: '' };
-  private toggleTokenErrorDialogValue = new BehaviorSubject<any>(this.toggleTokenErrorDialog);
-  currentToggleTokenErrorDialogValue = this.toggleTokenErrorDialogValue.asObservable();
+  toggleErrorDialog = new Subject<any>();
+
+  toggleTokenErrorDialog = new Subject<any>();
+
+  toggleQuestionDialog = new Subject<any>();
 
   constructor() { }
 
@@ -32,19 +30,47 @@ export class DataService {
     this.toggleMenuValue.next(value);
   }
 
-  openSuccessDialogModal(value: any): void {
-    this.toggleSuccessDialogValue.next(value);
+  hideItemView(value: boolean): void {
+    this.toggleHideItemValue.next(value);
   }
 
-  openWarningDialogModal(value: any): void {
-    this.toggleWarningDialogValue.next(value);
+  openSuccessDialog(value: any): void {
+    this.toggleSuccessDialog.next(value);
   }
 
-  openErrorDialogModal(value: any): void {
-    this.toggleErrorDialogValue.next(value);
+  callOpenSuccessDialog(): Observable<any> {
+    return this.toggleSuccessDialog.asObservable();
   }
 
-  openTokenErrorDialogModal(value: any): void {
-    this.toggleTokenErrorDialogValue.next(value);
+  openWarningDialog(value: any): void {
+    this.toggleWarningDialog.next(value);
+  }
+
+  callOpenWarningDialog(): Observable<any> {
+    return this.toggleWarningDialog.asObservable();
+  }
+
+  openErrorDialog(value: any): void {
+    this.toggleErrorDialog.next(value);
+  }
+
+  callOpenErrorDialog(): Observable<any> {
+    return this.toggleErrorDialog.asObservable();
+  }
+
+  openTokenErrorDialog(value: any): void {
+    this.toggleTokenErrorDialog.next(value);
+  }
+
+  callOpenTokenErrorDialog(): Observable<any> {
+    return this.toggleTokenErrorDialog.asObservable();
+  }
+
+  openQuestionDialog(data: any): void {
+    this.toggleQuestionDialog.next(data);
+  }
+
+  callOpenQuestionDialog(): Observable<any> {
+    return this.toggleQuestionDialog.asObservable();
   }
 }

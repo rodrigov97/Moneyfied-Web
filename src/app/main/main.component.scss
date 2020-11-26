@@ -1,4 +1,5 @@
 @import "../../assets/style/_variables.scss";
+@import "../../../node_modules/bootstrap/scss/mixins/_breakpoints.scss";
 
 section {
   height: calc(100vh - 3.125rem);
@@ -13,4 +14,18 @@ section {
   width: 100%;
   overflow-x: auto;
   background-color: $whitesmoke;
+}
+
+@include media-breakpoint-up(lg) {
+  .display {
+    margin-left: 4.375rem;
+  }
+
+  .modal-block {
+    height: calc(100vh - 3.125rem);
+    background-color: #3a3a3a38;
+    z-index: 1 !important;
+    margin-top: 3.125rem;
+    margin-left: 4.375rem;
+  }
 }

@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { DataService } from '../data.service';
-import { MENUITEMS, LOGOUT, MenuItem } from './menu.model';
+import { MENUITEMS, MenuItem } from './menu.model';
 import { ResponsiveService } from 'src/app/core/services/responsive.service';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-menu',
@@ -14,12 +15,13 @@ export class MenuComponent implements OnInit {
   toggleMenu: boolean;
   isMobile: boolean;
 
-  hideName: boolean = true;
+  hideName: boolean;
 
   menuItems: MenuItem[] = MENUITEMS;
-  logout: MenuItem = LOGOUT;
 
   selectedItem: string = 'Dashboard';
+
+  logoutCallback: Subscription;
 
   constructor(
     private dataService: DataService,
@@ -33,6 +35,11 @@ export class MenuComponent implements OnInit {
     this.dataService.currentToggleValue.subscribe(value => {
       this.toggleMenu = value
     });
+
+    this.dataService.currentToggleHideItem.subscribe(value => {
+      if (!this.isMobile)
+        this.hideName = value
+    });
   }
 
   onResize(): void {
@@ -44,13 +51,19 @@ export class MenuComponent implements OnInit {
 
   hideItemName(): void {
     this.hideName = !this.hideName;
+    this.dataService.hideItemView(this.hideName);
     window.dispatchEvent(new Event('resize'));
   }
 
   selectItem(itemName: string, url: string) {
     this.selectedItem = itemName;
+
     if (this.isMobile)
       this.toggleMenu = false;
+
+    this.hideName = true;
+    this.dataService.hideItemView(this.hideName);
+
     this.route.navigate(['app', url]);
   }
 
@@ -71,7 +84,20 @@ export class MenuComponent implements OnInit {
   }
 
   logoutUser(): void {
-    localStorage.clear();
-    this.route.navigate(['login']);
+    this.dataService.openQuestionDialog({
+      command: 'open',
+      title: 'Atenção',
+      question: 'Deseja mesmo sair ?',
+      callback: this.onLogout,
+      extras: this.route
+    });
+  }
+
+  onLogout(value: boolean, extras: any, sub: Subscription): void {
+    if (value) {
+      sub.unsubscribe();
+      localStorage.clear();
+      extras.navigate(['login']);
+    }
   }
 }

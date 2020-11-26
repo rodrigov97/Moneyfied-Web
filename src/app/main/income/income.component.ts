@@ -205,7 +205,7 @@ export class IncomeComponent implements OnInit, OnDestroy {
             this.loadingIndicator = false;
           }
           else {
-            this.dataService.openErrorDialogModal({
+            this.dataService.openErrorDialog({
               command: 'open',
               title: 'Atenção',
               content: 'Erro ao excluír a renda selecionada.'

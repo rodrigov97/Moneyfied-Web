@@ -41,15 +41,12 @@ export class TokenErrorComponent implements OnInit {
   ngAfterViewInit() {
     this.modalOption.backdrop = 'static';
     this.modalOption.keyboard = false;
-    this.dataService.currentToggleTokenErrorDialogValue.subscribe(value => {
+    this.dataService.callOpenTokenErrorDialog().subscribe(value => {
       if (value.command === 'open') {
         this.title = value.title;
         this.content = value.content;
 
         this.myModal = this.modalService.open(this.modal, this.modalOption);
-      }
-      else {
-        this.myModal = this.modalService.dismissAll;
       }
     });
   }

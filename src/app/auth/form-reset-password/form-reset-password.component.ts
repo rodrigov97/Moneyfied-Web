@@ -68,7 +68,7 @@ export class FormResetPasswordComponent implements OnInit {
           else {
             this.emailSuccess = response.success;
 
-            this.dataService.openWarningDialogModal({
+            this.dataService.openWarningDialog({
               command: 'open',
               title: 'Atenção',
               content: response.message

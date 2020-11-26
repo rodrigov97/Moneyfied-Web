@@ -16,6 +16,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { DatepickerComponent } from './components/datepicker/datepicker.component';
 import { NgxMaskModule } from 'ngx-mask';
 import { TokenErrorComponent } from './dialogs/token-error/token-error.component';
+import { QuestionComponent } from './dialogs/question/question.component';
 
 
 @NgModule({
@@ -38,7 +39,8 @@ import { TokenErrorComponent } from './dialogs/token-error/token-error.component
     NavbarComponent,
     SelectComponent,
     DatepickerComponent,
-    TokenErrorComponent
+    TokenErrorComponent,
+    QuestionComponent
   ],
   exports: [
     // App
@@ -51,7 +53,8 @@ import { TokenErrorComponent } from './dialogs/token-error/token-error.component
     NavbarComponent,
     SelectComponent,
     DatepickerComponent,
-    TokenErrorComponent
+    TokenErrorComponent,
+    QuestionComponent
   ],
   bootstrap: [AppComponent]
 })

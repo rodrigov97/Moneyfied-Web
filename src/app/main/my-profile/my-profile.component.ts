@@ -145,7 +145,7 @@ export class MyProfileComponent implements OnInit {
           if (response.success) {
             this.isLoading = false;
 
-            this.dataService.openSuccessDialogModal({
+            this.dataService.openSuccessDialog({
               command: 'open',
               title: 'Sucesso',
               content: response.message
@@ -158,7 +158,7 @@ export class MyProfileComponent implements OnInit {
           else {
             this.isLoading = false;
 
-            this.dataService.openWarningDialogModal({
+            this.dataService.openWarningDialog({
               command: 'open',
               title: 'Atenção',
               content: response.message
@@ -189,7 +189,7 @@ export class MyProfileComponent implements OnInit {
         if (response.success) {
           this.loadUserInfo();
 
-          this.dataService.openSuccessDialogModal({
+          this.dataService.openSuccessDialog({
             command: 'open',
             title: 'Sucesso',
             content: response.message
@@ -198,7 +198,7 @@ export class MyProfileComponent implements OnInit {
         else {
           this.isLoading = false;
 
-          this.dataService.openErrorDialogModal({
+          this.dataService.openErrorDialog({
             command: 'open',
             title: 'Erro',
             content: response.message

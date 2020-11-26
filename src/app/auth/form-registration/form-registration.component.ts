@@ -79,7 +79,7 @@ export class FormRegistrationComponent implements OnInit {
           if (response.success) {
             this.isLoading = false;
 
-            this.dataService.openSuccessDialogModal({
+            this.dataService.openSuccessDialog({
               command: 'open',
               title: 'Sucesso',
               content: response.message
@@ -90,7 +90,7 @@ export class FormRegistrationComponent implements OnInit {
           else {
             this.isLoading = false;
 
-            this.dataService.openWarningDialogModal({
+            this.dataService.openWarningDialog({
               command: 'open',
               title: 'Atenção',
               content: response.message

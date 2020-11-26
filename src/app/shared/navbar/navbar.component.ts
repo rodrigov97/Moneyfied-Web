@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DataService } from '../data.service';
-import { MenuItem, MENUITEMS, LOGOUT } from '../menu/menu.model';
+import { MenuItem, MENUITEMS } from '../menu/menu.model';
 import { ResponsiveService } from 'src/app/core/services/responsive.service';
 import { Router } from '@angular/router';
 
@@ -24,7 +24,6 @@ export class NavbarComponent implements OnInit {
   hideName: boolean = true;
 
   menuItems: MenuItem[] = MENUITEMS;
-  logout: MenuItem = LOGOUT;
 
   ngOnInit(): void {
     this.dataService.currentToggleValue.subscribe(value => {

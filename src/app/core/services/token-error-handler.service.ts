@@ -25,7 +25,7 @@ export class TokenErrorHandlerService {
       message = 'Ocorreu um erro na sessão';
     }
 
-    this.dataService.openTokenErrorDialogModal({
+    this.dataService.openTokenErrorDialog({
       command: 'open',
       title: 'Erro de Sessão',
       content: message

@@ -11,7 +11,7 @@ export class WarningComponent implements OnInit {
 
   // Exemplo de chamada do dialog
 
-  // this.dataService.openWarningDialogModal({
+  // this.dataService.openWarningDialog({
   //   command: 'open',
   //   title: 'Atenção',
   //   content: 'Olá Mundo'
@@ -39,15 +39,12 @@ export class WarningComponent implements OnInit {
   ngAfterViewInit() {
     this.modalOption.backdrop = 'static';
     this.modalOption.keyboard = false;
-    this.dataService.currentToggleWarningDialogValue.subscribe(value => {
+    this.dataService.callOpenWarningDialog().subscribe(value => {
       if (value.command === 'open') {
         this.title = value.title;
         this.content = value.content;
 
         this.myModal = this.modalService.open(this.modal, this.modalOption);
-      }
-      else {
-        this.myModal = this.modalService.dismissAll;
       }
     });
   }

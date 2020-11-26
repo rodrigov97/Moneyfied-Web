@@ -80,7 +80,7 @@ export class FormLoginComponent implements OnInit {
             this.route.navigate(['app']);
           }
           else {
-            this.dataService.openWarningDialogModal({
+            this.dataService.openWarningDialog({
               command: 'open',
               title: 'Atenção',
               content: response.message

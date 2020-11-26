@@ -11,7 +11,7 @@ export class ErrorComponent implements OnInit {
 
   // Exemplo de chamada do dialog
 
-  // this.dataService.openErrorDialogModal({
+  // this.dataService.openErrorDialog({
   //   command: 'open',
   //   title: 'Atenção',
   //   content: 'Olá Mundo'
@@ -40,15 +40,12 @@ export class ErrorComponent implements OnInit {
   ngAfterViewInit() {
     this.modalOption.backdrop = 'static';
     this.modalOption.keyboard = false;
-    this.dataService.currentToggleErrorDialogValue.subscribe(value => {
+    this.dataService.callOpenErrorDialog().subscribe(value => {
       if (value.command === 'open') {
         this.title = value.title;
         this.content = value.content;
 
         this.myModal = this.modalService.open(this.modal, this.modalOption);
-      }
-      else {
-        this.myModal = this.modalService.dismissAll;
       }
     });
   }

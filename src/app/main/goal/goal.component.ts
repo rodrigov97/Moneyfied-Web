@@ -159,7 +159,7 @@ export class GoalComponent implements OnInit {
 
   openFormAddAmount(): void {
     if (this.goalService.selectedItem.Status === 'Alcancado') {
-      this.dataService.openWarningDialogModal({
+      this.dataService.openWarningDialog({
         command: 'open',
         title: 'Atenção',
         content: 'Esse objetivo já foi alcançado !'
@@ -207,7 +207,7 @@ export class GoalComponent implements OnInit {
             this.loadingIndicator = false;
           }
           else {
-            this.dataService.openErrorDialogModal({
+            this.dataService.openErrorDialog({
               command: 'open',
               title: 'Atenção',
               content: 'Erro ao excluír o objetivo selecionado.'

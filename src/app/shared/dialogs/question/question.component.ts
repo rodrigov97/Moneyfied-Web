@@ -1,13 +1,14 @@
 import { Component, OnInit, ViewChild, TemplateRef, ElementRef } from '@angular/core';
 import { NgbModal, ModalDismissReasons, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
+import { Subscription } from 'rxjs';
 import { DataService } from '../../data.service';
 
 @Component({
-  selector: 'app-success',
-  templateUrl: './success.component.html',
-  styleUrls: ['./success.component.scss']
+  selector: 'app-question',
+  templateUrl: './question.component.html',
+  styleUrls: ['./question.component.scss']
 })
-export class SuccessComponent implements OnInit {
+export class QuestionComponent implements OnInit {
 
   // Exemplo de chamada do dialog
 
@@ -17,15 +18,19 @@ export class SuccessComponent implements OnInit {
   //   question: 'Olá Mundo'
   // });
 
+  questionToggle: Subscription;
+
   closeResult: string;
   modalOption: NgbModalOptions = {};
 
-  @ViewChild('successModal') modal: ElementRef;
+  @ViewChild('questionModal') modal: ElementRef;
 
   private myModal;
 
   title: string;
-  content: string;
+  question: string;
+  callback: Function;
+  extras: any;
 
   constructor(
     private modalService: NgbModal,
@@ -36,16 +41,27 @@ export class SuccessComponent implements OnInit {
 
   }
 
+  ngOnDestroy():void {
+    this.questionToggle.unsubscribe();
+  }
+
   ngAfterViewInit() {
     this.modalOption.backdrop = 'static';
     this.modalOption.keyboard = false;
-    this.dataService.callOpenSuccessDialog().subscribe(value => {
+    this.questionToggle = this.dataService.callOpenQuestionDialog().subscribe(value => {
       if (value.command === 'open') {
         this.title = value.title;
-        this.content = value.content;
+        this.question = value.question;
+        this.callback = value.callback;
+        this.extras = value.extras;
 
         this.myModal = this.modalService.open(this.modal, this.modalOption);
       }
     });
+  }
+
+  answer(answer: boolean): void {
+    this.callback(answer, this.extras, this.questionToggle);
+    this.modalService.dismissAll();
   }
 }

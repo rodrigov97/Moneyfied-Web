@@ -10,7 +10,7 @@
       </td>
       <td [hidden]="hideName" (click)="hideItemName()" class="name">Recolher</td>
     </tr>
-    <tr *ngFor="let item of menuItems" (click)="selectItem(item.Name, item.Url)"
+    <tr *ngFor="let item of menuItems" (click)="item.Name !== 'Sair' ? selectItem(item.Name, item.Url) : logoutUser()"
       [style.background-color]="item.Name === selectedItem ? '#ececec' : ''">
       <td class="color-indicator" [ngStyle]="setBackgroundStyle(item.Name, item.Color)">
         <div class="color-indicator"></div>
@@ -22,11 +22,5 @@
       </td>
     </tr>
   </table>
-  <tr (click)="logoutUser()" *ngIf="!isMobile" class="logout">
-    <td class="color-indicator">
-      <div class="color-indicator"></div>
-    </td>
-    <td class="icon align-items-center"><i class="{{logout.Icon}}"></i></td>
-    <td [hidden]="hideName" class="name align-items-center">{{logout.Name}}</td>
-  </tr>
+  <app-question></app-question>
 </section>
