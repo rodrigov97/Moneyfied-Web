@@ -209,7 +209,6 @@ export class FormRegisterComponent implements OnInit {
     this.expenseService.getCategories(this.storageService.userId).subscribe(
       response => {
         if (response.success) {
-          response.categories.unshift({ value: 'Nenhum', CategoriId: 0 });
           this.categoryItems = response.categories;
         }
       },

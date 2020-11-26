@@ -122,7 +122,6 @@ export class FormRegisterIncomeComponent implements OnInit, OnDestroy {
     this.incomeService.getCategories(this.storageService.userId).subscribe(
       response => {
         if (response.success) {
-          response.categories.unshift({ value: 'Nenhum', CategoriId: 0 });
           this.categoryItems = response.categories;
         }
       },
