@@ -33,6 +33,9 @@ export class AuthGuard implements CanActivate {
     else if (currentUrl.includes('/email-confirmation')) {
       return this.toLogin();
     }
+    else if (currentUrl.includes('/confirmation-response')) {
+      return this.toLogin();
+    }
     else if (currentUrl === '/') {
       return this.toLogin();
     }

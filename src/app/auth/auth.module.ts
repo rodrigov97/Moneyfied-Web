@@ -13,6 +13,7 @@ import { FormResetPasswordComponent } from './form-reset-password/form-reset-pas
 import { FormRegistrationComponent } from './form-registration/form-registration.component';
 import { ContentComponent } from './content/content.component';
 import { EmailConfirmationComponent } from './email-confirmation/email-confirmation.component';
+import { ScreenConfirmationComponent } from './screen-confirmation/screen-confirmation.component';
 
 @NgModule({
   imports: [
@@ -31,7 +32,8 @@ import { EmailConfirmationComponent } from './email-confirmation/email-confirmat
     FormResetPasswordComponent,
     FormRegistrationComponent,
     ContentComponent,
-    EmailConfirmationComponent
+    EmailConfirmationComponent,
+    ScreenConfirmationComponent
   ],
   bootstrap: [AppComponent]
 })

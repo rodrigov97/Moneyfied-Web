@@ -6,6 +6,7 @@ import { EmailConfirmationComponent } from './email-confirmation/email-confirmat
 import { FormLoginComponent } from './form-login/form-login.component';
 import { FormResetPasswordComponent } from './form-reset-password/form-reset-password.component';
 import { FormRegistrationComponent } from './form-registration/form-registration.component';
+import { ScreenConfirmationComponent } from './screen-confirmation/screen-confirmation.component';
 
 const ROUTES: Routes = [{
   path: '',
@@ -22,6 +23,9 @@ const ROUTES: Routes = [{
   }, {
     path: 'email-confirmation',
     component: EmailConfirmationComponent
+  }, {
+    path: 'confirmation-response/:type/:status',
+    component: ScreenConfirmationComponent
   }]
 }];
 
