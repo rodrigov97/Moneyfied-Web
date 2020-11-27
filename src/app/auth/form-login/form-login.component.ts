@@ -72,12 +72,7 @@ export class FormLoginComponent implements OnInit {
       this.authService.login(value).subscribe(
         (response) => {
           if (response.success) {
-            this.isLoading = false;
-
-            this.storageService.addToken(response.token);
-            this.storageService.addUser(response.usuario);
-
-            this.route.navigate(['app']);
+            this.loginResponseHandler(response);
           }
           else {
             this.dataService.openWarningDialog({
@@ -90,6 +85,21 @@ export class FormLoginComponent implements OnInit {
           }
         }
       );
+    }
+  }
+
+  loginResponseHandler(response: any): void {
+    this.isLoading = false;
+
+    this.storageService.addToken(response.token);
+    this.storageService.addUser(response.usuario);
+
+
+    if (this.storageService.emailConfirmado) {
+      this.route.navigate(['app']);
+    }
+    else {
+      this.route.navigate(['email-confirmation']);
     }
   }
 

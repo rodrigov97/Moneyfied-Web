@@ -17,6 +17,9 @@ export class FormRegistrationComponent implements OnInit {
   isPasswordHidden: boolean;
   isLoading: boolean = false;
 
+  emailSuccess: boolean = false;
+  mailSent: boolean = false;
+
   passwordInput: string = 'password';
 
   constructor(
@@ -75,6 +78,7 @@ export class FormRegistrationComponent implements OnInit {
 
       this.authService.register(value).subscribe(
         (response) => {
+          this.mailSent = response.emailEnviado;
 
           if (response.success) {
             this.isLoading = false;
@@ -84,6 +88,9 @@ export class FormRegistrationComponent implements OnInit {
               title: 'Sucesso',
               content: response.message
             });
+
+            if (response.emailEnviado)
+              this.emailSuccess = true;
 
             this.route.navigate(['login']);
           }

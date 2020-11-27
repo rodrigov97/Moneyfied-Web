@@ -4,6 +4,12 @@
     <div class="title d-flex align-items-center justify-content-center">
       CADASTRO
     </div>
+    <div *ngIf="emailSuccess && mailSent" class="email-success d-flex align-items-center justify-content-center">
+      <p>Email de confirmação enviado para <strong>{{email.value}}</strong></p>
+    </div>
+    <div *ngIf="!emailSuccess && mailSent" class="email-failure d-flex align-items-center justify-content-center">
+      <p>Não foi possível enviar o email de confirmação para <strong>{{email.value}}</strong></p>
+    </div>
     <form [formGroup]="formRegister" (submit)="register()">
 
       <app-text-input

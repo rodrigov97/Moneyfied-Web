@@ -30,4 +30,14 @@ export class LocalStorageService {
     const userInfo = JSON.parse(localStorage.getItem('usuario'));
     return userInfo.UsuarioId;
   }
+
+  get userEmail(): string {
+    const userInfo = JSON.parse(localStorage.getItem('usuario'));
+    return userInfo.Email;
+  }
+
+  get emailConfirmado(): boolean {
+    const userInfo = JSON.parse(localStorage.getItem('usuario'));
+    return userInfo.EmailConfirmado;
+  }
 }

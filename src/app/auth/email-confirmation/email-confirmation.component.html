@@ -1,0 +1,42 @@
+<section class="d-flex justify-content-center align-items-center">
+  <app-load-spinner *ngIf="isLoading"></app-load-spinner>
+  <div class="form" *ngIf="!isLoading">
+
+    <div *ngIf="emailSent && resentFinished" class="email-success d-block mb-5">
+      Email enviado para <strong>{{userEmail}}</strong> e aguardando confirmação.
+    </div>
+    <div *ngIf="!emailSent && resentFinished" class="email-failure d-block mb-5">
+      Não foi possível enviar o email para <strong>{{userEmail}}</strong>.
+    </div>
+    <div *ngIf="!hideWarning" class="email-awaiting d-block mb-5">
+      Aguardando confirmação do email enviado para <strong>{{userEmail}}</strong>.
+    </div>
+    <div class="title d-flex align-items-center justify-content-center">
+      CONFIRMAÇÃO DE EMAIL
+    </div>
+    <form [formGroup]="formConfirmation" (submit)="resentEmail()">
+
+      <app-text-input
+        [append]="true"
+        [control]="email"
+        [trim]="true"
+        fieldId="email"
+        label="Email"
+        name="email"
+        placeholder="Email"
+        type="text"
+      >
+        <span class="icon-container input-group-text">
+          <i class="fas fa-user"></i>
+        </span>
+      </app-text-input>
+
+      <div class="d-flex justify-content-center">
+        <button type="submit" class="btn btn-primary">Reenviar Email</button>
+      </div>
+      <div class="options">
+        <li> <a (click)="goToLogin()">Voltar a tela de login</a> </li>
+      </div>
+    </form>
+  </div>
+</section>

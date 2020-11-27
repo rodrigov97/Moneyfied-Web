@@ -7,6 +7,8 @@ import { ApiClient } from '../core/clients/api.client';
 })
 export class AuthService {
 
+  userEmail: string;
+
   constructor(
     private apiClient: ApiClient
   ) { }
@@ -24,7 +26,13 @@ export class AuthService {
   }
 
   resetPassword(info: any): Observable<any> {
-    const path = 'send-mail/confirmation';
+    const path = 'send-mail/password-reset-confirmation';
+
+    return this.apiClient.post(path, info);
+  }
+
+  resentEmailConfirmation(info: any): Observable<any> {
+    const path = 'send-mail/email-confirmation';
 
     return this.apiClient.post(path, info);
   }

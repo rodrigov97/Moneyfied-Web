@@ -4,6 +4,7 @@ interface UsuarioAttributes {
   Email: string;
   Senha: string;
   ImagemPerfil: string;
+  EmailConfirmado: boolean;
 }
 
 export class Usuario implements UsuarioAttributes {
@@ -12,6 +13,7 @@ export class Usuario implements UsuarioAttributes {
   Email: string;
   Senha: string;
   ImagemPerfil: string;
+  EmailConfirmado: boolean;
 
   constructor(attr: UsuarioAttributes) {
     this.UsuarioId = attr.UsuarioId;
@@ -19,5 +21,6 @@ export class Usuario implements UsuarioAttributes {
     this.Email = attr.Email;
     this.Senha = attr.Senha;
     this.ImagemPerfil = attr.ImagemPerfil;
+    this.EmailConfirmado = attr.EmailConfirmado;
   }
 }

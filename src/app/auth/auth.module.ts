@@ -12,6 +12,7 @@ import { FormLoginComponent } from './form-login/form-login.component';
 import { FormResetPasswordComponent } from './form-reset-password/form-reset-password.component';
 import { FormRegistrationComponent } from './form-registration/form-registration.component';
 import { ContentComponent } from './content/content.component';
+import { EmailConfirmationComponent } from './email-confirmation/email-confirmation.component';
 
 @NgModule({
   imports: [
@@ -29,7 +30,8 @@ import { ContentComponent } from './content/content.component';
     FormLoginComponent,
     FormResetPasswordComponent,
     FormRegistrationComponent,
-    ContentComponent
+    ContentComponent,
+    EmailConfirmationComponent
   ],
   bootstrap: [AppComponent]
 })

@@ -22,16 +22,20 @@ export class AuthGuard implements CanActivate {
   ): Observable<boolean> | Promise<boolean> | boolean {
     var currentUrl = this.router.url;
 
+    this.goingTo = next.routeConfig.path;
+
     if (currentUrl === '/login') {
       return this.loginToApp();
     }
     else if (currentUrl.includes('/app')) {
       return this.appToLogin();
     }
+    else if (currentUrl.includes('/email-confirmation')) {
+      return this.toLogin();
+    }
     else if (currentUrl === '/') {
       return this.toLogin();
     }
-
   }
 
   loginToApp(): boolean {
@@ -62,7 +66,7 @@ export class AuthGuard implements CanActivate {
       this.goingTo = '';
       return true;
     }
-    if (this.goingTo === 'login') {
+    else if (this.goingTo === 'login') {
       this.goingTo = '';
       return true;
     }
@@ -74,7 +78,7 @@ export class AuthGuard implements CanActivate {
       this.goingTo = 'app';
       this.router.navigate(['app']);
     }
-    return true;
+    return false;
   }
 
   get isUserLogged(): boolean {
