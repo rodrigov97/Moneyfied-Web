@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-comparison-chart',
@@ -6,6 +6,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./comparison-chart.component.scss']
 })
 export class ComparisonChartComponent implements OnInit {
+
+  @Input() chartHeight: number = 0;
 
   single = single;
   multi = multi;

@@ -1,5 +1,5 @@
-<section>
-  <ngx-charts-line-chart
+<section [style.height.px]="chartHeight">
+  <ngx-charts-line-chart [style.height.px]="chartHeight"
     [scheme]="colorScheme"
     [results]="multi"
     [gradient]="gradient"

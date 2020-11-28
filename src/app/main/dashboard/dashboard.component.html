@@ -1,18 +1,35 @@
 <section #main (window:resize)="onResize()">
   <div #headerInfo>
 
-
+    <app-dashboard-info
+      [isMobile]="isMobile"
+      [resume]="resumeInfo"
+    ></app-dashboard-info>
 
   </div>
-  <div #dataContent [style.height.px]="dataHeight" class="d-flex content">
-    <div class="data-list">
+  <div #dataContent [style.height.px]="dataHeight" class="content">
+    <div #listContainer [style.height.px]="isMobile ? mainHeight : listHeight" class="data-list">
 
-      <app-grid-list></app-grid-list>
+      <div #btnGroup class="btn-group" role="group">
+        <button type="button" class="btn btn-success">Receitas</button>
+        <button type="button" class="btn btn-danger">Despesas</button>
+      </div>
+
+      <app-grid-list
+
+      ></app-grid-list>
 
     </div>
-    <div class="data-chart">
+    <div #chartContainer class="data-chart">
 
-      <app-comparison-chart></app-comparison-chart>
+      <div #btnGroupChart class="btn-group" role="group">
+        <button type="button" class="btn btn-success">Receitas</button>
+        <button type="button" class="btn btn-danger">Despesas</button>
+      </div>
+
+      <app-comparison-chart
+        [chartHeight]="chartHeight"
+      ></app-comparison-chart>
 
     </div>
   </div>

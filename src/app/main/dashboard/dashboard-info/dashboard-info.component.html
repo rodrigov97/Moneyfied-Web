@@ -1,1 +1,37 @@
-<p>dashboard-info works!</p>
+<div [ngClass]="{'d-flex': !isMobile}">
+
+  <ul class="col-4" [ngClass]="{'col-12': isMobile}">
+    <li class="title col-6">
+      <a>Maior despesa do mês</a>
+    </li>
+    <li [ngClass]="{'content-margin': !isMobile}" class="content d-flex">{{resume.MaxDesc}} <span class="fill"></span>
+      <a class="result" [ngStyle]="expenseStatus(resume.MaxValue)">R$ {{resume.MaxValue}}</a>
+      <i *ngIf="biggerThanZero(resume.MaxValue)" [ngStyle]="expenseStatus(resume.MaxValue)"
+        class="negative fas fa-chevron-down"></i>
+    </li>
+  </ul>
+
+  <ul class="col-4" [ngClass]="{'col-12': isMobile}">
+    <li class="title col-6">
+      <a>Menor despesa do mês</a>
+    </li>
+    <li [ngClass]="{'content-margin': !isMobile}" class="content d-flex">{{resume.MinDesc}} <span class="fill"></span>
+      <a class="result" [ngStyle]="expenseStatus(resume.MinValue)">R$ {{resume.MinValue}}</a>
+      <i *ngIf="biggerThanZero(resume.MinValue)" [ngStyle]="expenseStatus(resume.MinValue)"
+        class="negative fas fa-chevron-down"></i>
+    </li>
+  </ul>
+
+  <ul class="col-4" [ngClass]="{'col-12': isMobile}">
+    <li class="title col-6">
+      <a>Total do Mês</a>
+    </li>
+    <li [ngClass]="{'content-margin': !isMobile}" class="content last d-flex">Despesa Total do Mês <span
+        class="fill"></span>
+      <a class="result" [ngStyle]="expenseStatus(resume.TotalValue)">R$ {{resume.TotalValue}}</a>
+      <i *ngIf="biggerThanZero(resume.TotalValue)" [ngStyle]="expenseStatus(resume.TotalValue)"
+        class="negative fas fa-chevron-down"></i>
+    </li>
+  </ul>
+
+</div>

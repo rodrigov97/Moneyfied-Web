@@ -17,8 +17,20 @@ export class DashboardComponent implements OnInit {
   @ViewChild('headerInfo') headerInfo: ElementRef;
   @ViewChild('dataContent') dataContent: ElementRef;
 
+  @ViewChild('btnGroup') btnGroup: ElementRef;
+  @ViewChild('listContainer') listContainer: ElementRef;
+
+  @ViewChild('btnGroupChart') btnGroupChart: ElementRef;
+  @ViewChild('chartContainer') chartContainer: ElementRef;
+
   mainHeight: number = 0;
   headerHeight: number = 0;
+
+  btnGroupHeight: number = 0;
+  listHeight: number = 0;
+
+  btnGroupChartHeight: number = 0;
+  chartHeight: number = 0;
 
   dataHeight: number = 0;
 
@@ -27,6 +39,8 @@ export class DashboardComponent implements OnInit {
   rowCount: number;
   limit: number = 10;
   loadingIndicator: boolean = false;
+
+  resumeInfo: any = [];
 
   constructor(
     private responsiveService: ResponsiveService,
@@ -54,7 +68,14 @@ export class DashboardComponent implements OnInit {
       this.mainHeight = this.mainSection.nativeElement.offsetHeight;
       this.headerHeight = this.headerInfo.nativeElement.offsetHeight;
 
-      this.dataHeight = (this.mainHeight - this.headerHeight) - 10;
+      this.btnGroupHeight = this.btnGroup.nativeElement.offsetHeight;
+      this.btnGroupChartHeight = this.btnGroupChart.nativeElement.offsetHeight;
+
+      this.dataHeight = this.mainHeight - 10 - 88;
+
+      this.listHeight = this.dataHeight - this.btnGroupHeight;
+
+      this.chartHeight = this.dataHeight - this.btnGroupChartHeight;
     }
   }
 

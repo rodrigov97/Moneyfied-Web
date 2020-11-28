@@ -1,26 +1,37 @@
 <div [ngClass]="{'d-flex': !isMobile}">
+
   <ul class="col-4" [ngClass]="{'col-12': isMobile}">
-    <li class="title col-6"><a>Maior renda do mês</a></li>
-    <li [ngClass]="{'content-margin': !isMobile}" class="content d-flex">{{resume.MaxDesc}} <span
-        class="fill"></span>
+    <li class="title col-6">
+      <a>Maior renda do mês</a>
+    </li>
+    <li [ngClass]="{'content-margin': !isMobile}" class="content d-flex">{{resume.MaxDesc}} <span class="fill"></span>
       <a class="result" [ngStyle]="incomeStatus(resume.MaxValue)">R$ {{resume.MaxValue}}</a>
-      <i *ngIf="biggerThanZero(resume.MaxValue)" [ngStyle]="incomeStatus(resume.MaxValue)" class="positive fas fa-chevron-up"></i>
+      <i *ngIf="biggerThanZero(resume.MaxValue)" [ngStyle]="incomeStatus(resume.MaxValue)"
+        class="positive fas fa-chevron-up"></i>
     </li>
   </ul>
+
   <ul class="col-4" [ngClass]="{'col-12': isMobile}">
-    <li class="title col-6"><a>Menor renda do mês</a></li>
-    <li [ngClass]="{'content-margin': !isMobile}" class="content d-flex">{{resume.MinDesc}} <span
-        class="fill"></span>
+    <li class="title col-6">
+      <a>Menor renda do mês</a>
+    </li>
+    <li [ngClass]="{'content-margin': !isMobile}" class="content d-flex">{{resume.MinDesc}} <span class="fill"></span>
       <a class="result" [ngStyle]="incomeStatus(resume.MinValue)">R$ {{resume.MinValue}}</a>
-      <i *ngIf="biggerThanZero(resume.MinValue)" [ngStyle]="incomeStatus(resume.MinValue)" class="positive fas fa-chevron-up"></i>
+      <i *ngIf="biggerThanZero(resume.MinValue)" [ngStyle]="incomeStatus(resume.MinValue)"
+        class="positive fas fa-chevron-up"></i>
     </li>
   </ul>
+
   <ul class="col-4" [ngClass]="{'col-12': isMobile}">
-    <li class="title col-6"><a>Total do Mês</a></li>
+    <li class="title col-6">
+      <a>Total do Mês</a>
+    </li>
     <li [ngClass]="{'content-margin': !isMobile}" class="content last d-flex">Renda Total do Mês <span
         class="fill"></span>
       <a class="result" [ngStyle]="incomeStatus(resume.TotalValue)">R$ {{resume.TotalValue}}</a>
-      <i *ngIf="biggerThanZero(resume.TotalValue)" [ngStyle]="incomeStatus(resume.TotalValue)" class="positive fas fa-chevron-up"></i>
+      <i *ngIf="biggerThanZero(resume.TotalValue)" [ngStyle]="incomeStatus(resume.TotalValue)"
+        class="positive fas fa-chevron-up"></i>
     </li>
   </ul>
+
 </div>

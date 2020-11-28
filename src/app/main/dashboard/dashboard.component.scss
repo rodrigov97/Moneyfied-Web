@@ -7,6 +7,14 @@ section {
   background-color: $whitesmoke;
 }
 
+.content {
+  margin-top: 0.625rem;
+}
+
+.btn-group {
+  width: 100%;
+}
+
 .data-list,
 .data-chart {
   background-color: $white;
@@ -19,23 +27,24 @@ section {
   }
 
   .data-chart {
-    width: 100%;
+    width: 60%;
   }
 
-  .data {
+  .content {
     display: flex;
   }
 }
 
 @include media-breakpoint-down(md) {
   .data-list {
+    height: 100%;
     width: 100%;
-    margin-bottom: 0.625rem;
+    margin-bottom: 3.125rem;
+    margin-top: 1.25rem;
   }
 
   .data-chart {
     height: 100%;
     width: 100%;
-    margin-bottom: 0.625rem;
   }
 }
