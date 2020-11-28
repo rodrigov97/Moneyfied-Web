@@ -4,16 +4,17 @@ import { AppComponent } from '../app.component';
 
 import { MainRoutingModule } from './main.routing.module';
 
-import { DashboardComponent } from './dashboard/dashboard.component';
 import { MainComponent } from './main.component';
 import { MyProfileComponent } from './my-profile/my-profile.component';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { ProfileService } from './my-profile/profile.service';
 import { ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../shared/shared.module';
 import { IncomeModule } from './income/income.module';
 import { ExpenseModule } from './expense/expense.module';
 import { GoalModule } from './goal/goal.module';
+import { DashboardModule } from './dashboard/dashboard.module';
 
 @NgModule({
   imports: [
@@ -23,7 +24,9 @@ import { GoalModule } from './goal/goal.module';
     MainRoutingModule,
     ReactiveFormsModule,
     NgxDatatableModule,
+    NgxChartsModule,
     SharedModule,
+    DashboardModule,
     IncomeModule,
     ExpenseModule,
     GoalModule
@@ -31,7 +34,6 @@ import { GoalModule } from './goal/goal.module';
   declarations: [
     // App
     MainComponent,
-    DashboardComponent,
     MyProfileComponent,
   ],
   providers: [

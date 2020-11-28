@@ -1,0 +1,41 @@
+@import "../../../assets/style/_variables.scss";
+@import "../../../../node_modules/bootstrap/scss/mixins/_breakpoints.scss";
+
+section {
+  height: 100%;
+  width: 100%;
+  background-color: $whitesmoke;
+}
+
+.data-list,
+.data-chart {
+  background-color: $white;
+}
+
+@include media-breakpoint-up(lg) {
+  .data-list {
+    width: 40%;
+    margin-right: 0.625rem;
+  }
+
+  .data-chart {
+    width: 100%;
+  }
+
+  .data {
+    display: flex;
+  }
+}
+
+@include media-breakpoint-down(md) {
+  .data-list {
+    width: 100%;
+    margin-bottom: 0.625rem;
+  }
+
+  .data-chart {
+    height: 100%;
+    width: 100%;
+    margin-bottom: 0.625rem;
+  }
+}

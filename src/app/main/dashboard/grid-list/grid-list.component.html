@@ -1,0 +1,44 @@
+<ngx-datatable
+  (activate)="dblClickItem($event)"
+  [columnMode]="columnMode.flex"
+  [columns] = "columns"
+  [footerHeight]="50"
+  [headerHeight]="50"
+  [limit]="limit"
+  [loadingIndicator]="loadingIndicator"
+  [messages]="{emptyMessage: 'Nenhuma Despesa disponível'}"
+  [rowHeight]="50"
+  [rows]="rows"
+  [count]="rowCount"
+  [scrollbarH]="true"
+  [scrollbarV]="true"
+  [selected]="selected"
+  [selectionType]="'single'"
+  class="material">
+
+    <ngx-datatable-column *ngFor="let col of columns"
+      [resizeable]="true"
+      [name]="col.name"
+      [prop]="col.prop"
+      [flexGrow]="col.flex"
+      [cellClass]="col.align"
+      [sortable]="false"
+      [canAutoResize]="true"
+    ></ngx-datatable-column>
+
+  <ngx-datatable-footer>
+    <ng-template ngx-datatable-footer-template>
+      <datatable-pager
+        [pagerLeftArrowIcon]="'datatable-icon-left'"
+        [pagerRightArrowIcon]="'datatable-icon-right'"
+        [pagerPreviousIcon]="'datatable-icon-prev'"
+        [pagerNextIcon]="'datatable-icon-skip'"
+        [page]="1"
+        [size]="10"
+        [count]="rowCount"
+        (change)="setPageData($event)">
+      </datatable-pager>
+    </ng-template>
+  </ngx-datatable-footer>
+</ngx-datatable>
+

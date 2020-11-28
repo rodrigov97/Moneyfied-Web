@@ -50,11 +50,23 @@ p {
 
 * {
   font-weight: lighter;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+i,
+a,
+label {
   color: #3f3f3f;
 }
 
-i {
-  color: #3f3f3f;
+span {
+  color: inherit;
 }
 
 button:focus {
@@ -97,4 +109,16 @@ button:focus {
 
 .margin-b-10 {
   margin-bottom: 0.625rem;
+}
+
+/* Charts */
+
+ngx-charts-line-chart span {
+  color: $whitesmoke;
+}
+
+ngx-charts-line-chart .legend-label-text,
+ngx-charts-line-chart text {
+  color: #3f3f3f;
+  font-weight: normal;
 }
