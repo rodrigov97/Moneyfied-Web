@@ -1,0 +1,39 @@
+<div [ngClass]="{'d-flex': !isMobile}">
+
+  <ul class="col-4" [ngClass]="{'col-12': isMobile}">
+    <li class="title col-6">
+      <a>Total de Receitas do mês </a>
+    </li>
+    <li [ngClass]="{'content-margin': !isMobile}" class="content d-flex">Total <span class="fill"></span>
+      <a class="result" [ngStyle]="incomeStatus(resume.ReceitaValue)">R$ {{resume.ReceitaValue}}</a>
+      <i *ngIf="biggerThanZero(resume.ReceitaValue)" [ngStyle]="incomeStatus(resume.ReceitaValue)"
+        class="negative fas fa-chevron-up"></i>
+    </li>
+  </ul>
+
+  <ul class="col-4" [ngClass]="{'col-12': isMobile}">
+    <li class="title col-6">
+      <a>Total de Despesas do mês </a>
+    </li>
+    <li [ngClass]="{'content-margin': !isMobile}" class="content d-flex">Total <span class="fill"></span>
+      <a class="result" [ngStyle]="expenseStatus(resume.DespesaValue)">R$ {{resume.DespesaValue}}</a>
+      <i *ngIf="biggerThanZero(resume.DespesaValue)" [ngStyle]="expenseStatus(resume.DespesaValue)"
+        class="negative fas fa-chevron-down"></i>
+    </li>
+  </ul>
+
+  <ul class="col-4" [ngClass]="{'col-12': isMobile}">
+    <li class="title col-6">
+      <a>Saldo do mês</a>
+    </li>
+    <li [ngClass]="{'content-margin': !isMobile}" class="content last d-flex">Saldo do mês <span
+        class="fill"></span>
+      <a class="result" [ngStyle]="totalStatus(resume.Saldo)">R$ {{resume.Saldo}}</a>
+      <i *ngIf="biggerThanZero(resume.Saldo)" [ngStyle]="totalStatus(resume.Saldo)"
+        class="negative fas fa-chevron-up"></i>
+      <i *ngIf="lowerThanZero(resume.Saldo)" [ngStyle]="totalStatus(resume.Saldo)"
+        class="negative fas fa-chevron-down"></i>
+    </li>
+  </ul>
+
+</div>

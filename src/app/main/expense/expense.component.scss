@@ -7,51 +7,6 @@ section {
   background-color: $whitesmoke;
 }
 
-.content-container {
-  height: 100%;
-  width: 100%;
-}
-
-i {
-  margin-left: 0.625rem;
-}
-
-ul {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-a {
-  text-decoration: none;
-  color: inherit;
-}
-
-ul .title {
-  width: 11.5625rem;
-  padding: 0.3125rem 0.625rem;
-  margin-bottom: -0.625rem;
-  margin-left: 0.625rem !important;
-  background-color: $red-dark;
-  color: $white;
-  position: relative;
-  z-index: 1;
-}
-
-ul .content {
-  padding: 0.9375rem 0.9375rem;
-  background-color: $white;
-  //box-shadow: 2px 2px 5px -2px rgba(133, 133, 133, 0.75);
-}
-
-ul .content-margin {
-  margin: 0rem 0.625rem 0.625rem 0;
-}
-
-.last {
-  margin: 0rem 0rem 0.625rem 0 !important;
-}
-
 /* Lista de Gastos */
 
 .data {

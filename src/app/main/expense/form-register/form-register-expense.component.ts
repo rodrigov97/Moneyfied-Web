@@ -108,9 +108,7 @@ export class FormRegisterComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    if (this.form === 'Alterar') {
-      this.setExpenseItem();
-    }
+
   }
 
   initFormListeners(): void {
@@ -153,13 +151,6 @@ export class FormRegisterComponent implements OnInit {
         this.isMobile = value.isMobile;
 
         this.myModal = this.modalService.open(this.modal, this.modalOption);
-
-        if (this.formType === 'Alterar') {
-          this.setExpenseItem();
-
-          if (this.formValue.Parcelado)
-            this.isParcelado = true;
-        }
 
         this.initFormListeners();
         this.loadCategories();
@@ -209,7 +200,15 @@ export class FormRegisterComponent implements OnInit {
     this.expenseService.getCategories(this.storageService.userId).subscribe(
       response => {
         if (response.success) {
+          response.categories.unshift({ value: '-', CategoriId: 0 });
           this.categoryItems = response.categories;
+
+          if (this.formType === 'Alterar') {
+            this.setExpenseItem();
+
+            if (this.formValue.Parcelado)
+              this.isParcelado = true;
+          }
         }
       },
       error => {
@@ -330,7 +329,7 @@ export class FormRegisterComponent implements OnInit {
     this.formExpense.setValue({
       Descricao: null,
       Valor: null,
-      Parcelado: null,
+      Parcelado: false,
       ParcelaQtd: null,
       ParcelaValor: null,
       DataInicial: new Date(),

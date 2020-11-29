@@ -46,7 +46,7 @@ export class ExpenseGridComponent implements OnInit {
       this.expenseService.openFormExpense({
         command: 'open',
         title: 'Atenção',
-        form: 'Receita',
+        form: 'Despesa',
         formType: 'Alterar',
         data: event.row
       });

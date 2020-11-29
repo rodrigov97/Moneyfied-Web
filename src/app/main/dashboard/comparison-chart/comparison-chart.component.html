@@ -1,0 +1,18 @@
+<section [style.height.px]="chartHeight">
+  <app-load-spinner *ngIf="isLoading"></app-load-spinner>
+
+  <ngx-charts-area-chart *ngIf="!isLoading"
+    [style.height.px]="chartHeight"
+    [scheme]="colorScheme"
+    [results]="chartData"
+    [gradient]="gradient"
+    [xAxis]="showXAxis"
+    [yAxis]="showYAxis"
+    [showXAxisLabel]="showXAxisLabel"
+    [showYAxisLabel]="showYAxisLabel"
+    [xAxisLabel]="xAxisLabel"
+    [yAxisLabel]="yAxisLabel"
+    [autoScale]="autoScale"
+  >
+  </ngx-charts-area-chart>
+</section>

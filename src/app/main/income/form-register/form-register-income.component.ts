@@ -76,11 +76,7 @@ export class FormRegisterIncomeComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    if (this.form === 'Alterar') {
-      this.setIncomeItem();
-    }
 
-    this.loadCategories();
   }
 
   ngAfterViewInit() {
@@ -99,8 +95,7 @@ export class FormRegisterIncomeComponent implements OnInit, OnDestroy {
 
         this.myModal = this.modalService.open(this.modal, this.modalOption);
 
-        if (this.formType === 'Alterar')
-          this.setIncomeItem();
+        this.loadCategories();
       }
     });
   }
@@ -122,7 +117,11 @@ export class FormRegisterIncomeComponent implements OnInit, OnDestroy {
     this.incomeService.getCategories(this.storageService.userId).subscribe(
       response => {
         if (response.success) {
+          response.categories.unshift({ value: '-', CategoriId: 0 });
           this.categoryItems = response.categories;
+
+          if (this.formType === 'Alterar')
+            this.setIncomeItem();
         }
       },
       error => {
@@ -161,9 +160,8 @@ export class FormRegisterIncomeComponent implements OnInit, OnDestroy {
       response => {
         if (response.success) {
           this.isLoading = false;
-          this.resetFormValue();
           this.incomeService.reloadGridEvent();
-          this.modalService.dismissAll();
+          this.onClose();
         }
         else {
           this.isLoading = false;
@@ -194,9 +192,8 @@ export class FormRegisterIncomeComponent implements OnInit, OnDestroy {
       response => {
         if (response.success) {
           this.isLoading = false;
-          this.resetFormValue();
           this.incomeService.reloadGridEvent();
-          this.modalService.dismissAll();
+          this.onClose();
         }
         else {
           this.isLoading = false;

@@ -1,0 +1,66 @@
+@import "../../../assets/style/_variables.scss";
+@import "../../../../node_modules/bootstrap/scss/mixins/_breakpoints.scss";
+
+section {
+  height: 100%;
+  width: 100%;
+  background-color: $whitesmoke;
+}
+
+.content {
+  margin-top: 0.625rem;
+}
+
+.btn-group {
+  width: 100%;
+}
+
+.btn-group button,
+.btn-group button:active,
+.btn-group button:focus {
+  height: 2.375rem !important;
+}
+
+.btn-group h5 {
+  margin: 0 1.875rem 0 0.625rem;
+}
+
+.data-list,
+.data-chart {
+  background-color: $white;
+}
+
+.list-name {
+  width: 100%;
+  padding: 0.3125rem 0 0 0;
+  text-align: center;
+}
+
+@include media-breakpoint-up(lg) {
+  .data-list {
+    width: 30%;
+    margin-right: 0.625rem;
+  }
+
+  .data-chart {
+    width: 70%;
+  }
+
+  .content {
+    display: flex;
+  }
+}
+
+@include media-breakpoint-down(md) {
+  .data-list {
+    height: 100%;
+    width: 100%;
+    margin-bottom: 88px;
+    margin-top: 1.25rem;
+  }
+
+  .data-chart {
+    height: 100%;
+    width: 100%;
+  }
+}

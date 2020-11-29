@@ -1,1 +1,49 @@
-<p>dashboard works!</p>
+<section #main (window:resize)="onResize()">
+  <div #headerInfo>
+
+    <app-dashboard-info
+      [isMobile]="isMobile"
+      [resume]="resumeInfo"
+    ></app-dashboard-info>
+
+  </div>
+  <div #dataContent [style.height.px]="dataHeight" class="content">
+    <div #listContainer [style.height.px]="isMobile ? mainHeight : listHeight" class="data-list">
+      <div #btnGroup class="btn-group" role="group">
+        <button (click)="changeListType('income')" type="button" class="btn btn-success">Receitas</button>
+        <button (click)="changeListType('expense')" type="button" class="btn btn-danger">Despesas</button>
+        <button (click)="changeListType('goal')" type="button" class="btn btn-primary">Objetivos</button>
+      </div>
+
+      <div #listName class="list-name">
+        <h5>{{listLabel}}</h5>
+      </div>
+
+      <app-grid-list
+        [columns]="columns"
+        [loadingIndicator]="loadingIndicator"
+        [rows]="rows"
+        [rowCount]="rowCount"
+        [limit]="limit"
+        [type]="listType"
+      ></app-grid-list>
+
+    </div>
+    <div #chartContainer class="data-chart">
+
+      <div #btnGroupChart class="btn-group align-items-center" role="group">
+        <h5>Comparação</h5>
+        <!-- <button (click)="changeChartType('month')" type="button" class="btn btn-dark">Mensal</button>
+        <button (click)="changeChartType('year')" type="button" class="btn btn-dark">Anual</button> -->
+      </div>
+
+      <app-comparison-chart
+        [isLoading]="isLoading"
+        [chartHeight]="chartHeight"
+        [chartType]="chartType"
+        [chartData]="chartData"
+      ></app-comparison-chart>
+
+    </div>
+  </div>
+</section>

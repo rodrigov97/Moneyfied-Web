@@ -2,11 +2,14 @@
   (activate)="dblClickItem($event)"
   [columnMode]="columnMode.flex"
   [columns] = "columns"
-  [footerHeight]="50"
+  [footerHeight]="0"
   [headerHeight]="50"
   [limit]="limit"
   [loadingIndicator]="loadingIndicator"
-  [messages]="{emptyMessage: 'Nenhuma Meta disponível'}"
+  [messages]="type === 'income' ?{emptyMessage: 'Nenhuma Receita disponível'}
+  : (type === 'expense' ? {emptyMessage: 'Nenhuma Despesa disponível'}
+  : {emptyMessage: 'Nenhum Objetivo disponível'})"
+
   [rowHeight]="50"
   [rows]="rows"
   [count]="rowCount"
@@ -16,7 +19,7 @@
   [selectionType]="'single'"
   class="material">
 
-    <ngx-datatable-column
+    <ngx-datatable-column *ngIf="type === 'goal'"
       [resizeable]="false"
       [name]="''"
       [prop]="'Status'"
@@ -55,10 +58,11 @@
         [pagerPreviousIcon]="'datatable-icon-prev'"
         [pagerNextIcon]="'datatable-icon-skip'"
         [page]="1"
-        [size]="limit"
+        [size]="10"
         [count]="rowCount"
         (change)="setPageData($event)">
       </datatable-pager>
     </ng-template>
   </ngx-datatable-footer>
 </ngx-datatable>
+

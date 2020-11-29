@@ -289,7 +289,7 @@ export class ExpenseComponent implements OnInit {
     this.expenseService.getCategories(this.localStorage.userId).subscribe(
       response => {
         if (response.success) {
-          response.categories.unshift({ value: 'Nenhum', CategoriId: 0 });
+          response.categories.unshift({ value: '-', CategoriId: 0 });
           this.categoryItems = response.categories;
         }
       },

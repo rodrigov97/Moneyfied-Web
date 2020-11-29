@@ -1,0 +1,56 @@
+@import "../../../../assets/style/_variables.scss";
+@import "../../../../../node_modules/bootstrap/scss/mixins/_breakpoints.scss";
+
+ngx-datatable {
+  height: 100%;
+  width: 100%;
+}
+
+.ngx-datatable.material {
+  box-shadow: none !important;
+}
+
+:host ::ng-deep span {
+  font-weight: normal !important;
+}
+
+:host ::ng-deep .empty-row {
+  text-align: center !important;
+}
+
+:host ::ng-deep .datatable-body-row {
+  cursor: pointer;
+}
+
+:host ::ng-deep.progress-linear .container .bar {
+  background: $blue-grey !important;
+}
+
+:host ::ng-dee .progress-linear .container {
+  background: $blue-grey-light !important;
+}
+
+:host ::ng-deep .ngx-datatable.material.single-selection .datatable-body-row.active .datatable-row-group {
+  background: $blue-grey !important;
+}
+:host ::ng-deep .datatable-body-row.active span {
+  color: $white !important;
+}
+
+.success,
+.warning,
+.danger {
+  font-size: 1.0625rem;
+}
+
+.success {
+  color: $success;
+}
+
+.warning {
+  color: $warning;
+}
+
+.danger {
+  color: $danger;
+}
