@@ -11,7 +11,7 @@ export class DashboardComponent implements OnInit {
 
   isMobile: boolean = true;
 
-  isLoading: boolean = true;
+  isLoading: boolean = false;
 
   @ViewChild('main') mainSection: ElementRef;
   @ViewChild('headerInfo') headerInfo: ElementRef;
@@ -37,8 +37,11 @@ export class DashboardComponent implements OnInit {
   columns: any = [];
   rows: any[] = [];
   rowCount: number;
-  limit: number = 10;
+  limit: number = 1000;
   loadingIndicator: boolean = false;
+
+  listType: string = 'income';
+  chartType: string = 'month';
 
   resumeInfo: any = [];
 
@@ -79,28 +82,48 @@ export class DashboardComponent implements OnInit {
     }
   }
 
+  changeListType(name: string): void {
+    this.listType = name;
+    this.setGridColumns();
+
+    if (name === 'income') {
+
+    }
+    else if (name === 'expense') {
+
+    }
+    else if (name === 'goal') {
+
+    }
+  }
+
   setGridColumns(): void {
-    if (!this.isMobile) {
+    if (this.listType === 'income' || this.listType === 'expense') {
       this.columns = [{
         name: 'Descrição', prop: 'Descricao', flex: 3, align: 'align-left'
       }, {
-        name: 'Valor (R$)', prop: 'ParcelaValor', flex: 1, align: 'align-right'
-      }, {
-        name: 'Categoria', prop: 'Categoria', flex: 1, align: 'align-center'
-      }, {
-        name: 'Pagamento', prop: 'DataPagamento', flex: 1.2, align: 'align-center'
-      }, {
-        name: 'Nº Parcela', prop: 'ParcelaNumero', flex: 1, align: 'align-center'
+        name: '(R$)', prop: 'Valor', flex: 1, align: 'align-center'
       }];
     }
-    else {
+    else if (this.listType === 'goal') {
       this.columns = [{
-        name: 'Descrição', prop: 'Descricao', flex: 3, align: 'align-left'
+
       }, {
-        name: 'R$', prop: 'ParcelaValor', flex: 1, align: 'align-right'
+        name: 'Objetivo', prop: 'Nome', flex: 3, align: 'align-left'
       }, {
-        name: 'Nº', prop: 'ParcelaNumero', flex: 1, align: 'align-center'
+        name: '(%)', prop: 'Porcentagem', flex: 1, align: 'align-center'
       }];
+    }
+  }
+
+  changeChartType(name: string): void {
+    this.chartType = name;
+
+    if (name === 'month') {
+
+    }
+    else if (name === 'year') {
+
     }
   }
 }

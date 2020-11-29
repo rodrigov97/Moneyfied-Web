@@ -9,6 +9,7 @@ import { DashboardService } from '../dashboard.service';
 })
 export class GridListComponent implements OnInit {
 
+  @Input() type: string = '';
   @Input() rows = [];
   @Input() columns = [];
   @Input() rowCount: number;

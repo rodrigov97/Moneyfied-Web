@@ -1,5 +1,8 @@
 <section [style.height.px]="chartHeight">
-  <ngx-charts-line-chart [style.height.px]="chartHeight"
+  <app-load-spinner *ngIf="isLoading"></app-load-spinner>
+
+  <ngx-charts-area-chart *ngIf="!isLoading"
+    [style.height.px]="chartHeight"
     [scheme]="colorScheme"
     [results]="multi"
     [gradient]="gradient"
@@ -11,5 +14,5 @@
     [yAxisLabel]="yAxisLabel"
     [autoScale]="autoScale"
   >
-  </ngx-charts-line-chart>
+  </ngx-charts-area-chart>
 </section>

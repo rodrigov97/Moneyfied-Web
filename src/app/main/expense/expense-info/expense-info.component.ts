@@ -42,7 +42,7 @@ export class ExpenseInfoComponent implements OnInit {
     if (amount < 0) {
       return true;
     }
-    else if (amount > 0) {
+    else {
       return false;
     }
   }
@@ -52,7 +52,7 @@ export class ExpenseInfoComponent implements OnInit {
     if (amount > 0) {
       return true;
     }
-    else if (amount > 0) {
+    else {
       return false;
     }
   }

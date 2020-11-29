@@ -1,5 +1,4 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { DespesaResumo } from 'src/app/core/models/despesa.model';
 
 @Component({
   selector: 'app-dashboard-info',
@@ -19,11 +18,9 @@ export class DashboardInfoComponent implements OnInit {
 
   setResumeDeafultValue(): void {
     this.resume = {
-      MaxDesc: '-',
-      MaxValue: '0',
-      MinDesc: '-',
-      MinValue: '0',
-      TotalValue: '0',
+      ReceitaValue: '0',
+      DespesaValue: '0',
+      Saldo: '0',
     };
   }
 
@@ -38,12 +35,34 @@ export class DashboardInfoComponent implements OnInit {
     }
   }
 
+  incomeStatus(value: string): {} {
+    var amount = parseFloat(value);
+
+    if (amount) {
+
+      return {
+        'color': '#13ca66'
+      }
+    }
+  }
+
+  totalStatus(value: string): {} {
+    var amount = parseFloat(value);
+
+    if (amount) {
+
+      return {
+        'color': '#13ca66'
+      }
+    }
+  }
+
   lowerThanZero(value: string): boolean {
     var amount = parseFloat(value);
     if (amount < 0) {
       return true;
     }
-    else if (amount > 0) {
+    else {
       return false;
     }
   }
@@ -53,7 +72,7 @@ export class DashboardInfoComponent implements OnInit {
     if (amount > 0) {
       return true;
     }
-    else if (amount > 0) {
+    else {
       return false;
     }
   }

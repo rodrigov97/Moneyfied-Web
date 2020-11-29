@@ -15,6 +15,16 @@ section {
   width: 100%;
 }
 
+.btn-group button,
+.btn-group button:active,
+.btn-group button:focus {
+  height: 2.375rem !important;
+}
+
+.btn-group h5 {
+  margin: 0 1.875rem 0 0.625rem;
+}
+
 .data-list,
 .data-chart {
   background-color: $white;
@@ -22,12 +32,12 @@ section {
 
 @include media-breakpoint-up(lg) {
   .data-list {
-    width: 40%;
+    width: 30%;
     margin-right: 0.625rem;
   }
 
   .data-chart {
-    width: 60%;
+    width: 70%;
   }
 
   .content {

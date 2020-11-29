@@ -7,106 +7,139 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class ComparisonChartComponent implements OnInit {
 
+  @Input() isLoading: boolean = false;
   @Input() chartHeight: number = 0;
+  @Input() chartType: string= '';
+  @Input() info: any;
 
-  single = single;
-  multi = multi;
+  multi: any = multi;
 
-  //view: any[] = [700, 400];
+  showXAxis: boolean = true;
+  showYAxis: boolean = true;
+  gradient: boolean = true;
+  showLegend: boolean = true;
+  showXAxisLabel: boolean = true;
+  showYAxisLabel: boolean = true;
+  autoScale = true;
+  xAxisLabel: string = 'Meses';
+  yAxisLabel: string = 'Quantia (R$)';
 
-  // options
-  showXAxis = true;
-  showYAxis = true;
-  gradient = false;
-  showLegend = true;
-  showXAxisLabel = true;
-  xAxisLabel = 'Country';
-  showYAxisLabel = true;
-  yAxisLabel = 'Population';
-
-  colorScheme = {
-    domain: ['#5AA454', '#A10A28', '#C7B42C', '#AAAAAA']
+  colorScheme: any = {
+    domain: ['#4caf50', '#e71426', '#AAAAAA']
   };
 
-  // line, area
-  autoScale = true;
-
-  constructor() {
-    Object.assign(this, { single, multi })
-  }
+  constructor() { }
 
   ngOnInit(): void {
+
   }
-
-
 }
-
-export var single = [
-  {
-    "name": "Germany",
-    "value": 8940000
-  },
-  {
-    "name": "USA",
-    "value": 5000000
-  },
-  {
-    "name": "France",
-    "value": 7200000
-  }
-];
 
 export var multi = [
   {
-    "name": "Germany",
+    "name": "Receitas",
     "series": [
       {
-        "name": "2010",
-        "value": 7300000
+        "name": "Janeiro",
+        "value": 890.30
       },
       {
-        "name": "2011",
-        "value": 8940000
+        "name": "Fevereiro",
+        "value": 600.04
       },
       {
-        "name": "2012",
-        "value": 900000
+        "name": "Março",
+        "value": 900.90
+      },
+      {
+        "name": "Abril",
+        "value": 1000.00
+      },
+      {
+        "name": "Maio",
+        "value": 890.30
+      },
+      {
+        "name": "Junho",
+        "value": 600.04
+      },
+      {
+        "name": "Julho",
+        "value": 900.90
+      },
+      {
+        "name": "Agosto",
+        "value": 1000.00
+      },
+      {
+        "name": "Setembro",
+        "value": 890.30
+      },
+      {
+        "name": "Outubro",
+        "value": 600.04
+      },
+      {
+        "name": "Novembro",
+        "value": 900.90
+      },
+      {
+        "name": "Dezembro",
+        "value": 1000.00
       }
     ]
   },
 
   {
-    "name": "USA",
+    "name": "Despesas",
     "series": [
       {
-        "name": "2010",
-        "value": 7870000
+        "name": "Janeiro",
+        "value": 200.58
       },
       {
-        "name": "2011",
-        "value": 8270000
+        "name": "Fevereiro",
+        "value": 358.99
       },
       {
-        "name": "2012",
-        "value": 9800000
-      }
-    ]
-  },
-
-  {
-    "name": "France",
-    "series": [
-      {
-        "name": "2010",
-        "value": 5000002
+        "name": "Março",
+        "value": 100.50
       },
       {
-        "name": "2011",
-        "value": 5800000
+        "name": "Abril",
+        "value": 879.00
       },
       {
-        "name": "2012",
-        "value": 7900000
+        "name": "Maio",
+        "value": 200.58
+      },
+      {
+        "name": "Junho",
+        "value": 358.99
+      },
+      {
+        "name": "Julho",
+        "value": 100.50
+      },
+      {
+        "name": "Agosto",
+        "value": 879.00
+      },
+      {
+        "name": "Setembro",
+        "value": 200.58
+      },
+      {
+        "name": "Outubro",
+        "value": 358.99
+      },
+      {
+        "name": "Novembro",
+        "value": 100.50
+      },
+      {
+        "name": "Dezembro",
+        "value": 879.00
       }
     ]
   }

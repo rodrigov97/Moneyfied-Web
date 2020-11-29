@@ -11,6 +11,7 @@ import { GridListComponent } from './grid-list/grid-list.component';
 import { ComparisonChartComponent } from './comparison-chart/comparison-chart.component';
 import { DashboardComponent } from './dashboard.component';
 import { DashboardInfoComponent } from './dashboard-info/dashboard-info.component';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 @NgModule({
   imports: [
@@ -20,7 +21,8 @@ import { DashboardInfoComponent } from './dashboard-info/dashboard-info.componen
     MainRoutingModule,
     ReactiveFormsModule,
     NgxDatatableModule,
-    NgxChartsModule
+    NgxChartsModule,
+    SharedModule
   ],
   declarations: [
     // App

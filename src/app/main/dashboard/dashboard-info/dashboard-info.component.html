@@ -2,34 +2,36 @@
 
   <ul class="col-4" [ngClass]="{'col-12': isMobile}">
     <li class="title col-6">
-      <a>Maior despesa do mês</a>
+      <a>Total de Receitas do mês </a>
     </li>
-    <li [ngClass]="{'content-margin': !isMobile}" class="content d-flex">{{resume.MaxDesc}} <span class="fill"></span>
-      <a class="result" [ngStyle]="expenseStatus(resume.MaxValue)">R$ {{resume.MaxValue}}</a>
-      <i *ngIf="biggerThanZero(resume.MaxValue)" [ngStyle]="expenseStatus(resume.MaxValue)"
+    <li [ngClass]="{'content-margin': !isMobile}" class="content d-flex">Total <span class="fill"></span>
+      <a class="result" [ngStyle]="expenseStatus(resume.ReceitaValue)">R$ {{resume.ReceitaValue}}</a>
+      <i *ngIf="biggerThanZero(resume.MaxValue)" [ngStyle]="incomeStatus(resume.ReceitaValue)"
+        class="negative fas fa-chevron-up"></i>
+    </li>
+  </ul>
+
+  <ul class="col-4" [ngClass]="{'col-12': isMobile}">
+    <li class="title col-6">
+      <a>Total de Despesas do mês </a>
+    </li>
+    <li [ngClass]="{'content-margin': !isMobile}" class="content d-flex">Total <span class="fill"></span>
+      <a class="result" [ngStyle]="expenseStatus(resume.DespesaValue)">R$ {{resume.DespesaValue}}</a>
+      <i *ngIf="biggerThanZero(resume.MinValue)" [ngStyle]="expenseStatus(resume.DespesaValue)"
         class="negative fas fa-chevron-down"></i>
     </li>
   </ul>
 
   <ul class="col-4" [ngClass]="{'col-12': isMobile}">
     <li class="title col-6">
-      <a>Menor despesa do mês</a>
+      <a>Saldo do mês</a>
     </li>
-    <li [ngClass]="{'content-margin': !isMobile}" class="content d-flex">{{resume.MinDesc}} <span class="fill"></span>
-      <a class="result" [ngStyle]="expenseStatus(resume.MinValue)">R$ {{resume.MinValue}}</a>
-      <i *ngIf="biggerThanZero(resume.MinValue)" [ngStyle]="expenseStatus(resume.MinValue)"
-        class="negative fas fa-chevron-down"></i>
-    </li>
-  </ul>
-
-  <ul class="col-4" [ngClass]="{'col-12': isMobile}">
-    <li class="title col-6">
-      <a>Total do Mês</a>
-    </li>
-    <li [ngClass]="{'content-margin': !isMobile}" class="content last d-flex">Despesa Total do Mês <span
+    <li [ngClass]="{'content-margin': !isMobile}" class="content last d-flex">Saldo do mês <span
         class="fill"></span>
-      <a class="result" [ngStyle]="expenseStatus(resume.TotalValue)">R$ {{resume.TotalValue}}</a>
-      <i *ngIf="biggerThanZero(resume.TotalValue)" [ngStyle]="expenseStatus(resume.TotalValue)"
+      <a class="result" [ngStyle]="expenseStatus(resume.Saldo)">R$ {{resume.Saldo}}</a>
+      <i *ngIf="biggerThanZero(resume.TotalValue)" [ngStyle]="totalStatus(resume.TotalValue)"
+        class="negative fas fa-chevron-up"></i>
+      <i *ngIf="lowerThanZero(resume.TotalValue)" [ngStyle]="totalStatus(resume.TotalValue)"
         class="negative fas fa-chevron-down"></i>
     </li>
   </ul>

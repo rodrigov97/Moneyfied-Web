@@ -11,12 +11,13 @@ ul {
 }
 
 a {
+  white-space: nowrap;
   text-decoration: none;
   color: inherit;
 }
 
 ul .title {
-  width: 11.5625rem;
+  width: 195px;
   padding: 0.3125rem 0.625rem;
   margin-bottom: -0.625rem;
   margin-left: 0.625rem !important;
