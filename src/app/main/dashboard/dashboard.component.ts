@@ -66,6 +66,7 @@ export class DashboardComponent implements OnInit {
     this.dataChanged.detectChanges();
     this.setGridColumns();
     this.changeListType(this.listType);
+    this.loadResume();
   }
 
   onResize(): void {
@@ -73,7 +74,6 @@ export class DashboardComponent implements OnInit {
     this.isMobile = this.responsiveService.isMobile;
     this.setHeight();
     this.setGridColumns();
-    this.changeListType(this.listType);
   }
 
   setHeight(): void {
@@ -89,10 +89,24 @@ export class DashboardComponent implements OnInit {
 
       this.dataHeight = this.mainHeight - 10 - 88;
 
-      this.listHeight = this.dataHeight - this.btnGroupHeight - this.listNameHeight;
+      this.listHeight = this.dataHeight - this.btnGroupHeight - this.listNameHeight - 10;
 
       this.chartHeight = this.dataHeight - this.btnGroupChartHeight;
     }
+  }
+
+  loadResume(): void {
+    this.dashboardService.getResumeInfo().subscribe(
+      response => {
+        if (response.success) {
+          this.loadingIndicator = false;
+          this.resumeInfo = response.values;
+        }
+      },
+      error => {
+        if (error.error && error.status !== 500)
+          this.tokenErrorHandler.handleError(error.error);
+      });
   }
 
   changeListType(name: string): void {

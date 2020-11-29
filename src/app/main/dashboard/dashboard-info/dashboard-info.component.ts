@@ -27,7 +27,7 @@ export class DashboardInfoComponent implements OnInit {
   expenseStatus(value: string): {} {
     var amount = parseFloat(value);
 
-    if (amount) {
+    if (amount > 0) {
 
       return {
         'color': '#e71426'
@@ -38,7 +38,7 @@ export class DashboardInfoComponent implements OnInit {
   incomeStatus(value: string): {} {
     var amount = parseFloat(value);
 
-    if (amount) {
+    if (amount > 0) {
 
       return {
         'color': '#13ca66'
@@ -49,10 +49,16 @@ export class DashboardInfoComponent implements OnInit {
   totalStatus(value: string): {} {
     var amount = parseFloat(value);
 
-    if (amount) {
+    if (amount > 0) {
 
       return {
         'color': '#13ca66'
+      }
+    }
+    else if (amount < 0) {
+      
+      return {
+        'color': '#e71426'
       }
     }
   }

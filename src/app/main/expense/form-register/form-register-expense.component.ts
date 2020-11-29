@@ -200,6 +200,7 @@ export class FormRegisterComponent implements OnInit {
     this.expenseService.getCategories(this.storageService.userId).subscribe(
       response => {
         if (response.success) {
+          response.categories.unshift({ value: '-', CategoriId: 0 });
           this.categoryItems = response.categories;
 
           if (this.formType === 'Alterar') {
@@ -328,7 +329,7 @@ export class FormRegisterComponent implements OnInit {
     this.formExpense.setValue({
       Descricao: null,
       Valor: null,
-      Parcelado: null,
+      Parcelado: false,
       ParcelaQtd: null,
       ParcelaValor: null,
       DataInicial: new Date(),
