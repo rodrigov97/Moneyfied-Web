@@ -33,14 +33,15 @@
 
       <div #btnGroupChart class="btn-group align-items-center" role="group">
         <h5>Comparação</h5>
-        <button (click)="changeChartType('month')" type="button" class="btn btn-dark">Mensal</button>
-        <button (click)="changeChartType('year')" type="button" class="btn btn-dark">Anual</button>
+        <!-- <button (click)="changeChartType('month')" type="button" class="btn btn-dark">Mensal</button>
+        <button (click)="changeChartType('year')" type="button" class="btn btn-dark">Anual</button> -->
       </div>
 
       <app-comparison-chart
         [isLoading]="isLoading"
         [chartHeight]="chartHeight"
         [chartType]="chartType"
+        [chartData]="chartData"
       ></app-comparison-chart>
 
     </div>

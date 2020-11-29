@@ -10,6 +10,7 @@ export class ComparisonChartComponent implements OnInit {
   @Input() isLoading: boolean = false;
   @Input() chartHeight: number = 0;
   @Input() chartType: string= '';
+  @Input() chartData: any [] = [];
   @Input() info: any;
 
   multi: any = multi;

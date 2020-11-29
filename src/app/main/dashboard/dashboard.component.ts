@@ -35,6 +35,7 @@ export class DashboardComponent implements OnInit {
 
   btnGroupChartHeight: number = 0;
   chartHeight: number = 0;
+  chartData: any[] = [];
 
   dataHeight: number = 0;
 
@@ -67,6 +68,7 @@ export class DashboardComponent implements OnInit {
     this.setGridColumns();
     this.changeListType(this.listType);
     this.loadResume();
+    this.getChartData();
   }
 
   onResize(): void {
@@ -186,6 +188,21 @@ export class DashboardComponent implements OnInit {
         if (response.success) {
           this.loadingIndicator = false;
           this.rows = response.objetivos;
+        }
+      },
+      error => {
+        if (error.error && error.status !== 500)
+          this.tokenErrorHandler.handleError(error.error);
+      });
+  }
+
+  getChartData(): void {
+    this.isLoading = true;
+    this.dashboardService.getChartInfo().subscribe(
+      response => {
+        if (response.success) {
+          this.isLoading = false;
+          this.chartData = response.values;
         }
       },
       error => {
