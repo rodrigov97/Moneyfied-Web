@@ -1,6 +1,8 @@
 import { ChangeDetectorRef } from '@angular/core';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ResponsiveService } from 'src/app/core/services/responsive.service';
+import { TokenErrorHandlerService } from 'src/app/core/services/token-error-handler.service';
+import { DashboardService } from './dashboard.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -18,6 +20,7 @@ export class DashboardComponent implements OnInit {
   @ViewChild('dataContent') dataContent: ElementRef;
 
   @ViewChild('btnGroup') btnGroup: ElementRef;
+  @ViewChild('listName') listName: ElementRef;
   @ViewChild('listContainer') listContainer: ElementRef;
 
   @ViewChild('btnGroupChart') btnGroupChart: ElementRef;
@@ -28,13 +31,16 @@ export class DashboardComponent implements OnInit {
 
   btnGroupHeight: number = 0;
   listHeight: number = 0;
+  listNameHeight: number = 0;
 
   btnGroupChartHeight: number = 0;
   chartHeight: number = 0;
 
   dataHeight: number = 0;
 
-  columns: any = [];
+  listLabel: string = 'Receita';
+
+  columns: any[] = [];
   rows: any[] = [];
   rowCount: number;
   limit: number = 1000;
@@ -46,8 +52,10 @@ export class DashboardComponent implements OnInit {
   resumeInfo: any = [];
 
   constructor(
+    private dashboardService: DashboardService,
     private responsiveService: ResponsiveService,
-    private dataChanged: ChangeDetectorRef
+    private dataChanged: ChangeDetectorRef,
+    private tokenErrorHandler: TokenErrorHandlerService
   ) { }
 
   ngOnInit(): void {
@@ -56,6 +64,8 @@ export class DashboardComponent implements OnInit {
   ngAfterViewInit(): void {
     this.onResize();
     this.dataChanged.detectChanges();
+    this.setGridColumns();
+    this.changeListType(this.listType);
   }
 
   onResize(): void {
@@ -63,6 +73,7 @@ export class DashboardComponent implements OnInit {
     this.isMobile = this.responsiveService.isMobile;
     this.setHeight();
     this.setGridColumns();
+    this.changeListType(this.listType);
   }
 
   setHeight(): void {
@@ -72,11 +83,13 @@ export class DashboardComponent implements OnInit {
       this.headerHeight = this.headerInfo.nativeElement.offsetHeight;
 
       this.btnGroupHeight = this.btnGroup.nativeElement.offsetHeight;
+      this.listNameHeight = this.listName.nativeElement.offsetHeight;
+
       this.btnGroupChartHeight = this.btnGroupChart.nativeElement.offsetHeight;
 
       this.dataHeight = this.mainHeight - 10 - 88;
 
-      this.listHeight = this.dataHeight - this.btnGroupHeight;
+      this.listHeight = this.dataHeight - this.btnGroupHeight - this.listNameHeight;
 
       this.chartHeight = this.dataHeight - this.btnGroupChartHeight;
     }
@@ -87,13 +100,19 @@ export class DashboardComponent implements OnInit {
     this.setGridColumns();
 
     if (name === 'income') {
+      this.listLabel = 'Receitas';
 
+      this.loadIncome();
     }
     else if (name === 'expense') {
+      this.listLabel = 'Despesas';
 
+      this.loadExpense();
     }
     else if (name === 'goal') {
+      this.listLabel = 'Objetivos';
 
+      this.loadGoal();
     }
   }
 
@@ -114,6 +133,51 @@ export class DashboardComponent implements OnInit {
         name: '(%)', prop: 'Porcentagem', flex: 1, align: 'align-center'
       }];
     }
+  }
+
+  loadIncome(): void {
+    this.loadingIndicator = true;
+    this.dashboardService.getIncome().subscribe(
+      response => {
+        if (response.success) {
+          this.loadingIndicator = false;
+          this.rows = response.receitas;
+        }
+      },
+      error => {
+        if (error.error && error.status !== 500)
+          this.tokenErrorHandler.handleError(error.error);
+      });
+  }
+
+  loadExpense(): void {
+    this.loadingIndicator = true;
+    this.dashboardService.getExpense().subscribe(
+      response => {
+        if (response.success) {
+          this.loadingIndicator = false;
+          this.rows = response.despesas;
+        }
+      },
+      error => {
+        if (error.error && error.status !== 500)
+          this.tokenErrorHandler.handleError(error.error);
+      });
+  }
+
+  loadGoal(): void {
+    this.loadingIndicator = true;
+    this.dashboardService.getGoal().subscribe(
+      response => {
+        if (response.success) {
+          this.loadingIndicator = false;
+          this.rows = response.objetivos;
+        }
+      },
+      error => {
+        if (error.error && error.status !== 500)
+          this.tokenErrorHandler.handleError(error.error);
+      });
   }
 
   changeChartType(name: string): void {

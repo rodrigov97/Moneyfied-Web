@@ -30,6 +30,12 @@ section {
   background-color: $white;
 }
 
+.list-name {
+  width: 100%;
+  padding: 0.3125rem 0 0 0;
+  text-align: center;
+}
+
 @include media-breakpoint-up(lg) {
   .data-list {
     width: 30%;

@@ -28,12 +28,16 @@ export class DashboardService {
     return this.apiClient.get(`${this.URL}/expense?userId=${this.userId}`);
   }
 
+  getGoal(): Observable<any> {
+    return this.apiClient.get(`${this.URL}/goal?userId=${this.userId}`);
+  }
+
   getChartInfo(): Observable<any> {
     return this.apiClient.get(`${this.URL}/chart-info?userId=${this.userId}`);
   }
 
   getResumeInfo(): Observable<any> {
-    return this.apiClient.get(`${this.URL}/chart-info?userId=${this.userId}`);
+    return this.apiClient.get(`${this.URL}/resume?userId=${this.userId}`);
   }
 
   gridPageChange(pageNumber: number): void {

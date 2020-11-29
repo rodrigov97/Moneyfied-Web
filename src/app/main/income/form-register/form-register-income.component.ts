@@ -99,8 +99,7 @@ export class FormRegisterIncomeComponent implements OnInit, OnDestroy {
 
         this.myModal = this.modalService.open(this.modal, this.modalOption);
 
-        if (this.formType === 'Alterar')
-          this.setIncomeItem();
+        this.loadCategories();
       }
     });
   }
@@ -123,6 +122,9 @@ export class FormRegisterIncomeComponent implements OnInit, OnDestroy {
       response => {
         if (response.success) {
           this.categoryItems = response.categories;
+
+          if (this.formType === 'Alterar')
+            this.setIncomeItem();
         }
       },
       error => {

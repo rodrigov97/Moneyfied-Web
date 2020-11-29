@@ -9,11 +9,14 @@
   </div>
   <div #dataContent [style.height.px]="dataHeight" class="content">
     <div #listContainer [style.height.px]="isMobile ? mainHeight : listHeight" class="data-list">
-
       <div #btnGroup class="btn-group" role="group">
         <button (click)="changeListType('income')" type="button" class="btn btn-success">Receitas</button>
         <button (click)="changeListType('expense')" type="button" class="btn btn-danger">Despesas</button>
         <button (click)="changeListType('goal')" type="button" class="btn btn-primary">Objetivos</button>
+      </div>
+
+      <div #listName class="list-name">
+        <h5>{{listLabel}}</h5>
       </div>
 
       <app-grid-list
