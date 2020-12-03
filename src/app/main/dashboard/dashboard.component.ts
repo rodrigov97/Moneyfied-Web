@@ -91,7 +91,7 @@ export class DashboardComponent implements OnInit {
 
       this.dataHeight = this.mainHeight - 10 - 88;
 
-      this.listHeight = this.dataHeight - this.btnGroupHeight - this.listNameHeight - 10;
+      this.listHeight = this.dataHeight - this.btnGroupHeight - this.listNameHeight - 8;
 
       this.chartHeight = this.dataHeight - this.btnGroupChartHeight;
     }
@@ -142,9 +142,7 @@ export class DashboardComponent implements OnInit {
     }
     else if (this.listType === 'goal') {
       this.columns = [{
-
-      }, {
-        name: 'Objetivo', prop: 'Nome', flex: 3, align: 'align-left'
+        name: 'Objetivo', prop: 'Nome', flex: 1, align: 'align-left'
       }, {
         name: '(%)', prop: 'Porcentagem', flex: 1, align: 'align-center'
       }];

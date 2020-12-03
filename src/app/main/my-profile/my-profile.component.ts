@@ -76,7 +76,9 @@ export class MyProfileComponent implements OnInit {
     this.profileService.getUserInfo(usuarioId).subscribe(
       response => {
         if (response.success) {
-          const user = response.usuario;
+          const user = new Usuario(response.usuario);
+
+          this.userProfilePicture = user.ImagemPerfil
 
           this.formProfile.setValue({
             Nome: user.Nome,
