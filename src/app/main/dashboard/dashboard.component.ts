@@ -200,7 +200,7 @@ export class DashboardComponent implements OnInit {
       response => {
         if (response.success) {
           this.isLoading = false;
-          this.chartData = response.values;
+          this.chartData = response.empty ? [] : response.values;
         }
       },
       error => {

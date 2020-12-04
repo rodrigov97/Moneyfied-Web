@@ -91,3 +91,17 @@ input {
   background-color: $white !important;
   cursor: pointer;
 }
+
+.email-success,
+.email-failure {
+  text-align: center;
+  border-bottom: 0.9375rem;
+}
+
+.email-failure {
+  border-left: 0.3125rem solid $danger;
+}
+
+.email-success {
+  border-left: 0.3125rem solid $success;
+}

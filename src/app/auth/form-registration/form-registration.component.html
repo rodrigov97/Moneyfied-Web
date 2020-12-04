@@ -1,14 +1,14 @@
 <section class="d-flex align-items-center justify-content-center">
   <app-load-spinner *ngIf="isLoading"></app-load-spinner>
   <div class="form-container" *ngIf="!isLoading">
+    <div *ngIf="emailSuccess && mailSent" class="email-success d-block mb-1">
+      <p>Email de confirmação enviado para <strong>{{currentEmail}}</strong></p>
+    </div>
+    <div *ngIf="!emailSuccess && mailSent" class="email-failure d-block mb-1">
+      <p>Não foi possível enviar o email de confirmação para <strong>{{currentEmail}}</strong></p>
+    </div>
     <div class="title d-flex align-items-center justify-content-center">
       CADASTRO
-    </div>
-    <div *ngIf="emailSuccess && mailSent" class="email-success d-flex align-items-center justify-content-center">
-      <p>Email de confirmação enviado para <strong>{{email.value}}</strong></p>
-    </div>
-    <div *ngIf="!emailSuccess && mailSent" class="email-failure d-flex align-items-center justify-content-center">
-      <p>Não foi possível enviar o email de confirmação para <strong>{{email.value}}</strong></p>
     </div>
     <form [formGroup]="formRegister" (submit)="register()">
 

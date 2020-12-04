@@ -17,6 +17,8 @@ export class FormRegistrationComponent implements OnInit {
   isPasswordHidden: boolean;
   isLoading: boolean = false;
 
+  currentEmail: string;
+
   emailSuccess: boolean = false;
   mailSent: boolean = false;
 
@@ -75,6 +77,7 @@ export class FormRegistrationComponent implements OnInit {
       }
 
       this.isLoading = true;
+      this.currentEmail = this.email.value;
 
       this.authService.register(value).subscribe(
         (response) => {
@@ -92,7 +95,7 @@ export class FormRegistrationComponent implements OnInit {
             if (response.emailEnviado)
               this.emailSuccess = true;
 
-            this.route.navigate(['login']);
+            this.formRegister.reset();
           }
           else {
             this.isLoading = false;
@@ -110,7 +113,6 @@ export class FormRegistrationComponent implements OnInit {
 
   backToLogin(): void {
     this.formRegister.reset();
-
     this.route.navigate(['login']);
   }
 }

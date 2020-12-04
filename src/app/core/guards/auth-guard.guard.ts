@@ -4,6 +4,7 @@ import {
   UrlTree, CanActivate, Router
 } from '@angular/router';
 import { Observable } from 'rxjs';
+import { LocalStorageService } from '../services/local-storage.service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,8 @@ export class AuthGuard implements CanActivate {
   goingTo: string;
 
   constructor(
-    public router: Router
+    private router: Router,
+    private storageService: LocalStorageService
   ) { }
 
   canActivate(
@@ -35,8 +37,7 @@ export class AuthGuard implements CanActivate {
   }
 
   loginToApp(): boolean {
-    if (this.isUserLogged !== true) {
-
+    if (!this.isUserLogged) {
       this.router.navigate(['login']);
     }
     return true;

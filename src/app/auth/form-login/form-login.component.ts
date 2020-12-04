@@ -94,12 +94,11 @@ export class FormLoginComponent implements OnInit {
     this.storageService.addToken(response.token);
     this.storageService.addUser(response.usuario);
 
-
     if (this.storageService.emailConfirmado) {
       this.route.navigate(['app']);
     }
     else {
-      this.route.navigate(['email-confirmation']);
+      this.route.navigate([this.route.url, 'email-confirmation']);
     }
   }
 
