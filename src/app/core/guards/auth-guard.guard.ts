@@ -39,6 +39,7 @@ export class AuthGuard implements CanActivate {
   loginToApp(): boolean {
     if (!this.isUserLogged) {
       this.router.navigate(['login']);
+      return true;
     }
     return true;
   }
@@ -51,6 +52,7 @@ export class AuthGuard implements CanActivate {
     if (!this.isUserLogged) {
       this.goingTo = 'login';
       this.router.navigate(['login']);
+      return true;
     }
     else if (this.isUserLogged) {
       return false
@@ -67,19 +69,30 @@ export class AuthGuard implements CanActivate {
       this.goingTo = '';
       return true;
     }
-    else if (!this.isUserLogged) {
+    else if (!this.isUserLogged && !this.isEmailConfirmed) {
       this.goingTo = 'login';
       this.router.navigate(['login']);
+      return true;
     }
-    else if (this.isUserLogged) {
+    else if (this.isUserLogged && this.isEmailConfirmed) {
       this.goingTo = 'app';
       this.router.navigate(['app']);
+      return true;
+    }
+    else {
+      this.goingTo = 'login';
+      this.router.navigate(['login']);
+      return true;
     }
     return true;
   }
 
   get isUserLogged(): boolean {
     const userInfo = JSON.parse(localStorage.getItem('usuario'));
-    return userInfo && userInfo.UsuarioId ? true : false;
+    return userInfo ? (userInfo.UsuarioId ? true : false) : false;
+  }
+
+  get isEmailConfirmed(): boolean {
+    return this.storageService.emailConfirmado;
   }
 }

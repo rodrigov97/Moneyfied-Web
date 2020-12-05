@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { LocalStorageService } from 'src/app/core/services/local-storage.service';
+import { DataService } from 'src/app/shared/data.service';
 import { AuthService } from '../auth.service';
 
 @Component({
@@ -25,9 +26,10 @@ export class EmailConfirmationComponent implements OnInit {
     private authService: AuthService,
     private router: Router,
     private storageService: LocalStorageService,
+    private dataService: DataService,
   ) {
     this.formConfirmation = new FormGroup({
-      Email: new FormControl(this.userEmail, [Validators.required])
+      Email: new FormControl('', [Validators.required])
     })
   }
 
@@ -48,22 +50,38 @@ export class EmailConfirmationComponent implements OnInit {
       Email: this.email.value
     };
 
-    this.isLoading = true;
+    if (this.isFormValid) {
+      this.isLoading = true;
 
-    this.authService.resentEmailConfirmation(email).subscribe(response => {
+      this.authService.resentEmailConfirmation(email).subscribe(response => {
 
-      this.resentFinished = true;
-      this.emailSent = response.emailEnviado;
-      this.hideWarning = true;
+        this.resentFinished = true;
+        this.emailSent = response.emailEnviado;
+        this.hideWarning = true;
 
-      if (response.success) {
-        this.formConfirmation.reset();
-        this.goToLogin();
-      }
+        if (response.success) {
+          this.formConfirmation.reset();
+        }
 
+        this.isLoading = false;
+      });
+    }
+    else {
+      this.dataService.openWarningDialog({
+        command: 'open',
+        title: 'Atenção',
+        content: 'O email deve ser igual ao cadastrado pelo usuário !'
+      });
+    }
+  }
 
-      this.isLoading = false;
-    });
+  get isFormValid(): boolean {
+    if (this.formConfirmation.valid && this.storageService.userEmail === this.email.value) {
+      return true;
+    }
+    else {
+      return false;
+    }
   }
 
   goToLogin(): void {

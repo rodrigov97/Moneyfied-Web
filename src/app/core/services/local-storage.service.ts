@@ -38,6 +38,6 @@ export class LocalStorageService {
 
   get emailConfirmado(): boolean {
     const userInfo = JSON.parse(localStorage.getItem('usuario'));
-    return userInfo.EmailConfirmado;
+    return userInfo ? (userInfo.EmailConfirmado ? true : false) : false;
   }
 }
