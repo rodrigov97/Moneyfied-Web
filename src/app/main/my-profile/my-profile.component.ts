@@ -78,7 +78,7 @@ export class MyProfileComponent implements OnInit {
         if (response.success) {
           const user = new Usuario(response.usuario);
 
-          this.userProfilePicture = user.ImagemPerfil
+          this.userProfilePicture = user.ImagemPerfil ? user.ImagemPerfil : 'NoImage.png';
 
           this.formProfile.setValue({
             Nome: user.Nome,
@@ -88,7 +88,6 @@ export class MyProfileComponent implements OnInit {
 
           this.isLoading = false;
           this.userName = user.Nome;
-          this.userProfilePicture = user.ImagemPerfil;
         }
       },
       error => {
